@@ -7,6 +7,7 @@
             @click="isOpen = ! isOpen"
             bgColor="bg-red-200/50 hover:bg-red-200"
             size="px-3 py-1"
+            textColor="text-red-600"
             {{ $attributes->merge(['class' => 'text-red-600']) }}
         >
             {{ __('actions.delete.page') }}

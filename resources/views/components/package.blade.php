@@ -23,7 +23,7 @@
                         @click="isOpen = ! isOpen"
                         bgColor="bg-red-200/50 hover:bg-red-200"
                         size="px-3 py-1"
-                        class="text-red-600"
+                        textColor="text-red-600"
                     >
                         {{ __('actions.delete.page')}}
                     </x-button>
@@ -56,7 +56,7 @@
 
                     <!-- begin::Form Button -->
                     <div class="flex justify-center">
-                        <x-button bgColor="bg-red-400 hover:bg-red-500" class="text-white">
+                        <x-button bgColor="bg-red-400 hover:bg-red-500" textColor="text-white">
                             {{ __('actions.delete.form') }}
                         </x-button>
                     </div>

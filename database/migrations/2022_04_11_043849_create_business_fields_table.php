@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('business_fields', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->enum('type', ['booking', 'advertisment']);
-            $table->enum('status', ['active', 'suspended'])->default('suspended');
+            $table->string('name');
+            $table->string('type');
             $table->timestamps();
         });
     }

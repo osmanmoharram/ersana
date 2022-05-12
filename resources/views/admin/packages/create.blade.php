@@ -3,6 +3,14 @@
         {{ __('page.packages.create.header') }}
     </x-slot>
 
+    @if ($errors->any())
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    @endif
+
     <form action="{{ route('packages.store') }}" method="POST" class="space-y-4 pb-16">
         @csrf
 
@@ -43,7 +51,7 @@
                                                 <input
                                                     type="checkbox"
                                                     class="bg-white rounded-sm cursor-pointer border border-slate-300"
-                                                    @click="$store.selection.feature(event)"
+                                                    @click="$store.selection.features($el)"
                                                 >
 
                                                 <span>

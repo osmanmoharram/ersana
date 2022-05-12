@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\NewPackageRequest;
-use App\Http\Requests\PackageRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\NewPackageRequest;
 use App\Http\Requests\UpdatePackageRequest;
-use App\Models\Feature;
-use App\Models\FeaturePackage;
-use App\Models\Package;
+use App\Models\Admin\Feature;
+use App\Models\Admin\FeaturePackage;
+use App\Models\Admin\Package;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class PackageController extends Controller
 {

@@ -5087,6 +5087,19 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('selection', {
     inputs[0].value = target.textContent.trim();
     inputs[1].value = value;
   },
+  features: function features($el) {
+    var features = document.querySelectorAll('.feature');
+
+    if ($el.checked === true) {
+      features.forEach(function (item) {
+        item.checked = true;
+      });
+    } else {
+      features.forEach(function (item) {
+        item.checked = false;
+      });
+    }
+  },
   priceType: function priceType(type) {
     if (type === 'fixed') {
       fixedPrice.disabled = false;

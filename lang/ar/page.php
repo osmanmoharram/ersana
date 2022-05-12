@@ -21,7 +21,38 @@ return [
             'updated' => 'تم تحديث بيانات المستخدم :user',
             'deleted' => 'تم حذف المستخدم :user'
         ],
-        'roles' => ['admin' => 'مدير', 'accountant' => 'محاسب', 'employee' => 'موظف']
+    ],
+    'roles' => [
+        'index' => [
+            'header' => 'الأدوار',
+            'table' => ['name' => 'الاسم'],
+        ],
+        'create' => [ 'header' => 'إنشاء دور جديد' ],
+        'edit' => ['تحديث بيانات الدور :role'],
+        'form' => [
+            'name' => ['label' => 'الإسم', 'placeholder' => 'الرجاء كتابة إسم الدور']
+        ],
+        'flash' => [
+            'created' => 'تم إنشاء دور جديد',
+            'updated' => 'تم تحديث بيانات الدور :role',
+            'deleted' => 'تم حذف الدور :role'
+        ],
+    ],
+    'permissions' => [
+        'index' => [
+            'header' => 'التصاريح',
+            'table' => ['name' => 'الاسم'],
+        ],
+        'create' => ['header' => 'إنشاء تصريح جديد' ],
+        'edit' => ['تحديث بيانات التصريح :permission'],
+        'form' => [
+            'name' => ['label' => 'الإسم', 'placeholder' => 'الرجاء كتابة إسم التصريح']
+        ],
+        'flash' => [
+            'created' => 'تم إنشاء تصريح جديد',
+            'updated' => 'تم تحديث بيانات التصريح :permission',
+            'deleted' => 'تم حذف التصريح :permission'
+        ],
     ],
     'features' => [
         'index' => ['header' => 'الميزات', 'table' => ['description' => 'الوصف']],
@@ -62,7 +93,7 @@ return [
                 'phone' => 'الهاتف',
                 'domain' => 'رابط الموقع',
                 'address' => 'عنوان مقر العمل',
-                'business_field' => 'مجال العمل'
+                'businessField' => 'مجال العمل'
             ],
         ],
         'create' => ['header' => 'إنشاء عميل جديد'],
@@ -72,7 +103,7 @@ return [
             'phone' => ['label' => 'الهاتف', 'placeholder' => 'الرجاء كتابة رقم الجوال متضمناً مفتاح البلد'],
             'email' => ['label' => 'البريد الإلكتروني', 'placeholder' => 'client@example.com'],
             'address' => ['label' => 'عنوان مقر العمل', 'placeholder' => 'الرجاء كتابة عنوان مقر العمل'],
-            'business-field' => ['label' => 'مجال العمل'],
+            'businessField' => ['label' => 'مجال العمل'],
             'domain' => ['label' => 'رابط الموقع', 'placeholder' => 'ersana.com'],
         ],
         'flash' => [
@@ -93,21 +124,21 @@ return [
             'package' => ['label' => 'الباقة', 'placeholder' => 'الرجاء اختيار واحدة من الباقات الموجودة.'],
         ],
         'flash' => [
-            'created' => 'تم إنشاء إشتراك جديد برقم :subscription',
+            'created' => 'تم إنشاء إشتراك جديد',
             'updated' => 'تم تحديث بيانات الإشتراك رقم :subscription',
             'deleted' => 'تم حذف الإشتراك رقم :subscription'
         ],
     ],
-    'business-fields' => [
+    'businessFields' => [
         'index' => ['header' => 'مجالات العمل', 'table' => ['field' => 'المجال', 'type' => 'النوع']],
         'create' => [ 'header' => 'إنشاء مجال عمل جديد', ],
         'edit' => ['header' => 'تحديث بيانات مجال العمل :field'],
         'form' => [
-            'title' => ['label' => 'المسمى', 'placeholder' => 'الأعراس والمناسبات'],
+            'name' => ['label' => 'الإسم', 'placeholder' => 'الأعراس و المناسبات'],
             'type' => ['label' => 'النوع', 'placeholder' => 'الرجاء اختيار واحدة من الأنواع الموجودة.'],
         ],
         'flash' => [
-            'created' => 'تم إنشاء مجال عمل جديد بمسمى :field',
+            'created' => 'تم إنشاء مجال عمل جديد',
             'updated' => 'تم تحديث بيانات مجال العمل :field',
             'deleted' => 'تم حذف مجال العمل :field'
         ],
@@ -126,7 +157,7 @@ return [
             'average_time' => ['label' => 'متوسط زمن المناسبة (ساعة)', 'placeholder' => 'الرجاء تحديد زمن المناسبة'],
         ],
         'flash' => [
-            'created' => 'تم إنشاء قاعة جديدة باسم :hall',
+            'created' => 'تم إنشاء قاعة جديدة',
             'updated' => 'تم تحديث بيانات القاعة :hall',
             'deleted' => 'تم حذف القاعة :hall'
         ],
@@ -153,7 +184,7 @@ return [
             'address' => ['label' => 'العنوان', 'placeholder' => 'الرجاء كتابة عنوان صاحب الحجز',],
         ],
         'flash' => [
-            'created' => 'تم إنشاء صاحب حجز جديد باسم :customer',
+            'created' => 'تم إنشاء صاحب حجز جديد',
             'updated' => 'تم تحديث بيانات صاحب الحجز :customer',
             'deleted' => 'تم حذف صاحب الحجز :customer'
         ],
@@ -219,7 +250,7 @@ return [
             'notes' => ['label' => 'ملاحظات']
         ],
         'flash' => [
-            'created' => 'تم إنشاء حجز جديد برقم :booking',
+            'created' => 'تم إنشاء حجز جديد',
             'updated' => 'تم تحديث بيانات الحجز رقم :booking',
             'deleted' => 'تم حذف الحجز رقم :booking'
         ],

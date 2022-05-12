@@ -12,5 +12,7 @@ return [
     'customers' => 'Bookings',
     'business-fields' => 'Business Fields',
     'users' => 'Users',
+    'users' => 'Roles',
+    'users' => 'Permissions',
     'settings' => 'Settings',
 ];

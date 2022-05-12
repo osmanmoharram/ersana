@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\BusinessField;
+use App\Http\Controllers\Controller;
+use App\Models\Admin\BusinessField;
 use Illuminate\Http\Request;
 
 class BusinessFieldController extends Controller
@@ -14,9 +15,9 @@ class BusinessFieldController extends Controller
      */
     public function index()
     {
-        $business_fields = BusinessField::latest()->paginate(30);
+        $businessFields = BusinessField::latest()->paginate(30);
 
-        return view('admin.business-fields.index', compact('business_fields'));
+        return view('admin.business-fields.index', compact('businessFields'));
     }
 
     /**
@@ -26,7 +27,7 @@ class BusinessFieldController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.business-fields.create');
     }
 
     /**
@@ -37,18 +38,16 @@ class BusinessFieldController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'type' => ['required', 'in:advertisement,booking']
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\BusinessField  $businessField
-     * @return \Illuminate\Http\Response
-     */
-    public function show(BusinessField $businessField)
-    {
-        //
+        BusinessField::create($data);
+
+        return redirect()
+            ->route('business-fields.index')
+            ->withMessage(__('page.businessFields.flash.created'));
     }
 
     /**
@@ -59,7 +58,7 @@ class BusinessFieldController extends Controller
      */
     public function edit(BusinessField $businessField)
     {
-        //
+        return view('admin.business-fields.edit', compact('businessField'));
     }
 
     /**
@@ -71,7 +70,16 @@ class BusinessFieldController extends Controller
      */
     public function update(Request $request, BusinessField $businessField)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'type' => ['required', 'in:advertisement,booking']
+        ]);
+
+        $businessField->update($data);
+
+        return redirect()
+            ->route('business-fields.index')
+            ->withMessage(__('page.businessFields.flash.updated', ['field' => $businessField->name]));
     }
 
     /**
@@ -82,6 +90,12 @@ class BusinessFieldController extends Controller
      */
     public function destroy(BusinessField $businessField)
     {
-        //
+        $name = $businessField->name;
+
+        $businessField->delete();
+
+        return redirect()
+            ->route('business-fields.index')
+            ->withMessage(__('page.businessFields.flash.deleted', ['field' => $name]));
     }
 }

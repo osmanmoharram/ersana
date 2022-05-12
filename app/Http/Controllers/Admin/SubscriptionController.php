@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Client;
-use App\Models\Package;
-use App\Models\Subscription;
+use App\Http\Controllers\Controller;
+use App\Models\Admin\Client;
+use App\Models\Admin\Package;
+use App\Models\Admin\Subscription;
 use Illuminate\Http\Request;
 
 class SubscriptionController extends Controller
@@ -43,22 +44,18 @@ class SubscriptionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'client' => ['required', 'exists:clients,id'],
-            'package' => ['required', 'exists:packages,id']
+            'client_id' => ['required', 'exists:clients,id'],
+            'package_id' => ['required', 'exists:packages,id']
         ]);
 
-        $subscription = Subscription::create([
-            'client_id' => $request->client,
-            'package_id' => $request->package
-        ]);
-
-        $subscription->update([
-            'slug' => '#' . number_format($subscription->id, 5)
+        Subscription::create([
+            'client_id' => $request->client_id,
+            'package_id' => $request->package_id
         ]);
 
         return redirect()
             ->route('subscriptions.index')
-            ->withMessage(__('page.subscriptions.flash.created', ['subscription' => $subscription->slug]));
+            ->withMessage(__('page.subscriptions.flash.created'));
     }
 
     /**
@@ -69,10 +66,9 @@ class SubscriptionController extends Controller
      */
     public function edit(Subscription $subscription)
     {
-        $clients = Client::all();
         $packages = Package::all();
 
-        return view('admin.subscriptions.edit', compact('subscription', 'clients', 'packages'));
+        return view('admin.subscriptions.edit', compact('subscription', 'packages'));
     }
 
     /**
@@ -93,13 +89,13 @@ class SubscriptionController extends Controller
             return back();
         }
 
-        $request->validate(['package' => ['required', 'exists:packages,id']]);
+        $request->validate(['package_id' => ['required', 'exists:packages,id']]);
 
-        $subscription->update(['package_id' => $request->package]);
+        $subscription->update(['package_id' => $request->package_id]);
 
         return redirect()
             ->route('subscriptions.index')
-            ->withMessage(__('page.subscriptions.flash.updated', ['subscription' => $subscription->slug]));
+            ->withMessage(__('page.subscriptions.flash.updated'));
     }
 
     /**

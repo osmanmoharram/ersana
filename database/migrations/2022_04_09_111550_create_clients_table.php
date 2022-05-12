@@ -16,9 +16,8 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('address')->nullable();
-            $table->string('business_field')->nullable();
-            $table->enum('subscription_status', ['unsubscribed', 'active', 'suspended'])->default('active');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('business_field_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });
     }

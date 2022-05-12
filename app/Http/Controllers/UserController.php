@@ -43,7 +43,13 @@ class UserController extends Controller
      */
     public function store(NewUserRequest $request)
     {
-        $user = User::create($request->validated());
+        $data = $request->validated();
+
+        if($client_id = $request->user->client_id) {
+            $data['client_id'] = $client_id;
+        }
+
+        $user = User::create($data);
 
         return redirect()
             ->route('users.index')

@@ -1,15 +1,11 @@
 <x-app-layout>
     <!-- begin::Page Heading -->
-    <x-slot name="header">
-        <div class="flex items-center space-s-8">
-            <span class="block">
-                {{ __('page.subscriptions.index.header') }}
-            </span>
+    <x-slot name="header" class="py-6">
+        {{ __('page.subscriptions.index.header') }}
 
-            <!-- begin::Add -->
-            <x-actions.add href="{{ route('subscriptions.create') }}" />
-            <!-- end::Add -->
-        </div>
+        <!-- begin::Add -->
+        <x-actions.add href="{{ route('subscriptions.create') }}" />
+        <!-- end::Add -->
     </x-slot>
     <!-- end::Page Heading -->
 
@@ -36,7 +32,7 @@
                 <!-- begin::Client -->
                 <td class="px-6 py-3 whitespace-nowrap {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}">
                     <div class="text-sm  text-slate-500" dir="ltr">
-                        {{ $subscription->client->name }}
+                        {{ $subscription->client->user->name }}
                     </div>
                 </td>
                 <!-- end::Client -->
@@ -57,7 +53,7 @@
                 <!-- end::Status -->
 
                 <!-- begin::Actions -->
-                <td class="px-6 py-3 whitespace-nowrap text-right text-sm space-s-0.5 flex items-center justify-end">
+                <td class="px-6 py-3 whitespace-nowrap text-right text-sm space-s-1 flex items-center justify-end">
                     @if ($subscription->status === 'suspended')
                         <!-- begin::Activate -->
                         <x-actions.activate action="{{ route('subscriptions.update', $subscription->id) }}" />

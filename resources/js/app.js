@@ -14,7 +14,19 @@ Alpine.store('selection', {
 
         inputs[1].value = value;
     },
+    features($el) {
+        const features = document.querySelectorAll('.feature');
 
+        if ($el.checked === true) {
+            features.forEach(item => {
+                item.checked = true;
+            })
+        } else {
+            features.forEach(item => {
+                item.checked = false;
+            })
+        }
+    },
     priceType(type) {
         if (type === 'fixed') {
             fixedPrice.disabled = false;

@@ -20,7 +20,38 @@ return [
             'updated' => 'The user :user data have been updated',
             'deleted' => 'The user :user has been deleted'
         ],
-        'roles' => ['admin' => 'Admin', 'accountant' => 'Accountant', 'employee' => 'Employee']
+    ],
+    'roles' => [
+        'index' => [
+            'header' => 'Roles',
+            'table' => ['name' => 'Name'],
+        ],
+        'create' => ['header' => 'Create New Role', 'placeholder' => 'Please write the name of the role'],
+        'edit' => ['Update the role :role'],
+        'form' => [
+            'name' => ['label' => 'Name', 'placeholder' => 'Please write the name of the role']
+        ],
+        'flash' => [
+            'created' => 'A new role has been created',
+            'updated' => 'the role :role has been updated',
+            'deleted' => 'the role :role is deleted'
+        ],
+    ],
+    'permissions' => [
+        'index' => [
+            'header' => 'Permissions',
+            'table' => ['name' => 'Name', 'placeholder' => 'Please write the name of the permission'],
+        ],
+        'create' => [ 'header' => 'Create New Permission' ],
+        'edit' => ['Update the permission :permission'],
+        'form' => [
+            'name' => ['label' => 'Name']
+        ],
+        'flash' => [
+            'created' => 'A new permission has been created',
+            'updated' => 'The permission :permission has been updated',
+            'deleted' => 'The permission :permission is deleted'
+        ],
     ],
     'features' => [
         'index' => [
@@ -84,7 +115,7 @@ return [
                 'email' => 'Email',
                 'domain' => 'Domain',
                 'address' => 'Work Address',
-                'business_field' => 'Business Field'
+                'businessField' => 'Business Field'
             ],
         ],
         'create' => ['header' => 'Create New Client'],
@@ -94,7 +125,7 @@ return [
             'email' => ['label' => 'Email', 'placeholder' => 'client@example.com',],
             'phone' => ['label' => 'Phone', 'placeholder' => 'Please write the phone number with the country key'],
             'address' => ['label' => 'Address', 'placeholder' => 'Please write your business location'],
-            'business-field' => ['label' => 'Business Field', 'placeholder' => 'Please write your business location'],
+            'businessField' => ['label' => 'Business Field'],
             'domain' => ['label' => 'Domain', 'placeholder' => 'ersana.com'],
         ],
         'flash' => [
@@ -125,18 +156,15 @@ return [
             'deleted' => 'Subscription :subscription is deleted'
         ],
     ],
-    'business-fields' => [
+    'businessFields' => [
         'index' => [
             'header' => 'Business Fields',
-            'table' => [
-                'field' => 'Field',
-                'type' => 'Type',
-            ],
+            'table' => ['field' => 'Field', 'type' => 'Type'],
         ],
         'create' => [ 'header' => 'Create New Business Field', ],
         'edit' => [ 'header' => 'Update :field Business Field', ],
         'form' => [
-            'title' => ['label' => 'Title', 'placeholder' => 'Weddings and events.'],
+            'name' => ['label' => 'Name', 'placeholder' => 'Weddings and events.'],
             'type' => ['label' => 'Type', 'placeholder' => 'Please select one of the types below.'],
         ],
         'flash' => [

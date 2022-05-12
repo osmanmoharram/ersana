@@ -1,23 +1,23 @@
 <x-app-layout>
     <x-slot name="header" class="py-6">
-        {{ __('page.business-fields.create.header') }}
+        {{ __('page.businessFields.create.header') }}
     </x-slot>
 
-    <form action="{{ route('business-fields.store') }}" method="POST" class="space-y-4 pb-8">
+    <form action="{{ route('business-fields.store') }}" method="POST" class="space-y-4">
         @csrf
 
         <!-- begin::Title -->
         <div class="grid grid-cols-2">
-            <div class="col-span-1">
-                <x-label for="title" :value="__('page.users.form.title.label')" />
+            <div class="col-span-2 max-w-[560px]">
+                <x-label for="name" :value="__('page.businessFields.form.name.label')" />
 
                 <div>
                     <x-input
-                        type="text" class="w-full" title="title" value="{{ old('title') }}"
-                        placeholder="{{ __('page.users.form.title.placeholder') }}"
+                        type="text" class="w-full" name="name" value="{{ old('name') }}"
+                        placeholder="{{ __('page.businessFields.form.name.placeholder') }}"
                     />
 
-                    @error('title')
+                    @error('name')
                         <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
@@ -27,21 +27,21 @@
 
         <!-- begin::Type -->
         <div class="grid grid-cols-2">
-            <div class="col-span-1">
-                <x-label for="type" :value="__('page.business-fields.form.type.label')" />
+            <div class="col-span-2 max-w-[560px]">
+                <x-label for="type" :value="__('page.businessFields.form.type.label')" />
 
-                <x-select name="type">
+                <x-select name="type" placeholder="{{ __('page.businessFields.form.type.placeholder') }}">
                     <li
                         class="text-gray-800 hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
-                        @click="$store.selection.resource($el); visible = false"
+                        @click="$store.selection.select($el, 'advertisement'); visible = false"
                     >
-                        {{ __('page.business-fields.types.advertisement') }}
+                        {{ __('page.businessFields.types.advertisement') }}
                     </li>
                     <li
                         class="text-gray-800 hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
-                        @click="$store.selection.type($el, app()->getLocale()); visible = false"
+                        @click="$store.selection.select($el, 'booking'); visible = false"
                     >
-                        {{ __('page.business-fields.types.booking') }}
+                        {{ __('page.businessFields.types.booking') }}
                     </li>
                 </x-select>
 
@@ -53,8 +53,8 @@
         <!-- end::type -->
 
         <!-- begin::Form Button -->
-        <div class="grid grid-cols-2">
-            <div class="col-span-1 flex items-center justify-between">
+        <div class="grid grid-cols-2 pt-8">
+            <div class="col-span-2 max-w-[560px] flex items-center justify-between">
                 <x-button>
                     {{ __('actions.add.form')}}
                 </x-button>

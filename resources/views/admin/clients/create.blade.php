@@ -3,7 +3,7 @@
         {{ __('page.clients.create.header') }}
     </x-slot>
 
-    <form action="{{ route('clients.store') }}" method="POST" class="pb-16 px-4">
+    <form action="{{ route('clients.store') }}" method="POST" class="space-y-4 pb-8 px-4">
         @csrf
 
         <!-- begin::Full Name -->
@@ -76,41 +76,32 @@
         <!-- end::Address -->
 
         <!-- begin::Business Field -->
-        <div class="grid grid-cols-2 mt-8">
+        <div class="grid grid-cols-2">
             <div class="col-span-2 max-w-[560px]">
-                <x-label for="business_field" :value="__('page.clients.form.business-field.label')" />
+                <div class="flex items-center justify-between">
+                    <x-label for="business_field" class="" :value="__('page.clients.form.business_field.label')" />
 
-                <x-input
-                    type="text" class="w-full mt-1" name="business_field" value="{{ old('business_field') }}"
-                    placeholder="{{ __('actions.select.placeholder') }}"
-                />
+                    <!-- begin::Add -->
+                    <x-actions.add href="{{ route('business-fields.create') }}" />
+                    <!-- end::Add -->
+                </div>
 
-                @error('business_field')
-                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                @enderror
-             </div>
+                <x-select name="business_field_id" placeholder="{{ __('actions.select.placeholder') }}">
+                    @foreach ($business_fields as $business_field)
+                        <li
+                            class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" business_field="option"
+                            @click="$store.selection.select($el, '{{ $business_field->id }}'); visible = false"
+                        >
+                            {{ $business_field->name }}
+                        </li>
+                    @endforeach
+                </x-select>
+            </div>
         </div>
         <!-- end::Business Field -->
 
-        <!-- begin::Domain -->
-        <div class="grid grid-cols-2 mt-8">
-            <div class="col-span-2 max-w-[560px]">
-                <x-label for="domain" :value="__('page.clients.form.domain.label')" />
-
-                <x-input
-                    type="text" class="w-full mt-1" name="domain" value="{{ old('domain') }}"
-                    placeholder="{{ __('page.clients.form.domain.placeholder') }}"
-                />
-
-                @error('domain')
-                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                @enderror
-             </div>
-        </div>
-        <!-- end::Domain -->
-
         <!-- begin::Form Button -->
-        <div class="grid grid-cols-2 mt-8">
+        <div class="grid grid-cols-2 pt-8">
             <div class="col-span-2 max-w-[560px] flex items-center justify-between">
                 <x-button>
                     {{ __('actions.add.form')}}

@@ -22,9 +22,9 @@
                 <!-- end::Description -->
 
                 <!-- begin::Actions -->
-                <td class="px-6 py-3 whitespace-nowrap text-right text-sm space-s-0.5 flex items-center justify-end">
+                <td class="px-6 py-3 whitespace-nowrap text-right text-sm space-s-1 flex items-center justify-end">
                     <!-- begin::Edit -->
-                    <x-actions.edit />
+                    <x-actions.edit href="{{ route('features.edit', $feature->id) }}" />
                     <!-- end::Edit -->
 
                     <!-- begin::Delete -->

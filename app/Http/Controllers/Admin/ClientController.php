@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\NewClientRequest;
-use App\Models\Client;
-use App\Models\Domain;
-use App\Models\Client\User;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\NewClientRequest;
+use App\Models\Admin\{BusinessField, Client};
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -29,7 +29,9 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('admin.clients.create');
+        $business_fields = BusinessField::all();
+
+        return view('admin.clients.create', compact('business_fields'));
     }
 
     /**
@@ -40,24 +42,13 @@ class ClientController extends Controller
      */
     public function store(NewClientRequest $request)
     {
-        $client = Client::create($request->except('domain'));
+        $client = Client::create($request->only(['address', 'business_field_id']));
 
-        $client->run(function () use ($client) {
-            User::create([
-                'name' => $client->name,
-                'email' => $client->email,
-                'phone' => $client->phone,
-                'role' => 'admin',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            ]);
-        });
+        $this->createClientUser($request, $client);
 
-        Domain::create([
-            'domain' => $request->domain,
-            'tenant_id' => $client->id
-        ]);
-
-        return redirect()->route('subscriptions.create');
+        return redirect()
+            ->route('subscriptions.create')
+            ->withMessage(__('page.clients.flash.created'));
     }
 
     /**
@@ -68,7 +59,8 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        return view('admin.clients.edit', compact('client'));
+        $businessFields = BusinessField::all();
+        return view('admin.clients.edit', compact('client', 'businessFields'));
     }
 
     /**
@@ -92,5 +84,17 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         //
+    }
+
+    protected function createClientUser($request, $client)
+    {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'client_id' => $client->id
+        ]);
+
+        $client->update(['user_id' => $user->id]);
     }
 }

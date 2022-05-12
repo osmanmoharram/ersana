@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('features', function (Blueprint $table) {
             $table->id();
             $table->text('description');
-            $table->unsignedBigInteger('tenant_id');
 
             $table->timestamps();
         });

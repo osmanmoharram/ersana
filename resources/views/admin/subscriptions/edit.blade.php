@@ -3,26 +3,26 @@
         {{ __('page.subscriptions.edit.header', ['subscription' => $subscription->slug]) }}
     </x-slot>
 
-    <form action="{{ route('subscriptions.update', $subscription->id) }}" method="POST" class="space-y-4 pb-8">
+    <form action="{{ route('subscriptions.update', $subscription->id) }}" method="POST" class="space-y-4">
         @csrf
         @method('PATCH')
 
         <!-- begin::Package -->
         <div class="grid grid-cols-2">
-            <div class="col-span-1">
+            <div class="col-span-2 max-w-[560px]">
                 <x-label for="package" :value="__('page.subscriptions.form.package.label')" />
 
-                <x-select name="package" :resource="$subscription->package">
+                <x-select name="package_id" :display="$subscription->package->name" :value="$subscription->pakcage_id">
                     @foreach ($packages as $package)
-                        <li class="text-gray-800 hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
-                            @click="$store.selection.resource($el, {{ $package->toJson() }}); visible = false"
+                        <li class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
+                            @click="$store.selection.select($el, '{{ $package->id }}'); visible = false"
                         >
                             {{ $package->name }}
                         </li>
                     @endforeach
                 </x-select>
 
-                @error('package')
+                @error('package_id')
                     <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                 @enderror
             </div>
@@ -30,20 +30,13 @@
         <!-- end::Package -->
 
         <!-- begin::Form Button -->
-        <div class="grid grid-cols-2">
-            <div class="col-span-1 flex items-center justify-between">
-                <x-button class="px-8 py-3">
+        <div class="grid grid-cols-2 pt-8">
+            <div class="col-span-2 max-w-[560px] flex items-center space-s-1">
+                <x-button>
                     {{ __('actions.edit.form')}}
                 </x-button>
 
-                <a
-                    href="{{ route('subscriptions.index') }}"
-                    class="px-8 py-3 bg-gray-800 border border-transparent rounded-sm font-semibold
-                    text-xs text-slate-300 uppercase hover:bg-gray-700 cursor-pointer active:bg-gray-900 focus:outline-none
-                    disabled:opacity-25 transition ease-in-out duration-150"
-                >
-                    {{ __('actions.back')}}
-                </a>
+                <x-actions.back href="{{ route('subscriptions.index') }}" />
             </div>
         </div>
         <!-- end::Form Button -->

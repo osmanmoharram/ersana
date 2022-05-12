@@ -1,16 +1,20 @@
 <?php
 
-use App\Http\Controllers\{
+use App\Http\Controllers\Admin\{
     BusinessFieldController,
     ClientController,
     FeatureController,
     PackageController,
     SubscriptionController,
-    UserController
 };
-use App\Http\Controllers\Client\BookingController;
-use App\Http\Controllers\Client\CustomerController;
-use App\Http\Controllers\Client\HallController;
+use App\Http\Controllers\Client\{
+    BookingController,
+    CustomerController,
+    HallController
+};
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -40,6 +44,10 @@ Route::group([
         Route::view('/', 'admin.dashboard')->name('dashboard');
 
         Route::resource('users', UserController::class)->except(['show']);
+
+        Route::resource('roles', RoleController::class)->except(['show']);
+
+        Route::resource('permissions', PermissionController::class)->except(['show']);
 
         Route::resource('features', FeatureController::class)->except(['show']);
 

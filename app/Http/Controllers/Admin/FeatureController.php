@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Feature;
+use App\Http\Controllers\Controller;
+use App\Models\Admin\Feature;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -38,9 +39,11 @@ class FeatureController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate(['description' => 'required|string|unique:features,description|max:225']);
+        $data = $request->validate([
+            'description' => ['required', 'string', 'unique:features,description', 'max:225']
+        ]);
 
-        Feature::create($validated);
+        Feature::create($data);
 
         return redirect()
             ->route('features.index')
@@ -67,16 +70,11 @@ class FeatureController extends Controller
      */
     public function update(Request $request, Feature $feature)
     {
-        $validated = $request->validate([
-            'description' => [
-                'required',
-                'string',
-                'max:225',
-                Rule::unique('features')->ignore($request->user()->id, 'id')
-            ]
+        $data = $request->validate([
+            'description' => ['required', 'string', 'max:255', 'unique:features,description,' . $request->description . ',description', 'max:225']
         ]);
 
-        $feature->update($validated);
+        $feature->update($data);
 
         return redirect()
             ->route('features.index')

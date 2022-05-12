@@ -3,12 +3,12 @@
         {{ __('page.users.create.header') }}
     </x-slot>
 
-    <form action="{{ route('users.store') }}" method="POST" class="space-y-4 pb-8">
+    <form action="{{ route('users.store') }}" method="POST" class="space-y-4">
         @csrf
 
         <!-- begin::Name -->
         <div class="grid grid-cols-2">
-            <div class="col-span-1">
+            <div class="col-span-2 max-w-[560px]">
                 <x-label for="name" :value="__('page.users.form.name.label')" />
 
                 <div>
@@ -27,7 +27,7 @@
 
         <!-- begin::Email -->
         <div class="grid grid-cols-2">
-            <div class="col-span-1">
+            <div class="col-span-2 max-w-[560px]">
                 <x-label for="email" :value="__('page.users.form.email.label')" />
 
                 <div>
@@ -46,7 +46,7 @@
 
         <!-- begin::Phone -->
         <div class="grid grid-cols-2">
-            <div class="col-span-1">
+            <div class="col-span-2 max-w-[560px]">
                 <x-label for="phone" :value="__('page.users.form.phone.label')" />
 
                 <div class="flex items-center">
@@ -66,25 +66,27 @@
         <!-- end::Phone -->
 
         <!-- begin::Role -->
-        <div class="grid grid-cols-2 pb-28">
-            <x-label for="role" class="" :value="__('page.users.form.role.label')" />
+        <div class="grid grid-cols-2">
+            <div class="col-span-2 max-w-[560px]">
+                <x-label for="role" class="" :value="__('page.users.form.role.label')" />
 
-            <x-select name="role_id" >
-                @foreach ($roles as $role)
-                    <li
-                        class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
-                        @click="$store.selection.resource($el, {{ $role->toJson() }}); visible = false"
-                    >
-                        {{ $role->name }}
-                    </li>
-                @endforeach
-            </x-select>
+                <x-select name="role_id" placeholder="{{ __('actions.select.placeholder') }}">
+                    @foreach ($roles as $role)
+                        <li
+                            class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
+                            @click="$store.selection.resource($el, '{{ $role->toJson() }}'); visible = false"
+                        >
+                            {{ $role->name }}
+                        </li>
+                    @endforeach
+                </x-select>
+            </div>
         </div>
         <!-- end::Role -->
 
         <!-- begin::Form Button -->
-        <div class="grid grid-cols-2">
-            <div class="col-span-1 flex items-center justify-between">
+        <div class="grid grid-cols-2 pt-8">
+            <div class="col-span-2 max-w-[560px] flex items-center justify-between">
                 <x-button>
                     {{ __('actions.add.form')}}
                 </x-button>

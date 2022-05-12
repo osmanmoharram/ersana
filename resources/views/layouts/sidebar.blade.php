@@ -6,7 +6,7 @@
 
         <!-- begin::Sidebar Links -->
         <div class="ps-2 pe-4 pt-6 space-y-1">
-            @if (Auth::user()->isClient())
+            @if (Auth::user()->client_id)
                 @include('partials.client-sidebar')
             @else
                 @include('partials.admin-sidebar')

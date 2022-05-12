@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password')->default('$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
             $table->string('photo')->nullable();
             $table->unsignedBigInteger('client_id')->nullable();
-            $table->string('remember_token');
+            $table->string('remember_token')->nullable();
             $table->timestamps();
         });
     }
