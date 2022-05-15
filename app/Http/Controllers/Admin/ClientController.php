@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\CreatedClient;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\NewClientRequest;
 use App\Models\Admin\{BusinessField, Client};
@@ -45,6 +46,8 @@ class ClientController extends Controller
         $client = Client::create($request->only(['address', 'business_field_id']));
 
         $this->createClientUser($request, $client);
+
+        event(new CreatedClient($client));
 
         return redirect()
             ->route('subscriptions.create')

@@ -1,10 +1,25 @@
 require('./bootstrap');
 
 import Alpine from 'alpinejs';
+import flatpickr from "flatpickr";
 
 window.Alpine = Alpine;
 
 Alpine.start();
+
+flatpickr('#from', {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    defaultDate: "08:00"
+});
+flatpickr('#to', {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    defaultDate: "00:00"
+});
+
 
 Alpine.store('selection', {
     select(target, value) {
@@ -14,18 +29,67 @@ Alpine.store('selection', {
 
         inputs[1].value = value;
     },
-    features($el) {
-        const features = document.querySelectorAll('.feature');
+    check(el, resource) {
+        const resources = document.querySelectorAll('.' + resource);
 
-        if ($el.checked === true) {
-            features.forEach(item => {
+        if (el.checked === true) {
+            resources.forEach(item => {
                 item.checked = true;
             })
         } else {
-            features.forEach(item => {
+            resources.forEach(item => {
                 item.checked = false;
             })
         }
+    },
+    period() {
+        const bookingTimes = document.getElementById('bookingTimes');
+        let counter = bookingTimes.querySelector('tbody').childElementCount;
+
+        const tr = document.createElement('tr');
+
+        const period = document.getElementById('period').querySelectorAll('input');
+        const periodDisplay = period[0].value;
+        const periodInput = document.createElement('input');
+              periodInput.type = 'hidden';
+              periodInput.name = "bookingTimes[${counter}]['period']";
+              periodInput.value = period[1].value;
+
+        const from = document.getElementById('from').value;
+        const fromInput = document.createElement('input');
+              fromInput.type = 'hidden';
+              fromInput.name = "bookingTimes[${counter}]['from']";
+              fromInput.value = from.value;
+
+        const to = document.getElementById('to').value;
+        const toInput = document.createElement('input');
+              toInput.type = 'hidden';
+              toInput.name = "bookingTimes[${counter}]['to']";
+              toInput.value = to.value;
+
+        for (let i=0; i<3; i++) {
+            const td_i = document.createElement('td');
+                td_i.classList.add('px-6', 'py-4', 'whitespace-nowrap');
+        }
+
+        for (let i=0; i<3; i++) {
+            const div_i = document.createElement('div');
+                div_i.classList.add('text-sm', 'text-slate-500');
+        }
+
+        div_0.textContent = periodDisplay
+        div_0.appendChild(periodInput);
+        div_1.textContent = from.value
+        div_1.appendChild(fromInput);
+        div_2.textContent = to.value
+        div_2.appendChild(toInput);
+
+        for (let i=0; i<3; i++) {
+            td_i.appendChild(div_i);
+            tr.appendChild(td_i)
+        }
+
+        bookingTimes.appendChild(tr);
     },
     priceType(type) {
         if (type === 'fixed') {

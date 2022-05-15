@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -15,41 +16,16 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::latest()->paginate(30);
-        return view('roles.index', compact('roles'));
+        $roles = request()->user()->isClient()
+            ? Role::where('client_id', request()->user()->client_id)
+            : Role::where('client_id', null);
+
+        return view('roles.index', ['roles' => $roles->latest()->paginate(30)]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function show(Role $role)
     {
-        return view('roles.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255']
-        ]);
-
-        if ($client_id = $request->user()->client_id) {
-            $data['client_id'] = $client_id;
-        }
-
-        Role::create($data);
-
-        return redirect()
-            ->route('roles.index')
-            ->withMessage(__('page.roles.flash.created'));
+        return view('roles.show', compact('role'));
     }
 
     /**
@@ -60,7 +36,14 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        return view('roles.edit', compact('role'));
+        $permissions = request()->user()->isClient()
+            ? Permission::where('type', 'client')->orWhere('type', 'both')
+            : Permission::where('type', 'owner')->orWhere('type', 'both');
+
+        return view('roles.edit', [
+            'role' => $role,
+            'permissions' => $permissions->get()
+        ]);
     }
 
     /**
@@ -72,35 +55,15 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255']
+        $permissions = $request->validate([
+            'permissions' => ['required', 'array'],
+            'permissions.*' => ['exists:permissions,id']
         ]);
 
-        if ($client_id = $request->user()->client_id) {
-            $data['client_id'] = $client_id;
-        }
-
-        $role->update(['name' => $request->name]);
+        $role->syncPermissions($permissions);
 
         return redirect()
             ->route('roles.index')
-            ->withMessage(__('page.roles.flash.updated', ['role' => $role->name]));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Role $role)
-    {
-        $name = $role->name;
-
-        $role->delete();
-
-        return redirect()
-            ->route('roles.index')
-            ->withMessage(__('page.roles.flash.deleted', ['role' => $name]));
+            ->withMessage(__('page.roles.flash.updated', ['role' => __('roles.' . $role->name)]));
     }
 }

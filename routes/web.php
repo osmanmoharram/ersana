@@ -9,12 +9,11 @@ use App\Http\Controllers\Admin\{
 };
 use App\Http\Controllers\Client\{
     BookingController,
+    BookingTimeController,
     CustomerController,
     HallController
 };
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -45,10 +44,6 @@ Route::group([
 
         Route::resource('users', UserController::class)->except(['show']);
 
-        Route::resource('roles', RoleController::class)->except(['show']);
-
-        Route::resource('permissions', PermissionController::class)->except(['show']);
-
         Route::resource('features', FeatureController::class)->except(['show']);
 
         Route::resource('packages', PackageController::class)->except(['show']);
@@ -64,6 +59,7 @@ Route::group([
 
             Route::middleware('currentHall')->group(function () {
                 Route::resource('bookings', BookingController::class);
+                Route::resource('booking-times', BookingTimeController::class);
                 Route::resource('customers', CustomerController::class);
             });
 

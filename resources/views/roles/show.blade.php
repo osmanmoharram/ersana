@@ -1,12 +1,9 @@
 <x-app-layout>
     <x-slot name="header" class="py-6">
-        {{ __('page.roles.edit.header', ['role' => __('roles.' . $role->name)])  }}
+        {{ __('page.roles.show.header', ['role' => __('roles.' . $role->name)])  }}
     </x-slot>
 
-    <form action="{{ route('roles.update', $role->id) }}" method="POST" class="space-y-4 pb-8">
-        @csrf
-        @method('PATCH')
-
+    <div class="space-y-4 pb-8">
         <!-- begin::Permissions -->
         <div x-data class="grid grid-cols-2">
             <div class="col-span-1">
@@ -24,12 +21,6 @@
                                                 class="px-6 py-3 space-s-3 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}
                                                 text-xs font-medium text-gray-400 uppercase tracking-wider"
                                             >
-                                                <input
-                                                    type="checkbox"
-                                                    class="permission bg-white rounded-sm cursor-pointer border border-slate-300"
-                                                    @click="$store.selection.check($el, 'permission')"
-                                                >
-
                                                 <span>
                                                     {{ __('permissions.label') }}
                                                 </span>
@@ -37,16 +28,10 @@
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
-                                        @foreach ($permissions as $permission)
+                                        @foreach ($role->permissions as $permission)
                                             <tr>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="flex items-center space-s-4 text-sm text-slate-500">
-                                                        <input
-                                                            type="checkbox" name="permissions[]" value="{{ $permission->id }}"
-                                                            class="permission bg-white rounded-sm cursor-pointer border border-slate-300 outline-none"
-                                                            {{ in_array($permission->id, $role->permissions->pluck('id')->toArray()) ? 'checked' : '' }}
-                                                        >
-
                                                         <span class="line-clamp-1 text-xs">
                                                             {{ __('permissions.' . $permission->name) }}
                                                         </span>
@@ -60,10 +45,6 @@
                         </div>
                     </div>
                 </div>
-
-                @error('permissions')
-                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                @enderror
             </div>
         </div>
         <!-- end::permissions -->
@@ -71,13 +52,18 @@
         <!-- begin::Form Button -->
         <div class="grid grid-cols-2">
             <div class="col-span-1 flex items-center justify-between">
-                <x-button>
-                    {{ __('actions.edit.form')}}
-                </x-button>
+                <a
+                    href="{{ route('roles.edit', $role->id) }}"
+                    class="px-6 py-2 bg-slate-700 hover:bg-gray-800 border border-transparent rounded-sm
+                    font-semibold text-xs text-slate-300 uppercase cursor-pointer focus:outline-none
+                    disabled:opacity-25 transition ease-in-out duration-150"
+                >
+                    {{ __('actions.edit.page')}}
+                </a>
 
                 <x-actions.back href="{{ route('roles.index') }}"/>
             </div>
         </div>
         <!-- end::Form Button -->
-    </form>
+    </div>
 </x-app-layout>

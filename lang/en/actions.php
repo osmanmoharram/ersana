@@ -2,6 +2,7 @@
 
 return [
     'add' => ['page' => 'Add', 'form' => 'Create'],
+    'show' => ['page' => 'Show'],
     'edit' => ['page' => 'Edit', 'form' => 'Update'],
     'delete' => [
         'page' => 'Delete',

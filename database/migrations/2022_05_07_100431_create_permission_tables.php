@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\PermissionRegistrar;
 
 class CreatePermissionTables extends Migration
@@ -29,7 +30,7 @@ class CreatePermissionTables extends Migration
             $table->bigIncrements('id');
             $table->string('name');       // For MySQL 8.0 use string('name', 125);
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
-            $table->unsignedBigInteger('client_id')->nullable();
+            $table->string('type');
             $table->timestamps();
 
             $table->unique(['name', 'guard_name']);
@@ -115,6 +116,14 @@ class CreatePermissionTables extends Migration
 
             $table->primary([PermissionRegistrar::$pivotPermission, PermissionRegistrar::$pivotRole], 'role_has_permissions_permission_id_role_id_primary');
         });
+
+        Artisan::call('db:seed', [
+            '--class' => 'RoleSeeder',
+        ]);
+
+        Artisan::call('db:seed', [
+            '--class' => 'PermissionSeeder',
+        ]);
 
         app('cache')
             ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)

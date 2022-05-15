@@ -6,6 +6,7 @@ use App\Http\Requests\NewUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -16,9 +17,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('id', '!=', auth()->id())
-            ->where('client_id', null)
-            ->latest()->paginate(30);
+        if (request()->user()->isClient()) {
+            $users = User::where('client_id', request()->user()->client_id)
+                ->latest()->paginate(30);
+        } else {
+            $users = User::where('client_id', null)
+                ->latest()->paginate(30);
+        }
 
         return view('users.index', compact('users'));
     }
@@ -30,9 +35,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = DB::table('roles')->get();
+        $permissions = request()->user()->isClient()
+            ? Permission::where('type', 'client')->orWhere('type', 'both')->get()
+            : Permission::where('type', 'owner')->orWhere('type', 'both')->get();
 
-        return view('users.create', compact('roles'));
+        return view('users.create', compact('permissions'));
     }
 
     /**
@@ -43,13 +50,15 @@ class UserController extends Controller
      */
     public function store(NewUserRequest $request)
     {
-        $data = $request->validated();
+        $data = $request->except('permissions');
 
-        if($client_id = $request->user->client_id) {
-            $data['client_id'] = $client_id;
+        if($request->user()->isClient()) {
+            $data['client_id'] = $request->user()->client_id;
         }
 
         $user = User::create($data);
+
+        $user->givePermissionTo($request->permissions);
 
         return redirect()
             ->route('users.index')
@@ -64,9 +73,11 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = DB::table('roles')->get();
+        $permissions = request()->user()->isClient()
+            ? Permission::where('type', 'client')->orWhere('type', 'both')->get()
+            : Permission::where('type', 'owner')->orWhere('type', 'both')->get();
 
-        return view('admin.users.edit', compact('user', 'roles'));
+        return view('users.edit', compact('user', 'permissions'));
     }
 
     /**
@@ -78,7 +89,15 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update($request->validated());
+        $data = $request->except('permissions');
+
+        if($request->user()->isClient()) {
+            $data['client_id'] = $request->user()->client_id;
+        }
+
+        $user->update($data);
+
+        $user->syncPermissions($request->permissions);
 
         return redirect()
             ->route('users.index')

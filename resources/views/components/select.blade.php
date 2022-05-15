@@ -1,4 +1,4 @@
-@props(['name', 'value' => null, 'display' => null, 'placeholder' => null])
+@props(['name' => null, 'value' => null, 'display' => null, 'placeholder' => null])
 
 <!-- This example requires Tailwind CSS v2.0+ -->
 <div x-data="{ visible: false }" {{ $attributes->merge(['class' => 'w-full']) }}>

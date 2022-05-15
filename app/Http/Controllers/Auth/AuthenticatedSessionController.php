@@ -32,7 +32,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return $request->user()->isClient()
+            ? redirect()->route('client.halls.index')
+            : redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**

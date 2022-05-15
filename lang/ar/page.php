@@ -27,31 +27,13 @@ return [
             'header' => 'الأدوار',
             'table' => ['name' => 'الاسم'],
         ],
-        'create' => [ 'header' => 'إنشاء دور جديد' ],
-        'edit' => ['تحديث بيانات الدور :role'],
+        'show' => ['header' => 'الدور :role'],
+        'edit' => ['header' => 'تحديد صلاحيات الدور :role'],
         'form' => [
-            'name' => ['label' => 'الإسم', 'placeholder' => 'الرجاء كتابة إسم الدور']
+            'permissions' => ['label' => 'الصلاحيات']
         ],
         'flash' => [
-            'created' => 'تم إنشاء دور جديد',
             'updated' => 'تم تحديث بيانات الدور :role',
-            'deleted' => 'تم حذف الدور :role'
-        ],
-    ],
-    'permissions' => [
-        'index' => [
-            'header' => 'التصاريح',
-            'table' => ['name' => 'الاسم'],
-        ],
-        'create' => ['header' => 'إنشاء تصريح جديد' ],
-        'edit' => ['تحديث بيانات التصريح :permission'],
-        'form' => [
-            'name' => ['label' => 'الإسم', 'placeholder' => 'الرجاء كتابة إسم التصريح']
-        ],
-        'flash' => [
-            'created' => 'تم إنشاء تصريح جديد',
-            'updated' => 'تم تحديث بيانات التصريح :permission',
-            'deleted' => 'تم حذف التصريح :permission'
         ],
     ],
     'features' => [
@@ -107,7 +89,7 @@ return [
             'domain' => ['label' => 'رابط الموقع', 'placeholder' => 'ersana.com'],
         ],
         'flash' => [
-            'created' => 'تم إنشاء عميل جديد باسم :client',
+            'created' => 'تم إنشاء عميل جديد',
             'updated' => 'تم تحديث بيانات العميل :client',
             'deleted' => 'تم حذف العميل :client'
         ],
@@ -145,16 +127,28 @@ return [
         'types' => ['advertisement' => 'إعلان', 'booking' => 'حجز']
     ],
     'halls' => [
-        'index' => [ 'header' => 'القاعات', ],
+        'index' => [
+            'header' => 'القاعات',
+            'table' => ['period' => 'الفترة', 'from' => 'من', 'to' => 'إلى' ]
+        ],
         'create' => [ 'header' => 'إنشاء قاعة جديدة', ],
         'edit' => ['header' => 'تحديث بيانات القاعة :hall'],
         'form' => [
             'name' => ['label' => 'إسم القاعة', 'placeholder' => 'اسم القاعة'],
             'location' => ['label' => 'الموقع', 'placeholder' => 'المدينة، الحي، اسم أو رقم الشارع'],
             'capacity' => ['label' => 'السعة', 'placeholder' => 'عدد الأشخاص الذين تسعهم القاعة', 'person' => 'شخص'],
-            'start_time' => ['label' => 'وقت ابتداء عمل القاعة', 'placeholder' => 'الرجاء اختيار وقت'],
-            'end_time' => ['label' => 'وقت انتهاء عمل القاعة', 'placeholder' => 'الرجاء اختيار وقت'],
-            'average_time' => ['label' => 'متوسط زمن المناسبة (ساعة)', 'placeholder' => 'الرجاء تحديد زمن المناسبة'],
+            'bookingTimes' => [
+                'label' => 'أوقات الحجز',
+                'period' => [
+                    'label' => 'الفترة',
+                    'items' => [
+                        'day' => 'صباحاً',
+                        'evening' => 'مساءاً'
+                    ],
+                ],
+                'from' => ['label' => 'من', 'placeholder' => 'الرجاء تحديد وقت'],
+                'to' => ['label' => 'إلى', 'placeholder' => 'الرجاء تحديد وقت'],
+            ]
         ],
         'flash' => [
             'created' => 'تم إنشاء قاعة جديدة',

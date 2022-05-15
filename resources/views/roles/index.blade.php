@@ -2,8 +2,6 @@
     <!-- begin::Page Heading -->
     <x-slot name="header" class="py-6">
         {{ __('page.roles.index.header') }}
-
-        <x-actions.add href="{{ route('roles.create') }}" />
     </x-slot>
     <!-- end::Page Heading -->
 
@@ -14,20 +12,20 @@
                 <!-- begin::Name -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center space-s-2 text-sm font-medium text-gray-800">
-                        <span class="block">{{ $role->name }}</span>
+                        <span class="block">{{ __('roles.' . $role->name) }}</span>
                     </div>
                 </td>
                 <!-- end::Name -->
 
                 <!-- begin::Actions -->
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm space-s-0.5 flex items-center justify-end">
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm space-s-1 flex items-center justify-end">
+                    <!-- begin::Show -->
+                    <x-actions.show href="{{ route('roles.show', $role->id) }}" />
+                    <!-- end::Show -->
+
                     <!-- begin::Edit -->
                     <x-actions.edit href="{{ route('roles.edit', $role->id) }}" />
                     <!-- end::Edit -->
-
-                    <!-- begin::Delete -->
-                    <x-actions.delete :action="route('roles.destroy', $role->id)" />
-                    <!-- end::Delete -->
                 </td>
                 <!-- end::Actions -->
             </tr>

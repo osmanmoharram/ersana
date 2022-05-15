@@ -5087,15 +5087,15 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('selection', {
     inputs[0].value = target.textContent.trim();
     inputs[1].value = value;
   },
-  features: function features($el) {
-    var features = document.querySelectorAll('.feature');
+  check: function check(el, resource) {
+    var resources = document.querySelectorAll('.' + resource);
 
-    if ($el.checked === true) {
-      features.forEach(function (item) {
+    if (el.checked === true) {
+      resources.forEach(function (item) {
         item.checked = true;
       });
     } else {
-      features.forEach(function (item) {
+      resources.forEach(function (item) {
         item.checked = false;
       });
     }

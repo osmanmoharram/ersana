@@ -1,14 +1,10 @@
 <x-hall-layout>
     <x-slot name="header">
-        <div class="flex items-center space-s-8">
-            <span class="block">
-                {{ __('page.halls.index.header') }}
-            </span>
+        {{ __('page.halls.index.header') }}
 
-            <!-- begin::Add -->
-            <x-actions.add href="{{ route('client.halls.create') }}" />
-            <!-- end::Add -->
-        </div>
+        <!-- begin::Add -->
+        <x-actions.add href="{{ route('client.halls.create') }}" />
+        <!-- end::Add -->
     </x-slot>
 
     <div class="grid grid-cols-4 gap-6 pt-2">

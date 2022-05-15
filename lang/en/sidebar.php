@@ -8,11 +8,10 @@ return [
     'ads' => 'Ads',
     'reports' => 'Reports',
     'clients' => 'Clients',
+    'bookings' => 'Bookings',
     'customers' => 'Customers',
-    'customers' => 'Bookings',
     'business-fields' => 'Business Fields',
     'users' => 'Users',
-    'users' => 'Roles',
-    'users' => 'Permissions',
+    'roles' => 'Roles',
     'settings' => 'Settings',
 ];

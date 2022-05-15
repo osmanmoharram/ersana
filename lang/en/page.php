@@ -26,8 +26,8 @@ return [
             'header' => 'Roles',
             'table' => ['name' => 'Name'],
         ],
-        'create' => ['header' => 'Create New Role', 'placeholder' => 'Please write the name of the role'],
-        'edit' => ['Update the role :role'],
+        'show' => ['header' => 'Role :role'],
+        'edit' => ['header' => 'Choose The Permissions For Role :role'],
         'form' => [
             'name' => ['label' => 'Name', 'placeholder' => 'Please write the name of the role']
         ],
@@ -179,21 +179,28 @@ return [
     ],
     'halls' => [
         'index' => [ 'header' => 'Halls', ],
-        'create' => [ 'header' => 'Create New Hall', ],
+        'create' => [
+            'header' => 'Create New Hall',
+            'table' => ['period' => 'Period', 'from' => 'From', 'to' => 'To' ]
+        ],
         'edit' => [ 'header' => 'Update :hall Hall'],
         'form' => [
             'name' => ['label' => 'Name', 'placeholder' => 'The hall name'],
             'location' => ['label' => 'Location', 'placeholder' => 'City, Nabourhood, street name or number'],
             'capacity' => ['label' => 'Capacity', 'placeholder' => 'The number of people the hall can fit', 'person' => 'Person'],
-            'start_time' => ['label' => 'Hall Working Start Time', 'placeholder' => 'please select time'],
-            'end_time' => ['label' => 'Hall Working End Time', 'placeholder' => 'please select time'],
-            'average_time' => ['label' => 'Event Average Time (Hour)', 'placeholder' => 'please specify time'],
+            'bookingTimes' => [
+                'label' => 'Booking Times',
+                'period' => [
+                    'label' => 'Period',
+                    'items' => [
+                        'day' => 'Day',
+                        'evening' => 'Evening'
+                    ],
+                ],
+                'from' => ['label' => 'From', 'placeholder' => 'Please enter time'],
+                'to' => ['label' => 'To', 'placeholder' => 'Please enter time'],
+            ]
         ],
-        'types' => [
-            'wedding' => 'Wedding',
-            'events' => 'Events',
-            'theatre' => 'Theatre'
-        ]
     ],
     'customers' => [
         'index' => [

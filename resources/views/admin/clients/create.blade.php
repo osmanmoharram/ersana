@@ -79,7 +79,7 @@
         <div class="grid grid-cols-2">
             <div class="col-span-2 max-w-[560px]">
                 <div class="flex items-center justify-between">
-                    <x-label for="business_field" class="" :value="__('page.clients.form.business_field.label')" />
+                    <x-label for="business_field" class="" :value="__('page.clients.form.businessField.label')" />
 
                     <!-- begin::Add -->
                     <x-actions.add href="{{ route('business-fields.create') }}" />

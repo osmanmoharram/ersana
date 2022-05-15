@@ -18,9 +18,7 @@ class HallController extends Controller
      */
     public function index()
     {
-        $halls = client()->run(function () {
-            return Hall::all();
-        });
+        $halls = Hall::where('client_id', request()->user()->client_id);
 
         return view('client.halls.index', compact('halls'));
     }

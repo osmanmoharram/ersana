@@ -37,22 +37,34 @@
                 </td>
                 <!-- end::Phone -->
 
-                <!-- begin::Role -->
+                <!-- begin::Permissions -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm  text-slate-500">
-                        {{ ucwords(__('page.users.roles.' . $user->role)) }}
+                        <x-modal>
+                            <x-slot name="trigger">
+                                <a class="cursor-pointer hover:underline" @click="isOpen = ! isOpen">
+                                    {{ __('permissions.title') }}
+                                </a>
+                            </x-slot>
+
+                            <ul class="divide-y space-y-2">
+                                @foreach ($user->permissions as $permission)
+                                    <li> {{ __('permissions.' . $permission->name) }} </li>
+                                @endforeach
+                            </ul>
+                        </x-modal>
                     </div>
                 </td>
-                <!-- end::Role -->
+                <!-- end::permissions -->
 
                 <!-- begin::Actions -->
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm space-s-0.5 flex items-center justify-end">
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm space-s-1 flex items-center justify-end">
                     <!-- begin::Edit -->
                     <x-actions.edit href="{{ route('users.edit', $user->id) }}" />
                     <!-- end::Edit -->
 
                     <!-- begin::Delete -->
-                    <x-actions.delete action="route('users.destroy', $user->id)" />
+                    <x-actions.delete :action="route('users.destroy', $user->id)" />
                     <!-- end::Delete -->
                 </td>
                 <!-- end::Actions -->

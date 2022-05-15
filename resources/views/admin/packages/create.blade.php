@@ -51,7 +51,7 @@
                                                 <input
                                                     type="checkbox"
                                                     class="bg-white rounded-sm cursor-pointer border border-slate-300"
-                                                    @click="$store.selection.features($el)"
+                                                    @click="$store.selection.check($el, 'feature')"
                                                 >
 
                                                 <span>

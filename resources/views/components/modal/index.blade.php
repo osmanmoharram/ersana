@@ -58,29 +58,6 @@
                     </div>
                     <!-- end::Close Button -->
 
-                    <!-- begin::Photo -->
-                    {{-- <div class="text-center">
-                        <div class="flex items-center justify-center">
-                            <div class="relative w-28 h-28 rounded-full">
-                                <img  src="{{ asset('img/user.png') }}" alt="" class="object-center object-cover w-full h-full rounded-full border-none" id="photoPreview">
-
-                                <button type="button" @click.prevent="userPhoto.click()" class="flex items-center justify-center p-2 rounded-full bg-slate-900 text-white absolute -bottom-2 right-3 border-4 border-white">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                    </svg>
-                                </button>
-                            </div>
-
-                            <input
-                                type="file" name="photo" accept=".png, .jpg, .jpeg"
-                                style="display: none" id="userPhoto"
-                                @change="photoPreview.src = URL.createObjectURL(event.target.files[0])"
-                            >
-                        </div>
-
-                        <p id="photoErrors" class="mt-4 text-xs text-red-500"></p>
-                    </div> --}}
-                    <!-- end::Photo -->
 
                     {{ $slot }}
                 </div>

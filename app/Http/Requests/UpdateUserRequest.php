@@ -14,7 +14,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return (! $this->user()->isClient()) && ($this->user()->isAdmin() || $this->user()->id === $this->request->user->id);
+        return true;
     }
 
     /**
@@ -26,9 +26,9 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', Rule::unique('users')->ignore($this->user()->id, 'id')],
-            'role' => ['required', 'exists:roles,title'],
-            'profile_picture' => ['nullable', 'image']
+            'phone' => ['required', 'string', 'unique:users,phone,' . $this->user->id . ',id'],
+            'permissions' => ['required', 'array'],
+            'permissions.*' => ['exists:permissions,id'],
         ];
     }
 }
