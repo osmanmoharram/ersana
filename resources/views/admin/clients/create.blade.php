@@ -12,7 +12,7 @@
                 <x-label for="name" :value="__('page.clients.form.name.label')" />
 
                 <x-input
-                    type="text" class="w-full mt-1" name="name" value="{{ old('name') }}"
+                    type="text" class="w-full mt-2" name="name" value="{{ old('name') }}"
                     placeholder="{{ __('page.clients.form.name.placeholder') }}"
                 />
 
@@ -29,7 +29,7 @@
                 <x-label for="email" :value="__('page.clients.form.email.label')" />
 
                 <x-input
-                    type="text" class="w-full mt-1" name="email" value="{{ old('email') }}"
+                    type="text" class="w-full mt-2" name="email" value="{{ old('email') }}"
                     placeholder="{{ __('page.clients.form.email.placeholder') }}"
                 />
 
@@ -47,7 +47,7 @@
 
                 <x-input
                     type="text" name="phone" value="{{ old('phone') }}" dir="ltr"
-                    class="w-full mt-1 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}"
+                    class="w-full mt-2 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}"
                     placeholder="{{ __('page.clients.form.phone.placeholder') }}"
                 />
 
@@ -64,7 +64,7 @@
                 <x-label for="address" :value="__('page.clients.form.address.label')" />
 
                 <x-input
-                    type="text" class="w-full mt-1" name="address" value="{{ old('address') }}"
+                    type="text" class="w-full mt-2" name="address" value="{{ old('address') }}"
                     placeholder="{{ __('page.clients.form.address.placeholder') }}"
                 />
 

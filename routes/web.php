@@ -40,7 +40,7 @@ Route::group([
     });
 
     Route::middleware(['auth'])->group(function () {
-        Route::view('/', 'admin.dashboard')->name('dashboard');
+        Route::view('/dashboard', 'admin.dashboard')->name('admin.dashboard');
 
         Route::resource('users', UserController::class)->except(['show']);
 

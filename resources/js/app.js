@@ -1,9 +1,11 @@
 require('./bootstrap');
 
 import Alpine from 'alpinejs';
+import jQuery from 'jquery-slim';
 import flatpickr from "flatpickr";
 
 window.Alpine = Alpine;
+window.$ = window.jQuery = jQuery;
 
 Alpine.start();
 
@@ -43,53 +45,97 @@ Alpine.store('selection', {
         }
     },
     period() {
-        const bookingTimes = document.getElementById('bookingTimes');
-        let counter = bookingTimes.querySelector('tbody').childElementCount;
+        // area where times will be inserted
+        const bookingTimes = $('#bookingTimes tbody');
 
-        const tr = document.createElement('tr');
+        // number of inserted times
+        let counter = bookingTimes.children().length;
 
-        const period = document.getElementById('period').querySelectorAll('input');
-        const periodDisplay = period[0].value;
-        const periodInput = document.createElement('input');
-              periodInput.type = 'hidden';
-              periodInput.name = "bookingTimes[${counter}]['period']";
-              periodInput.value = period[1].value;
+        console.log(counter);
+        // new time values
+        const periodDisplayValue = $('#period input')[0].value;
+        const periodsendValue = $('#period input')[1].value;
+        const from = $('#from').val();
+        const to = $('#to').val();
 
-        const from = document.getElementById('from').value;
-        const fromInput = document.createElement('input');
-              fromInput.type = 'hidden';
-              fromInput.name = "bookingTimes[${counter}]['from']";
-              fromInput.value = from.value;
+        let time = `
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-slate-500">
+                        ${periodDisplayValue}
+                        <input type="hidden" name="bookingTimes[${counter}][period]" value="${periodsendValue}">
+                    </div>
+                </td>
 
-        const to = document.getElementById('to').value;
-        const toInput = document.createElement('input');
-              toInput.type = 'hidden';
-              toInput.name = "bookingTimes[${counter}]['to']";
-              toInput.value = to.value;
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-slate-500">
+                        ${from}
+                        <input type="hidden" name="bookingTimes[${counter}][from]" value="${from}">
+                    </div>
+                </td>
 
-        for (let i=0; i<3; i++) {
-            const td_i = document.createElement('td');
-                td_i.classList.add('px-6', 'py-4', 'whitespace-nowrap');
-        }
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-slate-500">
+                        ${to}
+                        <input type="hidden" name="bookingTimes[${counter}][to]" value="${to}">
+                    </div>
+                </td>
 
-        for (let i=0; i<3; i++) {
-            const div_i = document.createElement('div');
-                div_i.classList.add('text-sm', 'text-slate-500');
-        }
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <button @click.prevent="$el.parentElement.parentElement.remove()" class="text-red-400 hover:text-red-500 py-2 px-4 transition duration-150 ease-in-out">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                <td>
+            </tr>
+        `;
 
-        div_0.textContent = periodDisplay
-        div_0.appendChild(periodInput);
-        div_1.textContent = from.value
-        div_1.appendChild(fromInput);
-        div_2.textContent = to.value
-        div_2.appendChild(toInput);
+        bookingTimes.append(time);
+        // const tr = document.createElement('tr');
 
-        for (let i=0; i<3; i++) {
-            td_i.appendChild(div_i);
-            tr.appendChild(td_i)
-        }
+        // const period = document.getElementById('period').querySelectorAll('input');
+        // const periodDisplay = period[0].value;
+        // const periodInput = document.createElement('input');
+        //       periodInput.type = 'hidden';
+        //       periodInput.name = "bookingTimes[${counter}]['period']";
+        //       periodInput.value = period[1].value;
 
-        bookingTimes.appendChild(tr);
+        // const from = document.getElementById('from').value;
+        // const fromInput = document.createElement('input');
+        //       fromInput.type = 'hidden';
+        //       fromInput.name = "bookingTimes[${counter}]['from']";
+        //       fromInput.value = from.value;
+
+        // const to = document.getElementById('to').value;
+        // const toInput = document.createElement('input');
+        //       toInput.type = 'hidden';
+        //       toInput.name = "bookingTimes[${counter}]['to']";
+        //       toInput.value = to.value;
+
+        // for (let i=0; i<3; i++) {
+        //     const td_i = document.createElement('td');
+        //         td_i.classList.add('px-6', 'py-4', 'whitespace-nowrap');
+        // }
+
+        // for (let i=0; i<3; i++) {
+        //     const div_i = document.createElement('div');
+        //         div_i.classList.add('text-sm', 'text-slate-500');
+        // }
+
+        // div_0.textContent = periodDisplay
+        // div_0.appendChild(periodInput);
+        // div_1.textContent = from.value
+        // div_1.appendChild(fromInput);
+        // div_2.textContent = to.value
+        // div_2.appendChild(toInput);
+
+        // for (let i=0; i<3; i++) {
+        //     td_i.appendChild(div_i);
+        //     tr.appendChild(td_i)
+        // }
+
+        // bookingTimes.appendChild(tr);
     },
     priceType(type) {
         if (type === 'fixed') {

@@ -138,7 +138,8 @@ return [
             'location' => ['label' => 'الموقع', 'placeholder' => 'المدينة، الحي، اسم أو رقم الشارع'],
             'capacity' => ['label' => 'السعة', 'placeholder' => 'عدد الأشخاص الذين تسعهم القاعة', 'person' => 'شخص'],
             'bookingTimes' => [
-                'label' => 'أوقات الحجز',
+                'enter' => ['label' => 'تحديد أوقات الحجوزات'],
+                'display' => ['label' => 'أوقات الحجوزات'],
                 'period' => [
                     'label' => 'الفترة',
                     'items' => [

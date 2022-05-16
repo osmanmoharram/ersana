@@ -13,7 +13,7 @@ class NewHallRequest extends FormRequest
      */
     public function authorize()
     {
-        return ($this->user()->isAdmin() && $this->user()->isClient());
+        return true;
     }
 
     /**
@@ -27,9 +27,10 @@ class NewHallRequest extends FormRequest
             'name' => ['required', 'string', 'unique:halls,name', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
             'capacity' => ['required', 'string', 'numeric'],
-            'start_time' => ['required', 'date_format:H:i'],
-            'end_time' => ['required', 'date_format:H:i', 'after:start_time'],
-            'average_time' => ['required', 'string', 'numeric']
+            'bookingTimes' => ['required', 'array'],
+            'bookingTimes.*.period' => ['required', 'in:day,evening'],
+            'bookingTimes.*.from' => ['required', 'date_format:H:i'],
+            'bookingTimes.*.to' => ['required', 'date_format:H:i', 'after:bookingTimes.*.from'],
         ];
     }
 }

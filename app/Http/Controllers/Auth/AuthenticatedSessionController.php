@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Admin\Client;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,9 +33,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return $request->user()->isClient()
-            ? redirect()->route('client.halls.index')
-            : redirect()->intended(RouteServiceProvider::HOME);
+        if ($request->user()->isClient()) {
+            $client = Client::find($request->user()->client_id);
+
+            if (is_null($client) || is_null($client->subscription) || ! $client->subscription->isActive()) {
+                Auth::logout($request->user());
+            }
+
+            return redirect()->route('client.halls.index');
+        }
+
+        return redirect()->route('admin.dashboard');
     }
 
     /**

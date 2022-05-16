@@ -22,4 +22,9 @@ class Subscription extends Model
     {
         return $this->belongsTo(Package::class);
     }
+
+    public function isActive()
+    {
+        return $this->status === 'active';
+    }
 }

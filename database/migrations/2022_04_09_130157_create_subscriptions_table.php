@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->nullable();
             $table->foreignId('client_id');
             $table->foreignId('package_id');
             $table->enum('status', ['active', 'suspended'])->default('active');

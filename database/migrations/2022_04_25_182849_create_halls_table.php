@@ -18,9 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('location');
             $table->string('capacity');
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->time('average_time');
             $table->unsignedBigInteger('client_id');
             $table->timestamps();
         });

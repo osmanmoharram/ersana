@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\NewHallRequest;
 use App\Http\Requests\Client\UpdateHallRequest;
+use App\Models\Client\BookingTime;
 use App\Models\Client\Hall;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -18,7 +19,7 @@ class HallController extends Controller
      */
     public function index()
     {
-        $halls = Hall::where('client_id', request()->user()->client_id);
+        $halls = Hall::where('client_id', request()->user()->client_id)->get();
 
         return view('client.halls.index', compact('halls'));
     }
@@ -41,24 +42,22 @@ class HallController extends Controller
      */
     public function store(NewHallRequest $request)
     {
-        client()->run(function () use ($request) {
-            Hall::create($request->validated());
-        });
+        $data = $request->except('bookingTimes');
+
+        $data['client_id'] = $request->user()->client_id;
+
+        $hall = Hall::create($data);
+
+        foreach ($request->bookingTimes as $time) {
+            BookingTime::create([
+                'period' => $time['period'],
+                'from' => $time['from'],
+                'to' => $time['to'],
+                'hall_id' => $hall->id
+            ]);
+        }
 
         return redirect()->route('client.halls.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  Hall  $hall
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Hall $hall)
-    {
-        Session::put('current_hall', $hall);
-
-        return view('client.dashboard');
     }
 
     /**

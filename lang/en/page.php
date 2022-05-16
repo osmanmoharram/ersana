@@ -189,7 +189,8 @@ return [
             'location' => ['label' => 'Location', 'placeholder' => 'City, Nabourhood, street name or number'],
             'capacity' => ['label' => 'Capacity', 'placeholder' => 'The number of people the hall can fit', 'person' => 'Person'],
             'bookingTimes' => [
-                'label' => 'Booking Times',
+                'enter' => ['label' => 'Determine Booking Times'],
+                'display' => ['label' => 'Booking Times'],
                 'period' => [
                     'label' => 'Period',
                     'items' => [

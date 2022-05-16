@@ -7,7 +7,7 @@
     <div class="pt-6 space-y-1">
         <!-- begin::Dashboard -->
         <a
-            href="{{ route('dashboard') }}"
+            href="{{ route('admin.dashboard') }}"
             class="flex items-center justify-center hover:bg-slate-800/60 py-3 rounded-sm text-slate-600 hover:text-slate-500 transition duration-150 ease-in-out"
         >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
