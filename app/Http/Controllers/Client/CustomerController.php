@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\{NewCustomerRequest, UpdateCustomerRequest};
 use App\Models\Client\Customer;
+use App\Models\Client\Hall;
 
 class CustomerController extends Controller
 {
@@ -15,9 +16,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = client()->run(function () {
-            return Customer::latest()->paginate(30);
-        });
+        $customers = Customer::where('hall_id', session('hall')->id)->latest()->paginate(30);
 
         return view('client.customers.index', compact('customers'));
     }
@@ -40,11 +39,11 @@ class CustomerController extends Controller
      */
     public function store(NewCustomerRequest $request)
     {
-        client()->run(function () use ($request) {
-            Customer::create($request->validated());
-        });
+        Customer::create($request->validated() + ['hall_id' => session('hall')->id]);
 
-        return redirect()->route('client.bookings.create');
+        return redirect()
+            ->route('halls.bookings.create', session('hall')->id)
+            ->withMessage(__('page.customers.flash.created'));
     }
 
     /**
@@ -53,7 +52,7 @@ class CustomerController extends Controller
      * @param  \App\Models\Client\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Customer $customer)
+    public function edit(Hall $hall, Customer $customer)
     {
         return view('client.customers.edit', compact('customer'));
     }
@@ -65,14 +64,12 @@ class CustomerController extends Controller
      * @param  \App\Models\Client\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCustomerRequest $request, Customer $customer)
+    public function update(UpdateCustomerRequest $request, Hall $hall, Customer $customer)
     {
-        client()->run(function () use ($request, $customer) {
-            $customer->update($request->validated());
-        });
+        $customer->update($request->validated());
 
         return redirect()
-            ->route('client.customers.index')
+            ->route('halls.customers.index', session('hall')->id)
             ->withMessage(__('page.customers.flash.updated', ['customer' => $customer->name]));
     }
 
@@ -82,13 +79,11 @@ class CustomerController extends Controller
      * @param  \App\Models\Client\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customer $customer)
+    public function destroy(Hall $hall, Customer $customer)
     {
         $name = $customer->name;
 
-        client()->run(function () use ($customer) {
-            $customer->delete();
-        });
+        $customer->delete();
 
         return back()->withMessage(__('page.customers.flash.deleted', ['customer' => $name]));
     }

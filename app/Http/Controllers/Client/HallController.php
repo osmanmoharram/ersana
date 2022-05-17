@@ -7,8 +7,6 @@ use App\Http\Requests\Client\NewHallRequest;
 use App\Http\Requests\Client\UpdateHallRequest;
 use App\Models\Client\BookingTime;
 use App\Models\Client\Hall;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class HallController extends Controller
 {
@@ -57,7 +55,9 @@ class HallController extends Controller
             ]);
         }
 
-        return redirect()->route('client.halls.index');
+        return redirect()
+            ->route('halls.index')
+            ->withMessage(__('page.halls.flash.created'));
     }
 
     /**
@@ -80,11 +80,24 @@ class HallController extends Controller
      */
     public function update(UpdateHallRequest $request, Hall $hall)
     {
-        client()->run(function () use ($request, $hall) {
-            $hall->update($request->validated());
-        });
+        $hall->update($request->except('bookingTimes'));
 
-        return redirect()->route('client.halls.index');
+        foreach ($hall->bookingTimes as $time) {
+            $time->delete();
+        }
+
+        foreach ($request->bookingTimes as $time) {
+            BookingTime::create([
+                'period' => $time['period'],
+                'from' => $time['from'],
+                'to' => $time['to'],
+                'hall_id' => $hall->id
+            ]);
+        }
+
+        return redirect()
+            ->route('client.halls.index')
+            ->withMessage(__('page.halls.flash.updated', ['hall' => $hall->name]));
     }
 
     /**
@@ -95,10 +108,6 @@ class HallController extends Controller
      */
     public function destroy(Hall $hall)
     {
-        client()->run(function () use ($hall) {
-            $hall->delete();
-        });
-
         return redirect()->route('client.halls.index');
     }
 }

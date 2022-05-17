@@ -131,7 +131,7 @@ return [
             'header' => 'القاعات',
             'table' => ['period' => 'الفترة', 'from' => 'من', 'to' => 'إلى' ]
         ],
-        'create' => [ 'header' => 'إنشاء قاعة جديدة', ],
+        'create' => ['header' => 'إنشاء قاعة جديدة'],
         'edit' => ['header' => 'تحديث بيانات القاعة :hall'],
         'form' => [
             'name' => ['label' => 'إسم القاعة', 'placeholder' => 'اسم القاعة'],
@@ -190,10 +190,10 @@ return [
             'table' => [
                 '#' => '#',
                 'customer' => 'إسم صاحب الحجز',
-                'start' => 'بداية الحجز',
-                'end' => 'انتهاء الحجز',
-                'type' => 'نوع الحجز',
-                'price' => 'سعر الحجز',
+                'date' => 'تاريخ الحجز',
+                'from' => 'من',
+                'to' => 'إلى',
+                'total' => 'سعر الحجز',
                 'status' => 'حالة الحجز'
             ]
         ],
@@ -202,38 +202,11 @@ return [
         'form' => [
             'customer' => ['label' => 'إسم صاحب الحجز'],
             'date' => ['label' => 'تاريخ الحجز', 'placeholder' => 'الرجاء اختيار تاريخ'],
-            'start_time' => ['label' => 'وقت ابتداء الحجز', 'placeholder' => 'الرجاء اختيار وقت'],
-            'end_time' => ['label' => 'وقت انتهاء الحجز', 'placeholder' => 'الرجاء اختيار وقت'],
-            'type' => [
-                'label' => 'نوع الحجز',
-                'items' => [
-                    'weddings' => 'أعراس',
-                    'events' => 'احتفالات',
-                    'occassions' => 'مناسبات'
-                ]
-            ],
-            'guest_type' => [
-                'label' => 'نوع الحضور',
-                'items' => [
-                    'men' => 'رجالي',
-                    'women' => 'نسائي',
-                    'men_women' => 'رجالي و نسائي'
-                ]
-            ],
-            'food_menu' => ['label' => 'قائمة الطعام'],
-            'price_type' => [
-                'label' => 'نوع التسعير',
-                'items' => [
-                    'fixed' => 'ثابت',
-                    'individual' => 'بالفرد'
-                ]
-            ],
-            'fixed_price' => ['label' => 'سعر ثابت'],
-            'individual_price' => ['label'=> 'سعر الفرد'],
-            'number_of_guests' => ['label' => 'عدد الحضور'],
+            'bookingTimes' => ['label' => 'أوقات الحجز المتوفرة'],
+            'from' => ['label' => 'من', 'placeholder' => 'الرجاء إدخال وقت'],
+            'to' => ['label' => 'إلى', 'placeholder' => 'الرجاء إدخال وقت'],
             'discount' => ['label' => 'سعر الخصم'],
             'insurance' => ['label' => 'سعر التأمين'],
-            'vat' => ['label' => 'القيمة المضافة'],
             'total' => ['label' => 'الإجمالي'],
             'status' => [
                 'label' => 'حالة الحجز',

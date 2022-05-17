@@ -36,8 +36,10 @@ class AuthenticatedSessionController extends Controller
         if ($request->user()->isClient()) {
             $client = Client::find($request->user()->client_id);
 
-            if (is_null($client) || is_null($client->subscription) || ! $client->subscription->isActive()) {
-                Auth::logout($request->user());
+            if (is_null($client->subscription) || ! $client->subscription->isActive()) {
+                Auth::logout();
+                
+                return redirect()->route('login')->withErrors(['invalid-subscription' => __('auth.invalid-subscription')]);
             }
 
             return redirect()->route('client.halls.index');

@@ -3,7 +3,7 @@
         {{ __('page.customers.create.header') }}
     </x-slot>
 
-    <form action="{{ route('customers.update', $customer->id) }}" method="POST" class="space-y-4 pb-16">
+    <form action="{{ route('halls.customers.update', ['hall' => session('hall')->id, 'customer' => $customer->id]) }}" method="POST" class="space-y-4 pb-16">
         @csrf
         @method('PATCH')
 
@@ -23,23 +23,6 @@
              </div>
         </div>
         <!-- end::Full Name -->
-
-        <!-- begin::Company -->
-        <div class="grid grid-cols-2">
-            <div class="col-span-1">
-                <x-label for="company" :value="__('page.customers.form.company.label')" />
-
-                <x-input
-                    type="text" class="w-full mt-1" name="name" value="{{ $customer->name }}"
-                    placeholder="{{ __('page.customers.form.company.placeholder') }}"
-                />
-
-                @error('name')
-                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                @enderror
-             </div>
-        </div>
-        <!-- end::Company -->
 
         <!-- begin::Email -->
         <div class="grid grid-cols-2">
@@ -76,23 +59,6 @@
         </div>
         <!-- end::Phone -->
 
-        <!-- begin::Address -->
-        <div class="grid grid-cols-2">
-            <div class="col-span-1">
-                <x-label for="address" :value="__('page.customers.form.address.label')" />
-
-                <x-input
-                    type="text" class="w-full mt-1" name="address" value="{{ $customer->address }}"
-                    placeholder="{{ __('page.customers.form.address.placeholder') }}"
-                />
-
-                @error('address')
-                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                @enderror
-             </div>
-        </div>
-        <!-- end::Address -->
-
         <!-- begin::Form Button -->
         <div class="grid grid-cols-2">
             <div class="col-span-1 flex items-center justify-between">
@@ -100,7 +66,7 @@
                     {{ __('actions.edit.form')}}
                 </x-button>
 
-                <x-actions.back href="{{ route('customers.index') }}" />
+                <x-actions.back href="{{ route('halls.customers.index', session('hall')->id) }}" />
             </div>
         </div>
         <!-- end::Form Button -->

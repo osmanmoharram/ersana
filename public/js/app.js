@@ -5130,42 +5130,7 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('selection', {
     var from = $('#from').val();
     var to = $('#to').val();
     var time = "\n            <tr>\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ".concat(periodDisplayValue, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][period]\" value=\"").concat(periodsendValue, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(from, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][from]\" value=\"").concat(from, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(to, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][to]\" value=\"").concat(to, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <button @click.prevent=\"$el.parentElement.parentElement.remove()\" class=\"text-red-400 hover:text-red-500 py-2 px-4 transition duration-150 ease-in-out\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6\" viewBox=\"0 0 20 20\" fill=\"currentColor\">\n                            <path fill-rule=\"evenodd\" d=\"M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z\" clip-rule=\"evenodd\" />\n                        </svg>\n                    </button>\n                <td>\n            </tr>\n        ");
-    bookingTimes.append(time); // const tr = document.createElement('tr');
-    // const period = document.getElementById('period').querySelectorAll('input');
-    // const periodDisplay = period[0].value;
-    // const periodInput = document.createElement('input');
-    //       periodInput.type = 'hidden';
-    //       periodInput.name = "bookingTimes[${counter}]['period']";
-    //       periodInput.value = period[1].value;
-    // const from = document.getElementById('from').value;
-    // const fromInput = document.createElement('input');
-    //       fromInput.type = 'hidden';
-    //       fromInput.name = "bookingTimes[${counter}]['from']";
-    //       fromInput.value = from.value;
-    // const to = document.getElementById('to').value;
-    // const toInput = document.createElement('input');
-    //       toInput.type = 'hidden';
-    //       toInput.name = "bookingTimes[${counter}]['to']";
-    //       toInput.value = to.value;
-    // for (let i=0; i<3; i++) {
-    //     const td_i = document.createElement('td');
-    //         td_i.classList.add('px-6', 'py-4', 'whitespace-nowrap');
-    // }
-    // for (let i=0; i<3; i++) {
-    //     const div_i = document.createElement('div');
-    //         div_i.classList.add('text-sm', 'text-slate-500');
-    // }
-    // div_0.textContent = periodDisplay
-    // div_0.appendChild(periodInput);
-    // div_1.textContent = from.value
-    // div_1.appendChild(fromInput);
-    // div_2.textContent = to.value
-    // div_2.appendChild(toInput);
-    // for (let i=0; i<3; i++) {
-    //     td_i.appendChild(div_i);
-    //     tr.appendChild(td_i)
-    // }
-    // bookingTimes.appendChild(tr);
+    bookingTimes.append(time);
   },
   priceType: function priceType(type) {
     if (type === 'fixed') {

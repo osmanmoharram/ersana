@@ -13,7 +13,7 @@ class UpdateCustomerRequest extends FormRequest
      */
     public function authorize()
     {
-        return ($this->user()->isAdmin() && $this->user()->isClient());
+        return true;
     }
 
     /**
@@ -25,10 +25,8 @@ class UpdateCustomerRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'company' => ['nullable', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'unique:customers,email'],
-            'phone' => ['required', 'string', 'unique:customers,phone'],
-            'address' => ['required', 'string'],
+            'email' => ['required', 'string', 'email', 'unique:customers,email,' . $this->customer->email . ',email'],
+            'phone' => ['required', 'string', 'unique:customers,phone,' . $this->customer->phone . ',phone'],
         ];
     }
 }

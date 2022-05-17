@@ -11,15 +11,8 @@ class Customer extends Model
 
     protected $guarded = [];
 
-    public function bookings()
+    public function hall()
     {
-        return client()->run(function () {
-            return $this->hasMany(Booking::class, 'customer_id');
-        });
-    }
-
-    public static function findOrNull($id)
-    {
-        return $id ? Static::find($id) : null;
+        return $this->belongsTo(Hall::class);
     }
 }

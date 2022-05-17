@@ -14,8 +14,10 @@ use App\Http\Controllers\Client\{
     HallController
 };
 use App\Http\Controllers\UserController;
+use App\Models\Client\Hall;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
@@ -35,14 +37,13 @@ Route::group([
 ], function() {
     Route::get('/', function () {
         return Auth::check()
-            ? redirect()->route('client.halls.index')
+            ? redirect()->route('halls.index')
             : redirect()->route('login');
     });
 
     Route::middleware(['auth'])->group(function () {
+        // Admin Routes
         Route::view('/dashboard', 'admin.dashboard')->name('admin.dashboard');
-
-        Route::resource('users', UserController::class)->except(['show']);
 
         Route::resource('features', FeatureController::class)->except(['show']);
 
@@ -54,17 +55,25 @@ Route::group([
 
         Route::resource('subscriptions', SubscriptionController::class)->except(['show']);
 
-        Route::name('client.')->group(function() {
-            Route::resource('halls', HallController::class);
+        // Client Routes
+        Route::prefix('/halls/{hall}/')->name('halls.')->group(function () {
+            Route::get('dashboard', function (Hall $hall) {
+                Session::put('hall', $hall);
 
-            Route::middleware('currentHall')->group(function () {
-                Route::resource('bookings', BookingController::class);
-                Route::resource('booking-times', BookingTimeController::class);
-                Route::resource('customers', CustomerController::class);
-            });
+                return view('client.halls.dashboard');
+            })->name('dashboard');
 
-            // Route::resource('users', UserController::class)->except(['show']);
+            Route::resource('bookings', BookingController::class);
+
+            Route::resource('booking-times', BookingTimeController::class);
+
+            Route::resource('customers', CustomerController::class);
         });
+
+        Route::resource('halls', HallController::class)->except(['show']);
+
+        // Admin And Client Routes
+        Route::resource('users', UserController::class)->except(['show']);
     });
 
     require __DIR__.'/auth.php';

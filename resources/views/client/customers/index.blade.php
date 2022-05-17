@@ -6,7 +6,7 @@
     <!-- end::Page Heading -->
 
     <!-- begin::Page Content -->
-    <x-table page="customers" :columns="['name', 'company', 'email', 'phone', 'address']">
+    <x-table page="customers" :columns="['name', 'email', 'phone']">
         @foreach ($customers as $customer)
             <tr>
                 <!-- begin::Full Name -->
@@ -33,22 +33,14 @@
                 </td>
                 <!-- end::Phone -->
 
-                <!-- begin::Address -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm {{ app()->getLocale() === 'ar' ? 'text-right' : '' }} text-slate-500">
-                        {{ $customer->address }}
-                    </div>
-                </td>
-                <!-- end::Address -->
-
                 <!-- begin::Actions -->
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm space-s-0.5 flex items-center justify-end">
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm space-s-1 flex items-center justify-end">
                     <!-- begin::Edit -->
-                    <x-actions.edit href="{{ route('customers.edit', $customer->id) }}"/>
+                    <x-actions.edit href="{{ route('halls.customers.edit', ['hall' => session('hall')->id, 'customer' => $customer->id]) }}"/>
                     <!-- end::Edit -->
 
                     <!-- begin::Delete -->
-                    <x-actions.delete action="{{ route('customers.destroy', $customer->id) }}"/>
+                    <x-actions.delete action="{{ route('halls.customers.destroy', ['hall' => session('hall')->id, 'customer' => $customer->id]) }}"/>
                     <!-- end::Delete -->
                 </td>
                 <!-- end::Actions -->

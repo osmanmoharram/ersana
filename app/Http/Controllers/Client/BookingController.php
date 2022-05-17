@@ -5,11 +5,8 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\NewBookingRequest;
 use App\Http\Requests\Client\UpdateBookingRequest;
-use App\Models\Client;
 use App\Models\Client\Booking;
 use App\Models\Client\Customer;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class BookingController extends Controller
 {

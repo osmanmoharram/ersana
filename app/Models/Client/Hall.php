@@ -17,6 +17,11 @@ class Hall extends Model
         return $this->belongsTo(\App\Models\Client::class);
     }
 
+    public function customers()
+    {
+        return $this->hasMany(Customer::class);
+    }
+
     public function bookingTimes()
     {
         return $this->hasMany(BookingTime::class);

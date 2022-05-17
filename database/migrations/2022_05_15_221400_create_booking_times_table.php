@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('booking_times', function (Blueprint $table) {
             $table->id();
             $table->string('period');
-            $table->time('from');
-            $table->time('to');
+            $table->string('from');
+            $table->string('to');
             $table->unsignedBigInteger('hall_id');
             $table->timestamps();
         });

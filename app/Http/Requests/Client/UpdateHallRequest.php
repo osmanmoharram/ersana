@@ -14,7 +14,7 @@ class UpdateHallRequest extends FormRequest
      */
     public function authorize()
     {
-        return ($this->user()->isAdmin() && $this->user()->isClient());
+        return true;
     }
 
     /**
@@ -25,10 +25,13 @@ class UpdateHallRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'location' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'unique:halls,name,' . $this->hall->name . ',name'],
+            'location' => ['required', 'string'],
             'capacity' => ['required', 'string', 'numeric'],
-            'type' => ['required', 'string', 'in:wedding,events,theatre'],
+            'bookingTimes' => ['required', 'array'],
+            'bookingTimes.*.period' => ['required', 'in:day,evening'],
+            'bookingTimes.*.from' => ['required', 'date_format:H:i'],
+            'bookingTimes.*.to' => ['required', 'date_format:H:i', 'after:bookingTimes.*.from'],
         ];
     }
 }

@@ -178,11 +178,11 @@ return [
         ]
     ],
     'halls' => [
-        'index' => [ 'header' => 'Halls', ],
-        'create' => [
-            'header' => 'Create New Hall',
+        'index' => [
+            'header' => 'Halls',
             'table' => ['period' => 'Period', 'from' => 'From', 'to' => 'To' ]
         ],
+        'create' => ['header' => 'Create New Hall',],
         'edit' => [ 'header' => 'Update :hall Hall'],
         'form' => [
             'name' => ['label' => 'Name', 'placeholder' => 'The hall name'],
@@ -230,10 +230,10 @@ return [
             'table' => [
                 '#' => '#',
                 'customer' => 'Customer Name',
-                'start' => 'Booking Start At',
-                'end' => 'Booking End At',
-                'type' => 'Type',
-                'price' => 'Price',
+                'date' => 'Booking Date',
+                'from' => 'From',
+                'to' => 'To',
+                'total' => 'Price',
                 'status' => 'Status'
             ]
         ],
@@ -242,38 +242,9 @@ return [
         'form' => [
             'customer' => ['label' => 'Customer Name'],
             'date' => ['label' => 'Booking Date', 'placeholder' => 'Please select a date'],
-            'start_time' => ['label' => 'Booking Start At', 'placeholder' => 'Please select time'],
-            'end_time' => ['label' => 'Booking End At', 'placeholder' => 'Please select time'],
-            'type' => [
-                'label' => 'Type',
-                'items' => [
-                    'weddings' => 'Weddings',
-                    'events' => 'Events',
-                    'occassions' => 'Occassions'
-                ]
-            ],
-            'guest_type' => [
-                'label' => 'Guest Type',
-                'items' => [
-                    'men' => 'Men',
-                    'women' => 'Women',
-                    'men_women' => 'Men & Women'
-                ]
-            ],
-            'food_menu' => ['label' => 'Food Menu'],
-            'price_type' => [
-                'label' => 'Price Type',
-                'items' => [
-                    'fixed' => 'Fixed',
-                    'individual' => 'Individual'
-                ]
-            ],
-            'fixed_price' => ['label' => 'Fixed Price'],
-            'individual_price' => ['label'=> 'Individual Price'],
-            'number_of_guests' => ['label' => 'Number Of Guests'],
+            'bookingTimes' => ['label' => 'Available Booking Times'],
             'discount' => ['label' => 'Discount'],
             'insurance' => ['label' => 'Insurance'],
-            'vat' => ['label' => 'Vat'],
             'total' => ['label' => 'Total'],
             'status' => [
                 'label' => 'Status',
