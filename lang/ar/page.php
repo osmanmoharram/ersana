@@ -129,7 +129,7 @@ return [
     'halls' => [
         'index' => [
             'header' => 'القاعات',
-            'table' => ['period' => 'الفترة', 'from' => 'من', 'to' => 'إلى' ]
+            'table' => ['period' => 'الفترة', 'from' => 'من', 'to' => 'إلى', 'price' => 'السعر']
         ],
         'create' => ['header' => 'إنشاء قاعة جديدة'],
         'edit' => ['header' => 'تحديث بيانات القاعة :hall'],
@@ -149,6 +149,7 @@ return [
                 ],
                 'from' => ['label' => 'من', 'placeholder' => 'الرجاء تحديد وقت'],
                 'to' => ['label' => 'إلى', 'placeholder' => 'الرجاء تحديد وقت'],
+                'price' => ['label' => 'السعر', 'placeholder' => 'الرجاء تحديد سعر وقت الحجةز']
             ]
         ],
         'flash' => [
@@ -156,7 +157,6 @@ return [
             'updated' => 'تم تحديث بيانات القاعة :hall',
             'deleted' => 'تم حذف القاعة :hall'
         ],
-        'types' => ['wedding' => 'أعراس', 'events' => 'مناسبات', 'theatre' => 'مسرح']
     ],
     'customers' => [
         'index' => [
@@ -202,7 +202,7 @@ return [
         'form' => [
             'customer' => ['label' => 'إسم صاحب الحجز'],
             'date' => ['label' => 'تاريخ الحجز', 'placeholder' => 'الرجاء اختيار تاريخ'],
-            'bookingTimes' => ['label' => 'أوقات الحجز المتوفرة'],
+            'bookingTimes' => ['label' => 'أوقات الحجز المتوفرة', 'button' => 'الأوقات المتوفرة'],
             'from' => ['label' => 'من', 'placeholder' => 'الرجاء إدخال وقت'],
             'to' => ['label' => 'إلى', 'placeholder' => 'الرجاء إدخال وقت'],
             'discount' => ['label' => 'سعر الخصم'],

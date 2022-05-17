@@ -12,18 +12,10 @@ class Booking extends Model
     protected $guarded = [];
 
     protected $dates = [
+        'date',
         'created_at',
         'updated_at',
-        'start_date',
-        'end_date'
     ];
 
-    protected $with = ['customer'];
-
-    public function customer()
-    {
-        return client()->run(function () {
-            return $this->belongsTo(Customer::class, 'customer_id');
-        });
-    }
+    protected $with = ['bookingTime', 'customer'];
 }

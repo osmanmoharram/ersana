@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('from');
             $table->string('to');
             $table->unsignedBigInteger('hall_id');
+            $table->integer('price');
             $table->timestamps();
         });
     }

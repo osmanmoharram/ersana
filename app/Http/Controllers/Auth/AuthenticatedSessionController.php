@@ -42,7 +42,7 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->route('login')->withErrors(['invalid-subscription' => __('auth.invalid-subscription')]);
             }
 
-            return redirect()->route('client.halls.index');
+            return redirect()->route('halls.index');
         }
 
         return redirect()->route('admin.dashboard');

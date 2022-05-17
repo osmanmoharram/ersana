@@ -15,7 +15,9 @@ class BookingTimeController extends Controller
      */
     public function index()
     {
-        //
+        $bookings = Booking::with(['bookingTime'])
+            ->where('')
+        
     }
 
     /**

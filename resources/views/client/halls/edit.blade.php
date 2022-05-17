@@ -7,7 +7,7 @@
         </div>
     </x-slot>
 
-    <form x-data action="{{ route('client.halls.update', $hall->id) }}" method="POST" class="space-y-4 pb-8">
+    <form x-data action="{{ route('halls.update', $hall->id) }}" method="POST" class="space-y-4 pb-8">
         @csrf
         @method('PATCH')
 
@@ -67,7 +67,7 @@
             <div class="col-span-1">
                 <x-label for="enter" :value="__('page.halls.form.bookingTimes.enter.label')" />
 
-                <div class="grid grid-cols-4 items-end gap-x-2 mt-2">
+                <div class="grid grid-cols-5 items-end gap-x-2 mt-2">
                     <!-- begin::Period -->
                     <div class="col-span-1">
                         <x-label for="period" :value="__('page.halls.form.bookingTimes.period.label')" class="text-xs" />
@@ -117,6 +117,21 @@
                     </div>
                     <!-- end::To -->
 
+                    <!-- begin::Price -->
+                    <div class="col-span-1">
+                        <x-label for="price" :value="__('page.halls.form.bookingTimes.price.label')" class="text-xs" />
+
+                        <x-input
+                            type="text" id="price" class="w-full"
+                            placeholder="{{ __('page.halls.form.bookingTimes.price.placeholder') }}"
+                        />
+
+                        @error('price')
+                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <!-- end::Price -->
+
                     <!-- begin::Button -->
                     <div class="col-span-1">
                         <span class="sr-only">Add Button</span>
@@ -150,7 +165,7 @@
             <div class="col-span-1">
                 <x-label for="display" :value="__('page.halls.form.bookingTimes.display.label')" class="mb-2"/>
 
-                <x-table page="halls" :columns="['period', 'from', 'to']" id="bookingTimes">
+                <x-table page="halls" :columns="['period', 'from', 'to', 'price']" id="bookingTimes">
                     @foreach ($hall->bookingTimes as $key => $time)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -171,6 +186,13 @@
                                 <div class="text-sm text-slate-500">
                                     <input type="hidden" name="bookingTimes[{{ $key }}][to]" value="{{ substr($time['to'],0,5) }}">
                                     {{ substr($time['to'],0,5) }}
+                                </div>
+                            </td>
+
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-slate-500">
+                                    <input type="hidden" name="bookingTimes[{{ $key }}][price]" value="{{ $time['price'] }}">
+                                    {{ $time['price'] }}
                                 </div>
                             </td>
 
@@ -197,7 +219,7 @@
                     {{ __('actions.edit.form')}}
                 </x-button>
 
-                <x-actions.back href="{{ route('client.halls.index') }}"/>
+                <x-actions.back href="{{ route('halls.index') }}"/>
             </div>
         </div>
         <!-- end::Form Button -->

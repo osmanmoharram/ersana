@@ -3,23 +3,35 @@ require('./bootstrap');
 import Alpine from 'alpinejs';
 import jQuery from 'jquery-slim';
 import flatpickr from "flatpickr";
+import axios from 'axios';
 
 window.Alpine = Alpine;
 window.$ = window.jQuery = jQuery;
 
 Alpine.start();
 
+flatpickr('#date', {
+    altInput: true,
+    altFormat: 'M j, Y h:i K',
+    enableTime: true,
+    onChange: function(selectedDate, config, instance) {
+        // Close picker on date select
+        instance.close();
+
+        Alpine.store('bookingTimes').setDate(selectedDate);
+    }
+});
 flatpickr('#from', {
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
-    defaultDate: "08:00"
+    defaultDate: "08:00",
 });
 flatpickr('#to', {
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
-    defaultDate: "00:00"
+    defaultDate: "00:00",
 });
 
 
@@ -31,6 +43,7 @@ Alpine.store('selection', {
 
         inputs[1].value = value;
     },
+
     check(el, resource) {
         const resources = document.querySelectorAll('.' + resource);
 
@@ -44,6 +57,7 @@ Alpine.store('selection', {
             })
         }
     },
+
     period() {
         // area where times will be inserted
         const bookingTimes = $('#bookingTimes tbody');
@@ -57,6 +71,7 @@ Alpine.store('selection', {
         const periodsendValue = $('#period input')[1].value;
         const from = $('#from').val();
         const to = $('#to').val();
+        const price = $('#price').val();
 
         let time = `
             <tr>
@@ -82,6 +97,13 @@ Alpine.store('selection', {
                 </td>
 
                 <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-slate-500">
+                        ${price}
+                        <input type="hidden" name="bookingTimes[${counter}][price]" value="${price}">
+                    </div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-nowrap">
                     <button @click.prevent="$el.parentElement.parentElement.remove()" class="text-red-400 hover:text-red-500 py-2 px-4 transition duration-150 ease-in-out">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
@@ -93,30 +115,33 @@ Alpine.store('selection', {
 
         bookingTimes.append(time);
     },
-    priceType(type) {
-        if (type === 'fixed') {
-            fixedPrice.disabled = false;
-            fixedPrice.classList.replace('bg-slate-200/40', 'bg-white');
-            fixedPrice.classList.remove('cursor-not-allowed', 'text-slate-500');
-
-            [individualPrice, numberOfGuests].forEach(field => {
-                field.disabled = true;
-                field.classList.replace('bg-white', 'bg-slate-200/40');
-                field.classList.add('cursor-not-allowed', 'text-slate-500');
-            });
-        } else {
-            fixedPrice.disabled = true;
-            fixedPrice.classList.replace('bg-white', 'bg-slate-200/40');
-            fixedPrice.classList.add('cursor-not-allowed', 'text-slate-500');
-
-            [individualPrice, numberOfGuests].forEach(field => {
-                field.disabled = false;
-                field.classList.replace('bg-slate-200/40', 'bg-white');
-                field.classList.remove('cursor-not-allowed', 'text-slate-500');
-            });
-        }
-    }
 });
+
+Alpine.store('bookingTimes', {
+    date: '',
+    period: '',
+
+    setDate(date) {
+        this.date = date; 
+    },
+    
+    setPeriod(period) {
+        this.period = period;
+    },
+
+    get(hallId) {
+        axios.get(`/halls/${hallId}/booking-times`, {
+            date: this.date,
+            period: this.period
+        })
+        .then(response => {
+            console.log(response.data);
+        })
+        .catch(errors => {
+            console.log(errors.data);
+        })
+    }
+})
 
 Alpine.store('computeTotal', {
     nf: Intl.NumberFormat(),

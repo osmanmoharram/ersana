@@ -26,4 +26,14 @@ class Hall extends Model
     {
         return $this->hasMany(BookingTime::class);
     }
+
+    public function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = $value * 100;
+    }
+
+    public function getPriceAttribute($value)
+    {
+        $this->attributes['price'] = $value / 100;
+    }
 }

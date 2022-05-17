@@ -5079,7 +5079,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery_slim__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery-slim */ "./node_modules/jquery-slim/dist/jquery.slim.js");
 /* harmony import */ var jquery_slim__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery_slim__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var flatpickr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flatpickr */ "./node_modules/flatpickr/dist/esm/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -5087,6 +5090,16 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 window.$ = window.jQuery = (jquery_slim__WEBPACK_IMPORTED_MODULE_1___default());
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
+(0,flatpickr__WEBPACK_IMPORTED_MODULE_2__["default"])('#date', {
+  altInput: true,
+  altFormat: 'M j, Y h:i K',
+  enableTime: true,
+  onChange: function onChange(selectedDate, config, instance) {
+    // Close picker on date select
+    instance.close();
+    alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('bookingTimes').setDate(selectedDate);
+  }
+});
 (0,flatpickr__WEBPACK_IMPORTED_MODULE_2__["default"])('#from', {
   enableTime: true,
   noCalendar: true,
@@ -5129,29 +5142,29 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('selection', {
     var periodsendValue = $('#period input')[1].value;
     var from = $('#from').val();
     var to = $('#to').val();
-    var time = "\n            <tr>\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ".concat(periodDisplayValue, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][period]\" value=\"").concat(periodsendValue, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(from, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][from]\" value=\"").concat(from, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(to, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][to]\" value=\"").concat(to, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <button @click.prevent=\"$el.parentElement.parentElement.remove()\" class=\"text-red-400 hover:text-red-500 py-2 px-4 transition duration-150 ease-in-out\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6\" viewBox=\"0 0 20 20\" fill=\"currentColor\">\n                            <path fill-rule=\"evenodd\" d=\"M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z\" clip-rule=\"evenodd\" />\n                        </svg>\n                    </button>\n                <td>\n            </tr>\n        ");
+    var price = $('#price').val();
+    var time = "\n            <tr>\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ".concat(periodDisplayValue, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][period]\" value=\"").concat(periodsendValue, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(from, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][from]\" value=\"").concat(from, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(to, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][to]\" value=\"").concat(to, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(price, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][price]\" value=\"").concat(price, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <button @click.prevent=\"$el.parentElement.parentElement.remove()\" class=\"text-red-400 hover:text-red-500 py-2 px-4 transition duration-150 ease-in-out\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6\" viewBox=\"0 0 20 20\" fill=\"currentColor\">\n                            <path fill-rule=\"evenodd\" d=\"M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z\" clip-rule=\"evenodd\" />\n                        </svg>\n                    </button>\n                <td>\n            </tr>\n        ");
     bookingTimes.append(time);
+  }
+});
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('bookingTimes', {
+  date: '',
+  period: '',
+  setDate: function setDate(date) {
+    this.date = date;
   },
-  priceType: function priceType(type) {
-    if (type === 'fixed') {
-      fixedPrice.disabled = false;
-      fixedPrice.classList.replace('bg-slate-200/40', 'bg-white');
-      fixedPrice.classList.remove('cursor-not-allowed', 'text-slate-500');
-      [individualPrice, numberOfGuests].forEach(function (field) {
-        field.disabled = true;
-        field.classList.replace('bg-white', 'bg-slate-200/40');
-        field.classList.add('cursor-not-allowed', 'text-slate-500');
-      });
-    } else {
-      fixedPrice.disabled = true;
-      fixedPrice.classList.replace('bg-white', 'bg-slate-200/40');
-      fixedPrice.classList.add('cursor-not-allowed', 'text-slate-500');
-      [individualPrice, numberOfGuests].forEach(function (field) {
-        field.disabled = false;
-        field.classList.replace('bg-slate-200/40', 'bg-white');
-        field.classList.remove('cursor-not-allowed', 'text-slate-500');
-      });
-    }
+  setPeriod: function setPeriod(period) {
+    this.period = period;
+  },
+  get: function get(hallId) {
+    axios__WEBPACK_IMPORTED_MODULE_3___default().get("/halls/".concat(hallId, "/booking-times"), {
+      date: this.date,
+      period: this.period
+    }).then(function (response) {
+      console.log(response.data);
+    })["catch"](function (errors) {
+      console.log(errors.data);
+    });
   }
 });
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('computeTotal', {

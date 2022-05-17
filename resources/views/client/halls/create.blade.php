@@ -66,7 +66,7 @@
             <div class="col-span-1">
                 <x-label for="enter" :value="__('page.halls.form.bookingTimes.enter.label')" />
 
-                <div class="grid grid-cols-4 items-end gap-x-2 mt-2">
+                <div class="grid grid-cols-5 items-end gap-x-2 mt-2">
                     <!-- begin::Period -->
                     <div class="col-span-1">
                         <x-label for="period" :value="__('page.halls.form.bookingTimes.period.label')" class="text-xs" />
@@ -116,6 +116,21 @@
                     </div>
                     <!-- end::To -->
 
+                    <!-- begin::Price -->
+                    <div class="col-span-1">
+                        <x-label for="price" :value="__('page.halls.form.bookingTimes.price.label')" class="text-xs" />
+
+                        <x-input
+                            type="text" id="price" class="w-full" value="{{ old('price') }}"
+                            placeholder="{{ __('page.halls.form.bookingTimes.price.placeholder') }}"
+                        />
+
+                        @error('price')
+                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <!-- end::Price -->
+
                     <!-- begin::Button -->
                     <div class="col-span-1">
                         <span class="sr-only">Add Button</span>
@@ -149,7 +164,7 @@
             <div class="col-span-1">
                 <x-label for="display" :value="__('page.halls.form.bookingTimes.display.label')" class="mb-2"/>
 
-                <x-table page="halls" :columns="['period', 'from', 'to']" id="bookingTimes">
+                <x-table page="halls" :columns="['period', 'from', 'to', 'price']" id="bookingTimes">
 
                     <x-slot name="pagination"></x-slot>
                 </x-table>

@@ -51,6 +51,7 @@ class HallController extends Controller
                 'period' => $time['period'],
                 'from' => $time['from'],
                 'to' => $time['to'],
+                'price' => $time['price'],
                 'hall_id' => $hall->id
             ]);
         }
@@ -91,12 +92,13 @@ class HallController extends Controller
                 'period' => $time['period'],
                 'from' => $time['from'],
                 'to' => $time['to'],
+                'price' => $time['price'],
                 'hall_id' => $hall->id
             ]);
         }
 
         return redirect()
-            ->route('client.halls.index')
+            ->route('halls.index')
             ->withMessage(__('page.halls.flash.updated', ['hall' => $hall->name]));
     }
 

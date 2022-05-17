@@ -32,6 +32,7 @@ class UpdateHallRequest extends FormRequest
             'bookingTimes.*.period' => ['required', 'in:day,evening'],
             'bookingTimes.*.from' => ['required', 'date_format:H:i'],
             'bookingTimes.*.to' => ['required', 'date_format:H:i', 'after:bookingTimes.*.from'],
+            'bookingTimes.*.price' => ['required', 'numeric'],
         ];
     }
 }

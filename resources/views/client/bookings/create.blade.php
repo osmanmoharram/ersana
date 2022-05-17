@@ -7,7 +7,7 @@
         @csrf
 
         <!-- begin::Customer Name -->
-        <div  class="grid grid-cols-4">
+        <div  class="grid grid-cols-2">
             <div class="col-span-1">
                 <div class="flex items-center justify-between">
                     <x-label for="customer_id" :value="__('page.bookings.form.customer.label')" />
@@ -35,29 +35,57 @@
         <!-- end::Customer Name -->
 
         <!-- begin::Date -->
-        <div  class="grid grid-cols-4">
+        <div x-data class="grid grid-cols-2 items-end">
             <div class="col-span-1">
-                <x-label for="date" :value="__('page.bookings.form.date.label')" />
+                <div class="grid grid-cols-3 gap-x-6 items-end">
+                    <div class="col-span-1">
+                        <div class="flex items-center justify-between">
+                            <x-label for="date" :value="__('page.bookings.form.date.label')" />
+                            
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                       
+                        <input
+                            type="text" id="date" name="date" value="{{ old('date') }}" placeholder="{{ __('page.bookings.form.date.placeholder') }}"
+                            class="w-full text-sm rounded-sm placeholder-slate-300 border-none cursor-pointer shadow-sm mt-2 outline-none focus:ring-0" readonly
+                        />
 
-                <div class="relative">
-                    <x-datetime
-                        name="date" value="{{ old('date') }}" placeholder="{{ __('page.bookings.form.date.placeholder') }}"
-                        x-init="flatpickr($el, {
-                            altInput: true,
-                            altFormat: 'M j, Y h:i K',
-                            enableTime: true,
-                            disable: {{ json_encode($booked) }},
-                        })"
-                    />
+                        @error('date')
+                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute {{ app()->getLocale() === 'ar' ? 'left-3' : 'right-3' }} top-5 cursor-pointer text-slate-400" @click="$refs.start_date.click()" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
+                    <div class="col-span-1">
+                        <x-label for="period" :value="__('page.halls.form.bookingTimes.period.label')" />
+
+                        <x-select :placeholder="__('actions.select.placeholder')">
+                            @foreach (['day', 'evening'] as $period)
+                                <option
+                                    class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
+                                    @click="$store.selection.select($el, '{{ $period }}'); visible = false; $store.bookingTimes.setPeriod('{{ $period }}');"
+                                >
+                                    {{ __('page.halls.form.bookingTimes.period.items.' . $period) }}
+                                </option>
+                            @endforeach
+                        </x-select>
+
+                        @error('customer_id')
+                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    
+                    <div class="col-span-1">
+                        <button 
+                            type="button"
+                            class="py-2.5 w-full text-sm text-white bg-green-400 hover:bg-green-500 shadow-sm rounded-sm mb-px transition duration-150 ease-in-out"
+                            @click.prevent="$store.bookingTimes.get({{ session('hall')->id }})"
+                        >
+                            {{ __('page.bookings.form.bookingTimes.button') }}
+                        </button>
+                    </div>
                 </div>
-
-                @error('date')
-                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                @enderror
             </div>
         </div>
         <!-- end::Date -->

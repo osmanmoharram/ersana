@@ -10,7 +10,7 @@ return [
         'create' => ['header' => 'Create New User'],
         'edit' => ['header' => 'Update The User :user'],
         'form' => [
-            'name' => ['label' => 'Full Name', 'placeholder' => 'Please enter the user\'s full name',],
+            'name' => ['label' => 'Full Name', 'placeholder' => 'Please insert the user\'s full name',],
             'email' => ['label' => 'Email', 'placeholder' => 'user@example.com',],
             'phone' => ['label' => 'Phone', 'placeholder' => 'Please write the phone number with the country key'],
             'role' => ['label' => 'Role', 'placeholder' => 'Please select a role'],
@@ -97,7 +97,7 @@ return [
             'price' => [
                 'label' => 'Price',
                 'placeholder' => 'Please write the package price here.',
-                'note' => 'If no price entered, then the package price will be set as 0 automatically.'
+                'note' => 'If no price inserted, then the package price will be set as 0 automatically.'
             ]
         ],
         'flash' => [
@@ -121,7 +121,7 @@ return [
         'create' => ['header' => 'Create New Client'],
         'edit' => ['header' => 'Update The Client :client'],
         'form' => [
-            'name' => ['label' => 'Full Name', 'placeholder' => 'Please enter the client\'s full name',],
+            'name' => ['label' => 'Full Name', 'placeholder' => 'Please insert the client\'s full name',],
             'email' => ['label' => 'Email', 'placeholder' => 'client@example.com',],
             'phone' => ['label' => 'Phone', 'placeholder' => 'Please write the phone number with the country key'],
             'address' => ['label' => 'Address', 'placeholder' => 'Please write your business location'],
@@ -180,7 +180,7 @@ return [
     'halls' => [
         'index' => [
             'header' => 'Halls',
-            'table' => ['period' => 'Period', 'from' => 'From', 'to' => 'To' ]
+            'table' => ['period' => 'Period', 'from' => 'From', 'to' => 'To', 'price' => 'Price']
         ],
         'create' => ['header' => 'Create New Hall',],
         'edit' => [ 'header' => 'Update :hall Hall'],
@@ -198,9 +198,15 @@ return [
                         'evening' => 'Evening'
                     ],
                 ],
-                'from' => ['label' => 'From', 'placeholder' => 'Please enter time'],
-                'to' => ['label' => 'To', 'placeholder' => 'Please enter time'],
+                'from' => ['label' => 'From', 'placeholder' => 'Please insert time'],
+                'to' => ['label' => 'To', 'placeholder' => 'Please insert time'],
+                'price' => ['label' => 'Price', 'placeholder' => 'Please insert the booking time price']
             ]
+        ],
+        'flash' => [
+            'created' => 'A new hall has been created',
+            'updated' => 'The hall :hall information has been updated',
+            'deleted' => 'The hall :hall is deleted'
         ],
     ],
     'customers' => [
@@ -242,7 +248,7 @@ return [
         'form' => [
             'customer' => ['label' => 'Customer Name'],
             'date' => ['label' => 'Booking Date', 'placeholder' => 'Please select a date'],
-            'bookingTimes' => ['label' => 'Available Booking Times'],
+            'bookingTimes' => ['label' => 'Available Booking Times', 'button' => 'Available Times'],
             'discount' => ['label' => 'Discount'],
             'insurance' => ['label' => 'Insurance'],
             'total' => ['label' => 'Total'],
