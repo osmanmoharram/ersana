@@ -30,8 +30,7 @@ class BookingController extends Controller
     public function create()
     {
         $customers = Customer::all();
-        $booked = $this->getBookedDatesAndTimes();
-        return view('client.bookings.create', compact('customers', 'booked'));
+        return view('client.bookings.create', compact('customers'));
     }
 
     /**
@@ -42,13 +41,11 @@ class BookingController extends Controller
      */
     public function store(NewBookingRequest $request)
     {
-        $booking = client()->run(function () use ($request) {
-            return Booking::create($request->validated() + ['slug' => '00235']);
-        });
+        Booking::create($request->validated());
 
         return redirect()
-            ->route('client.bookings.index')
-            ->withMessage(__('page.bookings.flash.created', ['booking' => $booking->slug]));
+            ->route('halls.bookings.index', session('hall')->id)
+            ->withMessage(__('page.bookings.flash.created'));
     }
 
     /**
@@ -85,9 +82,6 @@ class BookingController extends Controller
      */
     public function update(UpdateBookingRequest $request, Booking $booking)
     {
-        client()->run(function () use ($request, $booking) {
-            $booking->update($request->validated());
-        });
 
         return redirect()
             ->route('client.bookings.index')
@@ -102,30 +96,8 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        $slug = $booking->slug;
-
-        client()->run(function () use ($booking) {
-            $booking->delete();
-        });
-
         return redirect()
             ->route('client.bookings.index')
-            ->withMessage(__('page.bookings.flash.deleted', ['booking' => $slug]));
-    }
-
-    protected function getBookedDatesAndTimes($booking = null)
-    {
-        $bookings = ($booking) ? Booking::where('id', '!=', $booking->id)->get() : Booking::all();
-        $booked = [];
-
-        foreach($bookings->pluck('start_date')->all() as $datetime) {
-            $booked[] = $datetime->toDateTimeString();
-        };
-
-        foreach($bookings->pluck('end_date')->all() as $datetime) {
-            $booked[] = $datetime->toDateTimeString();
-        };
-
-        return $booked;
+            ->withMessage(__('page.bookings.flash.deleted'));
     }
 }

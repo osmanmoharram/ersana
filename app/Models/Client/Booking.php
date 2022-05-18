@@ -18,4 +18,14 @@ class Booking extends Model
     ];
 
     protected $with = ['bookingTime', 'customer'];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function bookingTime()
+    {
+        return $this->belongsTo(BookingTime::class, 'bookingTime_id');
+    }
 }

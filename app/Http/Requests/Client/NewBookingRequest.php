@@ -14,7 +14,7 @@ class NewBookingRequest extends FormRequest
      */
     public function authorize()
     {
-        return ($this->user()->isAdmin() && $this->user()->isClient());
+        return true;
     }
 
     /**
@@ -26,29 +26,13 @@ class NewBookingRequest extends FormRequest
     {
         return [
             'customer_id' => ['required', 'exists:customers,id'],
-            'start_date' => ['required', 'date', 'after:now'],
-            'end_date' => ['required', 'date', 'after:start_date'],
-            'type' => ['required'],
-            'guest_type' => ['required'],
-            'food_menu' => ['required'],
-            'price_type' => ['required', 'in:fixed,individual'],
-            'individual_price' => ['nullable', 'numeric'],
-            'number_of_guests' => ['required_with:individual_price'],
-            'fixed_price' => ['nullable', 'numeric'],
-            'vat' => ['required', 'numeric'],
+            'bookingTime_id' => ['required', 'exists:booking_times,id'],
+            'date' => ['required', 'date'],
             'discount' => ['nullable', 'numeric'],
             'insurance' => ['nullable', 'numeric'],
             'total' => ['required', 'numeric'],
             'status' => ['required', 'in:confirmed,temporary'],
             'notes' => ['nullable', 'string']
         ];
-    }
-
-    public function prepareForValidation()
-    {
-        $this->merge([
-            'total' => $this->input('total') * 100,
-            'vat' => $this->input('vat') * 100
-        ]);
     }
 }

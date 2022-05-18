@@ -180,7 +180,7 @@ return [
     'halls' => [
         'index' => [
             'header' => 'Halls',
-            'table' => ['period' => 'Period', 'from' => 'From', 'to' => 'To', 'price' => 'Price']
+            'table' => ['#' => '#', 'period' => 'Period', 'from' => 'From', 'to' => 'To', 'price' => 'Price']
         ],
         'create' => ['header' => 'Create New Hall',],
         'edit' => [ 'header' => 'Update :hall Hall'],

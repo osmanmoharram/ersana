@@ -41,15 +41,16 @@
                     <div class="col-span-1">
                         <div class="flex items-center justify-between">
                             <x-label for="date" :value="__('page.bookings.form.date.label')" />
-                            
+
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                         </div>
-                       
+
                         <input
-                            type="text" id="date" name="date" value="{{ old('date') }}" placeholder="{{ __('page.bookings.form.date.placeholder') }}"
+                            type="text" id="date" name="date" placeholder="{{ __('page.bookings.form.date.placeholder') }}"
                             class="w-full text-sm rounded-sm placeholder-slate-300 border-none cursor-pointer shadow-sm mt-2 outline-none focus:ring-0" readonly
+                            x-init="$el.value = ''"
                         />
 
                         @error('date')
@@ -60,7 +61,7 @@
                     <div class="col-span-1">
                         <x-label for="period" :value="__('page.halls.form.bookingTimes.period.label')" />
 
-                        <x-select :placeholder="__('actions.select.placeholder')">
+                        <x-select x-init="$el.querySelector('input').value=''" :placeholder="__('actions.select.placeholder')">
                             @foreach (['day', 'evening'] as $period)
                                 <option
                                     class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
@@ -75,9 +76,9 @@
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
-                    
+
                     <div class="col-span-1">
-                        <button 
+                        <button
                             type="button"
                             class="py-2.5 w-full text-sm text-white bg-green-400 hover:bg-green-500 shadow-sm rounded-sm mb-px transition duration-150 ease-in-out"
                             @click.prevent="$store.bookingTimes.get({{ session('hall')->id }})"
@@ -94,18 +95,23 @@
             <div class="col-span-1">
                 <x-label for="date" :value="__('page.bookings.form.bookingTimes.label')" />
 
+                <div class="hidden mt-2" id="availableBookingTimes">
+                    <x-table page="halls" :columns="['#', 'period', 'from', 'to', 'price']">
 
+                        <x-slot name="pagination"></x-slot>
+                    </x-table>
+                </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-2 py-4">
+        {{-- <div class="grid grid-cols-2 py-4">
             <div class="col-span-1"><hr></div>
-        </div>
+        </div> --}}
 
         <!-- begin::Discount / Insurance / Total -->
         <div class="grid grid-cols-2">
             <div class="col-span-1 grid grid-cols-3 gap-x-6">
-                <!-- begin::Discount -->
+                {{-- <!-- begin::Discount -->
                 <div class="col-span-1">
                     <x-label for="discount" :value="__('page.bookings.form.discount.label')" />
 
@@ -134,19 +140,17 @@
                         <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
-                <!-- end::Insurance -->
+                <!-- end::Insurance --> --}}
 
                 <!-- begin::Total -->
                 <div class="col-span-1">
                     <x-label for="total" :value="__('page.bookings.form.total.label')" />
 
                     <x-input
-                        type="text" value="{{ old('total') }}" dir="ltr" readonly
+                        type="text" name="total" id="total" dir="ltr" readonly
                         class="w-full mt-2 bg-slate-200/40 cursor-not-allowed text-slate-500
                         {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}"
                     />
-
-                    <input type="hidden" name="total" id="total" value="{{ old('total') }}">
 
                     @error('total')
                         <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
@@ -157,9 +161,9 @@
         </div>
         <!-- end::Discount / Insurance / Total -->
 
-        <div class="grid grid-cols-2 py-4">
+        {{-- <div class="grid grid-cols-2 py-4">
             <div class="col-span-1"><hr></div>
-        </div>
+        </div> --}}
 
         <!-- begin::Status -->
         <div class="grid grid-cols-2">

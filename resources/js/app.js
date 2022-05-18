@@ -12,8 +12,8 @@ Alpine.start();
 
 flatpickr('#date', {
     altInput: true,
-    altFormat: 'M j, Y h:i K',
-    enableTime: true,
+    altFormat: 'M j, Y',
+    enableTime: false,
     onChange: function(selectedDate, config, instance) {
         // Close picker on date select
         instance.close();
@@ -62,10 +62,11 @@ Alpine.store('selection', {
         // area where times will be inserted
         const bookingTimes = $('#bookingTimes tbody');
 
+        console.log(bookingTimes[0]);
+
         // number of inserted times
         let counter = bookingTimes.children().length;
 
-        console.log(counter);
         // new time values
         const periodDisplayValue = $('#period input')[0].value;
         const periodsendValue = $('#period input')[1].value;
@@ -122,64 +123,98 @@ Alpine.store('bookingTimes', {
     period: '',
 
     setDate(date) {
-        this.date = date; 
+        this.date = date;
     },
-    
+
     setPeriod(period) {
         this.period = period;
     },
 
-    get(hallId) {
-        axios.get(`/halls/${hallId}/booking-times`, {
-            date: this.date,
-            period: this.period
+    get(hall) {
+        axios.get(`/halls/${hall}/booking-times`, {
+            params: {
+                date: this.date,
+                period: this.period
+            }
         })
         .then(response => {
-            console.log(response.data);
+            $('#availableBookingTimes').removeClass('hidden');
+
+            const bookingTimes = $('#availableBookingTimes tbody');
+
+            response.data.times.forEach(time => {
+                let row = `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-slate-500">
+                                <input
+                                    type="checkbox"
+                                    class="booking-time bg-white rounded-sm cursor-pointer border border-slate-300"
+                                    @click="$store.computeTotal.compute($el)"
+                                >
+
+                                <input type="hidden" name="bookingTime_id" value="${time.id}">
+                            </div>
+                        </td>
+
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-slate-500">
+                                ${this.formatPeriod(time.period)}
+                            </div>
+                        </td>
+
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-slate-500">
+                                ${time.from}
+                            </div>
+                        </td>
+
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-slate-500">
+                                ${time.to}
+                            </div>
+                        </td>
+
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="price-input text-sm text-slate-500">
+                                ${time.price}
+                            </div>
+                        </td>
+
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-slate-500">
+
+                            </div>
+                        </td>
+                    </tr>
+                `;
+
+                bookingTimes.append(row);
+            });
         })
         .catch(errors => {
-            console.log(errors.data);
+            console.log(errors);
         })
+    },
+
+    formatPeriod(period) {
+        return period === 'day' ? 'Day / صباحاً' : 'Evening / مساءاً';
     }
 })
 
 Alpine.store('computeTotal', {
-    nf: Intl.NumberFormat(),
-    computed: 0,
-    vat: 0,
+    compute(element) {
+        const bookingTimes = Array.from(document.querySelectorAll('input.booking-time'));
+        const price = $(element).parents('tr').find('.price-input').text();
 
-    compute(type = null) {
-        let result;
+        // unselectedBookingTimes = bookingTimes.filter(item => {
+        //     item !== element;
+        // });
 
-        console.log(fixedPrice.value);
-        if (type === 'fixed' && fixedPrice.value && !isNaN(fixedPrice.value) && fixedPrice.value >= 0) {
-            this.computed = fixedPrice.value;
-        }
+        // unselectedBookingTimes.forEach(item => {
+        //     item.checked = false;
+        // });
 
-        if (type === 'individual' && individualPrice.value && !isNaN(individualPrice.value && individualPrice.value >= 0)) {
-            this.type = 'individual';
-
-            if (numberOfGuests.value && !isNaN(numberOfGuests.value)  && numberOfGuests.value >= 0) {
-                this.computed = individualPrice.value * numberOfGuests.value;
-            } else {
-                this.computed = individualPrice.value;
-            }
-        }
-
-        result = (discount.value && !isNaN(discount.value) && discount.value >=0)
-            ? this.computed - discount.value
-            : this.computed;
-
-        result = (this.vat)
-            ? result + (result * this.vat)
-            : result;
-
-        total.value = result;
-
-        total.nextElementSibling.value = this.nf.format(result);
+        total.value = price.trim();
     },
-
-    applyVat(value) {
-        this.vat = value;
-    }
 });

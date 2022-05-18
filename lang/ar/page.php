@@ -129,7 +129,7 @@ return [
     'halls' => [
         'index' => [
             'header' => 'القاعات',
-            'table' => ['period' => 'الفترة', 'from' => 'من', 'to' => 'إلى', 'price' => 'السعر']
+            'table' => ['#' => '#', 'period' => 'الفترة', 'from' => 'من', 'to' => 'إلى', 'price' => 'السعر']
         ],
         'create' => ['header' => 'إنشاء قاعة جديدة'],
         'edit' => ['header' => 'تحديث بيانات القاعة :hall'],

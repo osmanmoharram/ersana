@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\BookingTime;
+use App\Models\Client\Booking;
+use App\Models\Client\BookingTime;
 use Illuminate\Http\Request;
 
 class BookingTimeController extends Controller
@@ -15,9 +16,30 @@ class BookingTimeController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::with(['bookingTime'])
-            ->where('')
-        
+        $bookings_bookingTimes = [];
+
+        $hall_bookingTimes = BookingTime::where('hall_id', session('hall')->id)
+                                ->where('period', request('period'))->get();
+
+
+        $bookings = Booking::where('date', request('date')[0])
+                        ->whereHas('bookingTime', function ($query) {
+                            $query->where('period', '=', request('period'));
+                        })->get();
+
+        if ($bookings) {
+            foreach ($bookings as $booking) {
+                $bookings_bookingTimes[] = $booking->bookingTime;
+            }
+        }
+
+        $available = $hall_bookingTimes->filter(function ($value) use ($bookings_bookingTimes) {
+            return ! in_array($value, $bookings_bookingTimes);
+        });
+
+        return response()->json([
+            'times' => $available->toArray()
+        ], 200);
     }
 
     /**

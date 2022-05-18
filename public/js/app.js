@@ -5092,8 +5092,8 @@ window.$ = window.jQuery = (jquery_slim__WEBPACK_IMPORTED_MODULE_1___default());
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
 (0,flatpickr__WEBPACK_IMPORTED_MODULE_2__["default"])('#date', {
   altInput: true,
-  altFormat: 'M j, Y h:i K',
-  enableTime: true,
+  altFormat: 'M j, Y',
+  enableTime: false,
   onChange: function onChange(selectedDate, config, instance) {
     // Close picker on date select
     instance.close();
@@ -5133,10 +5133,10 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('selection', {
   },
   period: function period() {
     // area where times will be inserted
-    var bookingTimes = $('#bookingTimes tbody'); // number of inserted times
+    var bookingTimes = $('#bookingTimes tbody');
+    console.log(bookingTimes[0]); // number of inserted times
 
-    var counter = bookingTimes.children().length;
-    console.log(counter); // new time values
+    var counter = bookingTimes.children().length; // new time values
 
     var periodDisplayValue = $('#period input')[0].value;
     var periodsendValue = $('#period input')[1].value;
@@ -5156,47 +5156,40 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('bookingTimes', {
   setPeriod: function setPeriod(period) {
     this.period = period;
   },
-  get: function get(hallId) {
-    axios__WEBPACK_IMPORTED_MODULE_3___default().get("/halls/".concat(hallId, "/booking-times"), {
-      date: this.date,
-      period: this.period
+  get: function get(hall) {
+    var _this = this;
+
+    axios__WEBPACK_IMPORTED_MODULE_3___default().get("/halls/".concat(hall, "/booking-times"), {
+      params: {
+        date: this.date,
+        period: this.period
+      }
     }).then(function (response) {
-      console.log(response.data);
+      $('#availableBookingTimes').removeClass('hidden');
+      var bookingTimes = $('#availableBookingTimes tbody');
+      response.data.times.forEach(function (time) {
+        var row = "\n                    <tr>\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n                                <input\n                                    type=\"checkbox\"\n                                    class=\"booking-time bg-white rounded-sm cursor-pointer border border-slate-300\"\n                                    @click=\"$store.computeTotal.compute($el)\"\n                                >\n\n                                <input type=\"hidden\" name=\"bookingTime_id\" value=\"".concat(time.id, "\">\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n                                ").concat(_this.formatPeriod(time.period), "\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n                                ").concat(time.from, "\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n                                ").concat(time.to, "\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"price-input text-sm text-slate-500\">\n                                ").concat(time.price, "\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n\n                            </div>\n                        </td>\n                    </tr>\n                ");
+        bookingTimes.append(row);
+      });
     })["catch"](function (errors) {
-      console.log(errors.data);
+      console.log(errors);
     });
+  },
+  formatPeriod: function formatPeriod(period) {
+    return period === 'day' ? 'Day / صباحاً' : 'Evening / مساءاً';
   }
 });
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('computeTotal', {
-  nf: Intl.NumberFormat(),
-  computed: 0,
-  vat: 0,
-  compute: function compute() {
-    var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-    var result;
-    console.log(fixedPrice.value);
+  compute: function compute(element) {
+    var bookingTimes = Array.from(document.querySelectorAll('input.booking-time'));
+    var price = $(element).parents('tr').find('.price-input').text(); // unselectedBookingTimes = bookingTimes.filter(item => {
+    //     item !== element;
+    // });
+    // unselectedBookingTimes.forEach(item => {
+    //     item.checked = false;
+    // });
 
-    if (type === 'fixed' && fixedPrice.value && !isNaN(fixedPrice.value) && fixedPrice.value >= 0) {
-      this.computed = fixedPrice.value;
-    }
-
-    if (type === 'individual' && individualPrice.value && !isNaN(individualPrice.value && individualPrice.value >= 0)) {
-      this.type = 'individual';
-
-      if (numberOfGuests.value && !isNaN(numberOfGuests.value) && numberOfGuests.value >= 0) {
-        this.computed = individualPrice.value * numberOfGuests.value;
-      } else {
-        this.computed = individualPrice.value;
-      }
-    }
-
-    result = discount.value && !isNaN(discount.value) && discount.value >= 0 ? this.computed - discount.value : this.computed;
-    result = this.vat ? result + result * this.vat : result;
-    total.value = result;
-    total.nextElementSibling.value = this.nf.format(result);
-  },
-  applyVat: function applyVat(value) {
-    this.vat = value;
+    total.value = price.trim();
   }
 });
 

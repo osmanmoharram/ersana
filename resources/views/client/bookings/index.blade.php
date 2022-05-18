@@ -32,7 +32,7 @@
                 <!-- begin::Date -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-xs  text-slate-500">
-                        {{ $booking->start_date->format('M j, Y h:i A') }}
+                        {{ $booking->date }}
                     </div>
                 </td>
                 <!-- end::Date -->
@@ -40,7 +40,7 @@
                 <!-- begin::From -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-xs  text-slate-500">
-                        {{ $booking->end_date->format('M j, Y h:i A') }}
+                        {{ $booking->bookingTime->from }}
                     </div>
                 </td>
                 <!-- end::From -->
@@ -48,7 +48,7 @@
                 <!-- begin::To -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-xs  text-slate-500">
-                        {{ $booking->end_date->format('M j, Y h:i A') }}
+                        {{ $booking->bookingTime->to }}
                     </div>
                 </td>
                 <!-- end::To -->
@@ -56,7 +56,7 @@
                 <!-- begin::Total -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-xs {{ app()->getLocale() === 'ar' ? 'text-right' : '' }} text-slate-500">
-                        {{ number_format($booking->total) }}
+                        {{ $booking->total }}
                     </div>
                 </td>
                 <!-- end::Total -->
@@ -70,13 +70,13 @@
                 <!-- end::Status -->
 
                 <!-- begin::Actions -->
-                <td class="px-6 py-4 whitespace-nowrap text-right text-xs space-s-0.5 flex items-center justify-end">
+                <td class="px-6 py-4 whitespace-nowrap text-right text-xs space-s-1 flex items-center justify-end">
                     <!-- begin::Edit -->
                     <x-actions.edit href="{{ route('halls.bookings.edit', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"/>
                     <!-- end::Edit -->
 
                     <!-- begin::Delete -->
-                    <x-actions.delete action="{{ route('client.bookings.destroy', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"/>
+                    <x-actions.delete action="{{ route('halls.bookings.destroy', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"/>
                     <!-- end::Delete -->
                 </td>
                 <!-- end::Actions -->
