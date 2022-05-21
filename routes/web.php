@@ -13,6 +13,7 @@ use App\Http\Controllers\Client\{
     CustomerController,
     HallController
 };
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\UserController;
 use App\Models\Client\Hall;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +50,7 @@ Route::group([
 
         Route::resource('packages', PackageController::class)->except(['show']);
 
+
         Route::resource('clients', ClientController::class)->except(['show']);
 
         Route::resource('business-fields', BusinessFieldController::class)->except(['show']);
@@ -74,6 +76,8 @@ Route::group([
 
         // Admin And Client Routes
         Route::resource('users', UserController::class)->except(['show']);
+
+        Route::resource('expenses', ExpenseController::class)->except(['show']);
     });
 
     require __DIR__.'/auth.php';

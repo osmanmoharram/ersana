@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client\Booking;
@@ -18,14 +18,13 @@ class BookingTimeController extends Controller
     {
         $bookings_bookingTimes = [];
 
-        $hall_bookingTimes = BookingTime::where('hall_id', session('hall')->id)
+        $hall_bookingTimes = BookingTime::where('hall_id', request('hall'))
                                 ->where('period', request('period'))->get();
 
-
-        $bookings = Booking::where('date', request('date')[0])
+        $bookings = Booking::where('date', request('date'))
                         ->whereHas('bookingTime', function ($query) {
                             $query
-                                ->where('hall_id', session('hall')->id)
+                                ->where('hall_id', request('hall'))
                                 ->where('period', '=', request('period'));
                         })->get();
 

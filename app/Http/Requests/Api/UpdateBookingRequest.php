@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Client;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +24,9 @@ class UpdateBookingRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_id' => ['required', 'exists:customers,id'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email'],
+            'phone' => ['required', 'string'],
             'bookingTime_id' => ['required', 'exists:booking_times,id'],
             'date' => ['required', 'date'],
             'discount' => ['nullable', 'numeric'],

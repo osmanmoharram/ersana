@@ -261,5 +261,37 @@ return [
             ],
             'notes' => ['label' => 'Notes']
         ]
+    ],
+    'expenses' => [
+        'index' => [
+            'header' => 'Expenses',
+            'table' => [
+                '#' => '#',
+                'date' => 'Date',
+                'payment_method' => 'Payment Method',
+                'amount' => 'Amount',
+                'description' => 'Description',
+            ]
+        ],
+        'create' => ['header' => 'Create New Expense'],
+        'edit' => ['header' => 'Update Expense Number :expense'],
+        'form' => [
+            'date' => ['label' => 'Date', 'placeholder' => 'Please select date'],
+            'payment_method' => [
+                'label' => 'Payment Method',
+                'placeholder' => 'Please select payment method',
+                'items' => [
+                    'cash' => 'Cash',
+                    'bank' => 'Bank'
+                ],
+            ],
+            'amount' => ['label' => 'Amount', 'placeholder' => 'Please insert amount'],
+            'description' => ['label' => 'Description', 'placeholder' => 'Please write a detailed description']
+        ],
+        'flash' => [
+            'created' => 'A new expense has been created',
+            'updated' => 'The expense number :expense has been updated',
+            'deleted' => 'The expense :expense is deleted'
+        ],
     ]
 ];

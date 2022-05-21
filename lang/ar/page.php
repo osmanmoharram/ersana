@@ -222,5 +222,34 @@ return [
             'updated' => 'تم تحديث بيانات الحجز رقم :booking',
             'deleted' => 'تم حذف الحجز رقم :booking'
         ],
+    ],
+    'expenses' => [
+        'index' => [
+            'header' => 'المصروفات',
+            'table' => [
+                '#' => '#',
+                'date' => 'التاريخ',
+                'payment_method' => 'طريقة الدفع',
+                'amount' => 'المبلغ',
+                'description' => 'الوصف',
+            ]
+        ],
+        'create' => ['header' => 'إنشاء مصروف جديد'],
+        'edit' => ['header' => 'تحديث بيانات المصروف رقم :expense'],
+        'form' => [
+            'date' => ['label' => 'التاريخ', 'placeholder' => 'الرجاء ادخال تاريخ'],
+            'payment_method' => [
+                'label' => 'طريقة الدفع',
+                'placeholder' => 'الرجاء اختيار طريقة الدفع',
+                'items' => ['cash' => 'نقداً', 'bank' => 'بنك']
+            ],
+            'amount' => ['label' => 'المبلغ', 'placeholder' => 'الرجاء كتابة البلغ'],
+            'description' => ['label' => 'الوصف', 'placeholder' => 'الرجاء كتابة وصف المصروف بالتفصيل']
+        ],
+        'flash' => [
+            'created' => 'تم إنشاء مصروف جديد',
+            'updated' => 'تم تحديث بيانات المصروف رقم :expense',
+            'deleted' => 'تم حذف المصروف رقم :expense'
+        ],
     ]
 ];

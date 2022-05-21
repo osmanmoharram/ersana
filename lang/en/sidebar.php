@@ -6,6 +6,8 @@ return [
     'packages' => 'Packages',
     'features' => 'Features',
     'ads' => 'Ads',
+    'expenses' => 'Expenses',
+    'revenues' => 'Revenues',
     'reports' => 'Reports',
     'clients' => 'Clients',
     'bookings' => 'Bookings',

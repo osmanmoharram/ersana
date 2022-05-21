@@ -6,6 +6,8 @@ return [
     'packages' => 'الباقات',
     'features' => 'الميزات',
     'ads' => 'الإعلانات',
+    'expenses' => 'المصروفات',
+    'revenues' => 'الإيرادات',
     'reports' => 'التقارير',
     'clients' => 'العملاء',
     'customers' => 'أصحاب الحجوزات',

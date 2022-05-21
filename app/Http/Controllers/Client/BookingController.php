@@ -7,6 +7,7 @@ use App\Http\Requests\Client\NewBookingRequest;
 use App\Http\Requests\Client\UpdateBookingRequest;
 use App\Models\Client\Booking;
 use App\Models\Client\Customer;
+use App\Models\Client\Hall;
 
 class BookingController extends Controller
 {
@@ -65,12 +66,10 @@ class BookingController extends Controller
      * @param  \App\Models\Client\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function edit(Booking $booking)
+    public function edit(Hall $hall, Booking $booking)
     {
         $customers = Customer::all();
-        $booked = $this->getBookedDatesAndTimes($booking);
-        // dd(json_encode($booked));
-        return view('client.bookings.edit', compact('customers', 'booking', 'booked'));
+        return view('client.bookings.edit', compact('customers', 'booking'));
     }
 
     /**
@@ -80,12 +79,13 @@ class BookingController extends Controller
      * @param  \App\Models\Client\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBookingRequest $request, Booking $booking)
+    public function update(UpdateBookingRequest $request, Hall $hall, Booking $booking)
     {
+        $booking->update($request->validated());
 
         return redirect()
-            ->route('client.bookings.index')
-            ->withMessage(__('page.bookings.flash.updated', ['booking' => $booking->slug]));
+            ->route('halls.bookings.index', session('hall')->id)
+            ->withMessage(__('page.bookings.flash.updated', ['booking' => $booking->id]));
     }
 
     /**
@@ -96,8 +96,8 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        return redirect()
-            ->route('client.bookings.index')
-            ->withMessage(__('page.bookings.flash.deleted'));
+        $booking->delete();
+
+        return response()->json(200);
     }
 }
