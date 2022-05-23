@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('expenses', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->text('description');
-            $table->string('payment_method');
-            $table->date('date');
-            $table->integer('amount');
+            $table->date('from');
+            $table->date('to');
+            $table->string('type');
+            $table->integer('median');
+            $table->integer('total');
             $table->unsignedBigInteger('client_id')->nullable();
             $table->timestamps();
         });
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('expenses');
+        Schema::dropIfExists('reports');
     }
 };

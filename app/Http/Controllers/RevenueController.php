@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\NewExpenseRequest;
-use App\Http\Requests\UpdateExpenseRequest;
-use App\Models\Expense;
+use App\Http\Requests\NewRevenueRequest;
+use App\Http\Requests\UpdateRevenueRequest;
+use App\Models\Revenue;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
-class ExpenseController extends Controller
+class RevenueController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,14 +17,14 @@ class ExpenseController extends Controller
     public function index()
     {
         if (request()->user()->isClient()) {
-            $expenses = Expense::where('client_id', request()->user()->client_id)
+            $revenues = Revenue::where('client_id', request()->user()->client_id)
                 ->latest()->paginate(30);
         } else {
-            $expenses = Expense::where('client_id', null)
+            $revenues = Revenue::where('client_id', null)
                 ->latest()->paginate(30);
         }
 
-        return view('expenses.index', compact('expenses'));
+        return view('revenues.index', compact('revenues'));
     }
 
     /**
@@ -35,7 +34,7 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        return view('expenses.create');
+        return view('revenues.create');
     }
 
     /**
@@ -44,7 +43,7 @@ class ExpenseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(NewExpenseRequest $request)
+    public function store(NewRevenueRequest $request)
     {
         $data = $request->validated();
 
@@ -52,53 +51,53 @@ class ExpenseController extends Controller
             $data['client_id'] = $request->user()->client_id;
         }
 
-        Expense::create($data);
+        Revenue::create($data);
 
         return redirect()
-            ->route('expenses.index')
-            ->withMessage(__('page.expenses.flash.created'));
+            ->route('revenues.index')
+            ->withMessage(__('page.revenues.flash.created'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Expense  $expense
+     * @param  \App\Models\Revenue  $revenue
      * @return \Illuminate\Http\Response
      */
-    public function edit(Expense $expense)
+    public function edit(Revenue $revenue)
     {
-        return view('expenses.edit', compact('expense'));
+        return view('revenues.edit', compact('revenue'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Expense  $expense
+     * @param  \App\Models\Revenue  $revenue
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateExpenseRequest $request, Expense $expense)
+    public function update(UpdateRevenueRequest $request, Revenue $revenue)
     {
-        $expense->update($request->validated());
+        $revenue->update($request->validated());
 
         return redirect()
-            ->route('expenses.index')
-            ->withMessage(__('page.expenses.flash.updated', ['expense' => $expense->id]));
+            ->route('revenues.index')
+            ->withMessage(__('page.revenues.flash.updated', ['revenue' => $revenue->id]));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Expense  $expense
+     * @param  \App\Models\Revenue  $revenue
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Expense $expense)
+    public function destroy(Revenue $revenue)
     {
-        $expense_id = $expense->id;
+        $revenue_id = $revenue->id;
 
-        $expense->delete();
+        $revenue->delete();
 
-        return redirect()->route('expenses.index')
-            ->withMessage(__('page.expenses.flash.deleted', ['expense' => $expense_id]));
+        return redirect()->route('revenues.index')
+            ->withMessage(__('page.revenues.flash.deleted', ['revenue' => $revenue_id]));
     }
 }

@@ -14,6 +14,8 @@ use App\Http\Controllers\Client\{
     HallController
 };
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserController;
 use App\Models\Client\Hall;
 use Illuminate\Support\Facades\Auth;
@@ -78,6 +80,10 @@ Route::group([
         Route::resource('users', UserController::class)->except(['show']);
 
         Route::resource('expenses', ExpenseController::class)->except(['show']);
+
+        Route::resource('revenues', RevenueController::class)->except(['show']);
+
+        Route::resource('reports', ReportController::class)->except(['show']);
     });
 
     require __DIR__.'/auth.php';

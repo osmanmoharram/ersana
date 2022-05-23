@@ -5,5 +5,7 @@
         {{ $slot }}
     </div>
 
-    <div class="block h-2 w-2 rounded-full bg-slate-600 me-4"></div>
+    @if ($active)
+        <div class="block h-2 w-2 rounded-full bg-slate-600 me-4"></div>
+    @endif
 </a>

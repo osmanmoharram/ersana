@@ -251,5 +251,63 @@ return [
             'updated' => 'تم تحديث بيانات المصروف رقم :expense',
             'deleted' => 'تم حذف المصروف رقم :expense'
         ],
-    ]
+    ],
+    'revenues' => [
+        'index' => [
+            'header' => 'الإيرادات',
+            'table' => [
+                '#' => '#',
+                'date' => 'التاريخ',
+                'payment_method' => 'طريقة الدفع',
+                'amount' => 'المبلغ',
+                'description' => 'الوصف',
+            ]
+        ],
+        'create' => ['header' => 'إنشاء إيراد جديد'],
+        'edit' => ['header' => 'تحديث بيانات الإيراد رقم :revenue'],
+        'form' => [
+            'date' => ['label' => 'التاريخ', 'placeholder' => 'الرجاء ادخال تاريخ'],
+            'payment_method' => [
+                'label' => 'طريقة الدفع',
+                'placeholder' => 'الرجاء اختيار طريقة الدفع',
+                'items' => ['cash' => 'نقداً', 'bank' => 'بنك']
+            ],
+            'amount' => ['label' => 'المبلغ', 'placeholder' => 'الرجاء كتابة البلغ'],
+            'description' => ['label' => 'الوصف', 'placeholder' => 'الرجاء كتابة وصف المصروف بالتفصيل']
+        ],
+        'flash' => [
+            'created' => 'تم إنشاء إيراد جديد',
+            'updated' => 'تم تحديث بيانات الإيراد رقم :revenue',
+            'deleted' => 'تم حذف الإيراد رقم :revenue'
+        ],
+    ],
+    'reports' => [
+        'index' => [
+            'header' => 'التقارير',
+            'table' => [
+                '#' => '#',
+                'from' => 'من',
+                'to' => 'إلى',
+                'type' => 'النوع',
+                'median' => 'المتوسط',
+                'total' => 'الإجمالي',
+            ]
+        ],
+        'create' => ['header' => 'إنشاء تقرير جديد'],
+        'edit' => ['header' => 'تحديث بيانات التقرير رقم :report'],
+        'form' => [
+            'from' => ['label' => 'من', 'placeholder' => 'الرجاء ادخال تاريخ ابتداء التقرير'],
+            'to' => ['label' => 'إلى', 'placeholder' => 'الرجاء ادخال تاريخ انتهاء التقرير'],
+            'type' => [
+                'label' => 'النوع',
+                'placeholder' => 'الرجاء ادخال نوع التقرير',
+                'items' => ['expenses' => 'المصروفات', 'revenues' => 'الإيرادات', 'all' => 'الكل'],
+            ],
+        ],
+        'flash' => [
+            'created' => 'تم إنشاء تقرير جديد',
+            'updated' => 'تم تحديث بيانات التقرير رقم :report',
+            'deleted' => 'تم حذف التقرير رقم :report'
+        ],
+    ],
 ];

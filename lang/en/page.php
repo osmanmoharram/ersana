@@ -293,5 +293,66 @@ return [
             'updated' => 'The expense number :expense has been updated',
             'deleted' => 'The expense :expense is deleted'
         ],
-    ]
+    ],
+    'Revenues' => [
+        'index' => [
+            'header' => 'Revenues',
+            'table' => [
+                '#' => '#',
+                'date' => 'Date',
+                'payment_method' => 'Payment Method',
+                'amount' => 'Amount',
+                'description' => 'Description',
+            ]
+        ],
+        'create' => ['header' => 'Create New Revenue'],
+        'edit' => ['header' => 'Update revenue Number :revenue'],
+        'form' => [
+            'date' => ['label' => 'Date', 'placeholder' => 'Please select date'],
+            'payment_method' => [
+                'label' => 'Payment Method',
+                'placeholder' => 'Please select payment method',
+                'items' => [
+                    'cash' => 'Cash',
+                    'bank' => 'Bank'
+                ],
+            ],
+            'amount' => ['label' => 'Amount', 'placeholder' => 'Please insert amount'],
+            'description' => ['label' => 'Description', 'placeholder' => 'Please write a detailed description']
+        ],
+        'flash' => [
+            'created' => 'A new revenue has been created',
+            'updated' => 'The revenue number :revenue has been updated',
+            'deleted' => 'The revenue :revenue is deleted'
+        ],
+    ],
+    'reports' => [
+        'index' => [
+            'header' => 'Reports',
+            'table' => [
+                '#' => '#',
+                'from' => 'From',
+                'to' => 'To',
+                'type' => 'Type',
+                'median' => 'Median',
+                'total' => 'Total',
+            ]
+        ],
+        'create' => ['header' => 'Create New Report'],
+        'edit' => ['header' => 'Update Report Number :report'],
+        'form' => [
+            'from' => ['label' => 'From', 'placeholder' => 'Please insert the start date of the report'],
+            'to' => ['label' => 'To', 'placeholder' => 'Please insert the end date of the report'],
+            'type' => [
+                'label' => 'Type',
+                'placeholder' => 'Please select the type of the report',
+                'items' => ['expenses' => 'Expenses', 'revenues' => 'Revenues', 'all' => 'All']
+            ],
+        ],
+        'flash' => [
+            'created' => 'A new report has been created',
+            'updated' => 'The report number :report has been updated',
+            'deleted' => 'The report :report is deleted'
+        ],
+    ],
 ];
