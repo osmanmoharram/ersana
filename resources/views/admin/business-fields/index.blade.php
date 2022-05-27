@@ -1,15 +1,15 @@
-<x-app-layout>
-    <!-- begin::Page Heading -->
-    <x-slot name="header" class="py-6">
-        {{ __('page.businessFields.index.header') }}
-
-        <!-- begin::Add -->
-        <x-actions.add href="{{ route('business-fields.create') }}" />
-        <!-- end::Add -->
-    </x-slot>
-    <!-- end::Page Heading -->
-
+<x-settings-layout>
     <!-- begin::Page Content -->
+    <div class="flex items-center justify-between">
+        <span class="block">
+            {{ __('page.businessFields.index.header') }}
+        </span>
+
+        <a href="{{ route('business-fields.create') }}" class="inline-block py-1 px-6 mb-6 rounded-sm bg-slate-900 text-slate-300 text-sm hover:bg-slate-800 transition duration-150 ease-in-out">
+            {{ __('actions.add.page')}}
+        </a>
+    </div>
+
     <x-table page="businessFields" :columns="['field', 'type']">
         @foreach ($businessFields as $field)
             <tr>
@@ -48,4 +48,4 @@
         </x-slot>
     </x-table>
     <!-- begin::Page Content -->
-</x-app-layout>
+</x-settings-layout>

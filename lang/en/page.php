@@ -5,7 +5,8 @@ return [
         'header' => 'Dashboard',
     ],
     'settings' => [
-        'header' => 'Settings'
+        'header' => 'Settings',
+        'greeting' => 'Hi, please select one of the settings on the left.'
     ],
     'users' => [
         'index' => [
@@ -326,6 +327,35 @@ return [
             'created' => 'A new report has been created',
             'updated' => 'The report number :report has been updated',
             'deleted' => 'The report :report is deleted'
+        ],
+    ],
+    'advertisements' => [
+        'index' => [
+            'header' => 'Advertisements',
+            'table' => [
+                'name' => 'Name',
+                'start_date' => 'Start Date',
+                'end_date' => 'End Date',
+                'price' => 'Price',
+                'status' => 'Status',
+                'owner_name' => 'Owner Name',
+            ]
+        ],
+        'create' => ['header' => 'Create New Advertisement'],
+        'edit' => ['header' => 'Update The Advertisement :advertisement'],
+        'form' => [
+            'name' => 'Name',
+            'start_date' => 'Start Date',
+            'end_date' => 'End Date',
+            'price' => 'Price',
+            'status' => 'Status',
+            'owner_name' => 'Owner Name',
+            'owner_phone' => 'Owner Phone',
+        ],
+        'flash' => [
+            'created' => 'A new advertisement has been created',
+            'updated' => 'The advertisement :advertisement has been updated',
+            'deleted' => 'The advertisement :advertisement is deleted'
         ],
     ],
 ];

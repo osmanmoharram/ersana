@@ -1,8 +1,14 @@
 <x-settings-layout>
     <!-- begin::Page Content -->
-    <a href="{{ route('features.create') }}" class="inline-block py-1 px-6 mb-6 rounded-sm bg-slate-900 text-slate-300 text-sm hover:bg-slate-800 transition duration-150 ease-in-out">
-        {{ __('actions.add.page')}}
-    </a>
+    <div class="flex items-center justify-between">
+        <span class="block">
+            {{ __('page.features.index.header') }}
+        </span>
+
+        <a href="{{ route('features.create') }}" class="inline-block py-1 px-6 mb-6 rounded-sm bg-slate-900 text-slate-300 text-sm hover:bg-slate-800 transition duration-150 ease-in-out">
+            {{ __('actions.add.page')}}
+        </a>
+    </div>
 
     <x-table page="features" :columns="['description']">
         @foreach ($features as $feature)

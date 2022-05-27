@@ -3,15 +3,7 @@
         {{ __('page.packages.create.header') }}
     </x-slot>
 
-    @if ($errors->any())
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
-
-    <form action="{{ route('packages.store') }}" method="POST" class="space-y-4 pb-16">
+    <form action="{{ route('packages.store') }}" method="POST" class="space-y-4 pb-8">
         @csrf
 
         <!-- begin::Name -->
@@ -117,7 +109,7 @@
         <!-- end::Price -->
 
         <!-- begin::Form Button -->
-        <div class="grid grid-cols-2">
+        <div class="grid grid-cols-2 pt-8">
             <div class="col-span-1 flex items-center justify-between">
                 <x-button>
                     {{ __('actions.add.form')}}

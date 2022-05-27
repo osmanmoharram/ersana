@@ -5,7 +5,8 @@ return [
         'header' => 'لوحة التحكم',
     ],
     'settings' => [
-        'header' => 'الإعدادات'
+        'header' => 'الإعدادات',
+        'greeting' => 'مرحباً، الرجاء اختيار واحدة من الإعدادات التي على اليمين.'
     ],
     'users' => [
         'index' => [
@@ -299,6 +300,35 @@ return [
             'created' => 'تم إنشاء تقرير جديد',
             'updated' => 'تم تحديث بيانات التقرير رقم :report',
             'deleted' => 'تم حذف التقرير رقم :report'
+        ],
+    ],
+    'advertisements' => [
+        'index' => [
+            'header' => 'الإعلانات',
+            'table' => [
+                'name' => 'الإسم',
+                'start_date' => 'تاريخ بداية الإعلان',
+                'end_date' => 'تاريخ نهاية الإعلان',
+                'price' => 'السعر',
+                'status' => 'الحالة',
+                'owner_name' => 'المالك',
+            ]
+        ],
+        'create' => ['header' => 'إنشاء إعلان جديد'],
+        'edit' => ['header' => 'تحديث بيانات الإعلان :advertisement'],
+        'form' => [
+            'name' => 'الإسم',
+            'start_date' => 'تاريخ بداية الإعلان',
+            'end_date' => 'تاريخ نهاية الإعلان',
+            'price' => 'السعر',
+            'status' => 'الحالة',
+            'owner_name' => 'المالك',
+            'owner_phone' => 'الهاتف',
+        ],
+        'flash' => [
+            'created' => 'تم إنشاء إعلان جديد',
+            'updated' => 'تم تحديث بيانات الإعلان :advertisement',
+            'deleted' => 'تم حذف الإعلان :advertisement'
         ],
     ],
 ];

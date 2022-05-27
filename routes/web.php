@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\{
+    AdvertisementController,
     BusinessFieldController,
     ClientController,
     FeatureController,
@@ -47,19 +48,20 @@ Route::group([
     Route::middleware(['auth'])->group(function () {
         // Admin Routes
         Route::view('/dashboard', 'admin.dashboard')->name('admin.dashboard');
-        
+
         Route::view('/settings', 'admin.settings')->name('admin.settings');
 
         Route::resource('features', FeatureController::class)->except(['show']);
 
         Route::resource('packages', PackageController::class)->except(['show']);
 
-
         Route::resource('clients', ClientController::class)->except(['show']);
 
         Route::resource('business-fields', BusinessFieldController::class)->except(['show']);
 
         Route::resource('subscriptions', SubscriptionController::class)->except(['show']);
+
+        Route::resource('advertisements', AdvertisementController::class);
 
         // Client Routes
         Route::prefix('/halls/{hall}/')->name('halls.')->group(function () {

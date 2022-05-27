@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('page.settings.header')}}
+        {{ __('page.settings.header') }}
     </x-slot>
 
     <div class="grid grid-cols-12 gap-x-12">
