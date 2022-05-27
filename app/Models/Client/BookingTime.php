@@ -16,4 +16,14 @@ class BookingTime extends Model
     {
         return $this->belongsTo(Hall::class);
     }
+
+    protected function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = $value * 100;
+    }
+
+    protected function getPriceAttribute($value)
+    {
+        return $this->attributes['price'] = $value / 100;
+    }
 }

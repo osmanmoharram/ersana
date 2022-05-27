@@ -1,7 +1,12 @@
 <?php
 
 return [
-    'dashboard' => 'Dashboard',
+    'dashboard' =>[
+        'header' => 'Dashboard',
+    ],
+    'settings' => [
+        'header' => 'Settings'
+    ],
     'users' => [
         'index' => [
             'header' => 'Users',
@@ -19,38 +24,6 @@ return [
             'created' => 'A new user with the name :user has been created',
             'updated' => 'The user :user data have been updated',
             'deleted' => 'The user :user has been deleted'
-        ],
-    ],
-    'roles' => [
-        'index' => [
-            'header' => 'Roles',
-            'table' => ['name' => 'Name'],
-        ],
-        'show' => ['header' => 'Role :role'],
-        'edit' => ['header' => 'Choose The Permissions For Role :role'],
-        'form' => [
-            'name' => ['label' => 'Name', 'placeholder' => 'Please write the name of the role']
-        ],
-        'flash' => [
-            'created' => 'A new role has been created',
-            'updated' => 'the role :role has been updated',
-            'deleted' => 'the role :role is deleted'
-        ],
-    ],
-    'permissions' => [
-        'index' => [
-            'header' => 'Permissions',
-            'table' => ['name' => 'Name', 'placeholder' => 'Please write the name of the permission'],
-        ],
-        'create' => [ 'header' => 'Create New Permission' ],
-        'edit' => ['Update the permission :permission'],
-        'form' => [
-            'name' => ['label' => 'Name']
-        ],
-        'flash' => [
-            'created' => 'A new permission has been created',
-            'updated' => 'The permission :permission has been updated',
-            'deleted' => 'The permission :permission is deleted'
         ],
     ],
     'features' => [
@@ -334,7 +307,7 @@ return [
                 'from' => 'From',
                 'to' => 'To',
                 'type' => 'Type',
-                'median' => 'Median',
+                'average' => 'Average',
                 'total' => 'Total',
             ]
         ],

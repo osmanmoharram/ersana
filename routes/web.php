@@ -47,6 +47,8 @@ Route::group([
     Route::middleware(['auth'])->group(function () {
         // Admin Routes
         Route::view('/dashboard', 'admin.dashboard')->name('admin.dashboard');
+        
+        Route::view('/settings', 'admin.settings')->name('admin.settings');
 
         Route::resource('features', FeatureController::class)->except(['show']);
 
@@ -83,7 +85,7 @@ Route::group([
 
         Route::resource('revenues', RevenueController::class)->except(['show']);
 
-        Route::resource('reports', ReportController::class)->except(['show']);
+        Route::resource('reports', ReportController::class);
     });
 
     require __DIR__.'/auth.php';

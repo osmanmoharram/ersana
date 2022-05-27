@@ -90,8 +90,8 @@
                         <x-label for="from" :value="__('page.halls.form.bookingTimes.from.label')" class="text-xs" />
 
                         <input
-                            type="text" id="from" placeholder="{{ __('page.halls.form.bookingTimes.from.placeholder') }}"  readonly="readonly"
-                            class="flatpickr flatpickr-input w-full bg-white placeholder-slate-300 rounded-sm text-sm shadow-sm border-none outline-none focus:outline-none focus:ring-0 mt-2"
+                            type="text" placeholder="{{ __('page.halls.form.bookingTimes.from.placeholder') }}"  readonly="readonly"
+                            class="time-picker flatpickr flatpickr-input w-full bg-white placeholder-slate-300 rounded-sm text-sm shadow-sm border-none outline-none focus:outline-none focus:ring-0 mt-2"
                             data-id="multipleCustomConjunction"
                         >
 
@@ -106,8 +106,8 @@
                         <x-label for="to" :value="__('page.halls.form.bookingTimes.to.label')" class="text-xs" />
 
                         <input
-                            type="text" id="to" placeholder="{{ __('page.halls.form.bookingTimes.to.placeholder') }}" readonly="readonly"
-                            class="flatpickr flatpickr-input w-full bg-white placeholder-slate-300 rounded-sm text-sm shadow-sm border-none outline-none focus:outline-none focus:ring-0 mt-2"
+                            type="text" placeholder="{{ __('page.halls.form.bookingTimes.to.placeholder') }}" readonly="readonly"
+                            class="time-picker flatpickr flatpickr-input w-full bg-white placeholder-slate-300 rounded-sm text-sm shadow-sm border-none outline-none focus:outline-none focus:ring-0 mt-2"
                             data-id="multipleCustomConjunction"
                         >
 

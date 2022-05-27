@@ -28,4 +28,14 @@ class Booking extends Model
     {
         return $this->belongsTo(BookingTime::class, 'bookingTime_id');
     }
+
+    protected function setTotalAttribute($value)
+    {
+        $this->attributes['total'] = $value * 100;
+    }
+
+    protected function getTotalAttribute($value)
+    {
+        return $this->attributes['total'] = $value / 100;
+    }
 }

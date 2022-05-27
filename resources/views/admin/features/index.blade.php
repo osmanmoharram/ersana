@@ -1,15 +1,9 @@
-<x-app-layout>
-    <!-- begin::Page Heading -->
-    <x-slot name="header" class="py-6">
-        {{ __('page.features.index.header') }}
-
-        <!-- begin::Add -->
-        <x-actions.add href="{{ route('features.create') }}" />
-        <!-- end::Add -->
-    </x-slot>
-    <!-- end::Page Heading -->
-
+<x-settings-layout>
     <!-- begin::Page Content -->
+    <a href="{{ route('features.create') }}" class="inline-block py-1 px-6 mb-6 rounded-sm bg-slate-900 text-slate-300 text-sm hover:bg-slate-800 transition duration-150 ease-in-out">
+        {{ __('actions.add.page')}}
+    </a>
+
     <x-table page="features" :columns="['description']">
         @foreach ($features as $feature)
             <tr>
@@ -40,5 +34,5 @@
         </x-slot>
     </x-table>
     <!-- begin::Page Content -->
-</x-app-layout>
+</x-settings-layout>
 

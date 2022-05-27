@@ -1,13 +1,8 @@
-<x-app-layout>
+<x-settings-layout>
     <div class="pb-8">
-
-        <!-- begin::Page Heading -->
-        <x-slot name="header" class="py-6">
-            {{ __('page.packages.index.header') }}
-
-            <x-actions.add href="{{ route('packages.create') }}" />
-        </x-slot>
-        <!-- end::Page Heading -->
+        <a href="{{ route('packages.create') }}" class="inline-block py-1 px-6 mb-6 rounded-sm bg-slate-900 text-slate-300 text-sm hover:bg-slate-800 transition duration-150 ease-in-out">
+            {{ __('actions.add.page')}}
+        </a>
 
         <!-- begin::Page Content -->
         <div class="grid grid-cols-3 gap-6">
@@ -17,5 +12,5 @@
         </div>
         <!-- begin::Page Content -->
     </div>
-</x-app-layout>
+</x-settings-layout>
 

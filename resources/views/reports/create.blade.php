@@ -20,8 +20,8 @@
                         </div>
 
                         <input
-                            type="text" id="date" name="from" placeholder="{{ __('page.reports.form.from.placeholder') }}"
-                            class="w-full text-sm rounded-sm placeholder-slate-300 border-none cursor-pointer shadow-sm mt-2 outline-none focus:ring-0" readonly
+                            type="text"name="from" placeholder="{{ __('page.reports.form.from.placeholder') }}"
+                            class="date-picker w-full text-sm rounded-sm placeholder-slate-300 border-none cursor-pointer shadow-sm mt-2 outline-none focus:ring-0" readonly
                             x-init="$el.value = ''"
                         />
 
@@ -42,8 +42,8 @@
                         </div>
 
                         <input
-                            type="text" id="date" name="to" placeholder="{{ __('page.reports.form.to.placeholder') }}"
-                            class="w-full text-sm rounded-sm placeholder-slate-300 border-none cursor-pointer shadow-sm mt-2 outline-none focus:ring-0" readonly
+                            type="text" name="to" placeholder="{{ __('page.reports.form.to.placeholder') }}"
+                            class="date-picker w-full text-sm rounded-sm placeholder-slate-300 border-none cursor-pointer shadow-sm mt-2 outline-none focus:ring-0" readonly
                             x-init="$el.value = ''"
                         />
 

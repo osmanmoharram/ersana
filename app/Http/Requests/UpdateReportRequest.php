@@ -26,7 +26,7 @@ class UpdateReportRequest extends FormRequest
         return [
             'from' => ['required', 'date'],
             'to' => ['required', 'date', 'after:from'],
-            'type' => ['required', 'in:expenses,revenues','all']
+            'type' => ['required', 'in:expenses,revenues,all']
         ];
     }
 }

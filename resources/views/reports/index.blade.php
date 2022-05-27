@@ -8,7 +8,7 @@
     <!-- end::Page Heading -->
 
     <!-- begin::Page Content -->
-    <x-table page="reports" :columns="['from', 'to', 'type', 'median', 'total']">
+    <x-table page="reports" :columns="['from', 'to', 'type', 'average', 'total']">
         @foreach ($reports as $report)
             <tr>
                 <!-- begin::To -->
@@ -38,7 +38,7 @@
                 <!-- begin::Median -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm  text-slate-500">
-                        {{ $report->median }}
+                        {{ $report->average }}
                     </div>
                 </td>
                 <!-- end::Median -->
@@ -53,6 +53,10 @@
 
                 <!-- begin::Actions -->
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm space-s-1 flex items-center justify-end">
+                    <!-- begin::Show -->
+                    <x-actions.show href="{{ route('reports.show', $report->id) }}" />
+                    <!-- end::Show -->
+
                     <!-- begin::Edit -->
                     <x-actions.edit href="{{ route('reports.edit', $report->id) }}" />
                     <!-- end::Edit -->

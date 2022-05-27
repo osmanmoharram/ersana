@@ -10,30 +10,31 @@ window.$ = window.jQuery = jQuery;
 
 Alpine.start();
 
-flatpickr('#date', {
-    altInput: true,
-    altFormat: 'M j, Y',
-    enableTime: false,
-    onChange: function(selectedDate, config, instance) {
-        // Close picker on date select
-        instance.close();
+const datePickers = document.querySelectorAll('.date-picker');
 
-        Alpine.store('bookingTimes').setDate(selectedDate);
-    }
-});
-flatpickr('#from', {
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    defaultDate: "08:00",
-});
-flatpickr('#to', {
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    defaultDate: "00:00",
+datePickers.forEach(item => {
+    flatpickr(item, {
+        altInput: true,
+        altFormat: 'M j, Y',
+        enableTime: false,
+        onChange: function(selectedDate, config, instance) {
+            // Close picker on date select
+            instance.close();
+
+            Alpine.store('bookingTimes').setDate(selectedDate);
+        }
+    });
 });
 
+const timePickers = document.querySelectorAll('time-pickers');
+
+timePickers.forEach(item => {
+    flatpickr(item, {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+    });
+});
 
 Alpine.store('selection', {
     select(target, value) {

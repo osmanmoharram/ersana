@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('from');
             $table->date('to');
             $table->string('type');
-            $table->integer('median');
+            $table->integer('average');
             $table->integer('total');
             $table->unsignedBigInteger('client_id')->nullable();
             $table->timestamps();

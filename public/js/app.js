@@ -5090,27 +5090,26 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 window.$ = window.jQuery = (jquery_slim__WEBPACK_IMPORTED_MODULE_1___default());
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
-(0,flatpickr__WEBPACK_IMPORTED_MODULE_2__["default"])('#date', {
-  altInput: true,
-  altFormat: 'M j, Y',
-  enableTime: false,
-  onChange: function onChange(selectedDate, config, instance) {
-    // Close picker on date select
-    instance.close();
-    alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('bookingTimes').setDate(selectedDate);
-  }
+var datePickers = document.querySelectorAll('.date-picker');
+datePickers.forEach(function (item) {
+  (0,flatpickr__WEBPACK_IMPORTED_MODULE_2__["default"])(item, {
+    altInput: true,
+    altFormat: 'M j, Y',
+    enableTime: false,
+    onChange: function onChange(selectedDate, config, instance) {
+      // Close picker on date select
+      instance.close();
+      alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('bookingTimes').setDate(selectedDate);
+    }
+  });
 });
-(0,flatpickr__WEBPACK_IMPORTED_MODULE_2__["default"])('#from', {
-  enableTime: true,
-  noCalendar: true,
-  dateFormat: "H:i",
-  defaultDate: "08:00"
-});
-(0,flatpickr__WEBPACK_IMPORTED_MODULE_2__["default"])('#to', {
-  enableTime: true,
-  noCalendar: true,
-  dateFormat: "H:i",
-  defaultDate: "00:00"
+var timePickers = document.querySelectorAll('time-pickers');
+timePickers.forEach(function (item) {
+  (0,flatpickr__WEBPACK_IMPORTED_MODULE_2__["default"])(item, {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i"
+  });
 });
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('selection', {
   select: function select(target, value) {

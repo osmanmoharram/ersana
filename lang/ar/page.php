@@ -1,8 +1,12 @@
 <?php
 
 return [
-    'dashboard' => 'لوحة التحكم',
-
+    'dashboard' => [
+        'header' => 'لوحة التحكم',
+    ],
+    'settings' => [
+        'header' => 'الإعدادات'
+    ],
     'users' => [
         'index' => [
             'header'=> 'المستخدمون',
@@ -20,20 +24,6 @@ return [
             'created' => 'تم إنشاء مستخدم جديد',
             'updated' => 'تم تحديث بيانات المستخدم :user',
             'deleted' => 'تم حذف المستخدم :user'
-        ],
-    ],
-    'roles' => [
-        'index' => [
-            'header' => 'الأدوار',
-            'table' => ['name' => 'الاسم'],
-        ],
-        'show' => ['header' => 'الدور :role'],
-        'edit' => ['header' => 'تحديد صلاحيات الدور :role'],
-        'form' => [
-            'permissions' => ['label' => 'الصلاحيات']
-        ],
-        'flash' => [
-            'updated' => 'تم تحديث بيانات الدور :role',
         ],
     ],
     'features' => [
@@ -289,12 +279,13 @@ return [
                 'from' => 'من',
                 'to' => 'إلى',
                 'type' => 'النوع',
-                'median' => 'المتوسط',
+                'average' => 'المتوسط',
                 'total' => 'الإجمالي',
             ]
         ],
         'create' => ['header' => 'إنشاء تقرير جديد'],
         'edit' => ['header' => 'تحديث بيانات التقرير رقم :report'],
+        'show' => ['header' => 'تقرير رقم :report'],
         'form' => [
             'from' => ['label' => 'من', 'placeholder' => 'الرجاء ادخال تاريخ ابتداء التقرير'],
             'to' => ['label' => 'إلى', 'placeholder' => 'الرجاء ادخال تاريخ انتهاء التقرير'],
