@@ -40,7 +40,6 @@ class BusinessFieldController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'in:advertisement,booking']
         ]);
 
         BusinessField::create($data);

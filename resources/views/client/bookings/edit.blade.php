@@ -43,10 +43,10 @@
         </div>
         <!-- end::Customer Name -->
 
-        <!-- begin::Date -->
         <div x-data class="grid grid-cols-2 items-end">
             <div class="col-span-1">
                 <div class="grid grid-cols-3 gap-x-6 items-end">
+                    <!-- begin::Date -->
                     <div class="col-span-1">
                         <div class="flex items-center justify-between">
                             <x-label for="date" :value="__('page.bookings.form.date.label')" />
@@ -66,6 +66,7 @@
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+                    <!-- end::Date -->
 
                     <div class="col-span-1">
                         <x-label for="period" :value="__('page.halls.form.bookingTimes.period.label')" />
@@ -98,7 +99,6 @@
                 </div>
             </div>
         </div>
-        <!-- end::Date -->
 
         <div class="grid grid-cols-2">
             <div class="col-span-1">

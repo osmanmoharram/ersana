@@ -31,21 +31,9 @@ return [
         'index' => [
             'header' => 'Features',
             'table'  => ['description' => 'Description',],
-            'actions' => [
-                'add' => ['title' => 'Add New Feature', 'confirm' => 'Add'],
-                'edit' => ['title' => 'Edit', 'confirm' => 'Update'],
-                'delete' => [
-                    'title' => 'Delete',
-                    'confirm' => 'Confirm',
-                    'warning' => [
-                        'title' => 'Are you sure you want to delete this feature?',
-                        'sentence' => 'The feature will be removed from the system permanently and you won\'t be able to get it back',
-                    ]
-                ],
-            ],
         ],
         'create' => ['header' => 'Create New Feature'],
-        'edit' => ['header' => 'Update The Feature'],
+        'edit' => ['header' => 'Update The Feature :feature'],
         'form' => [
             'description' => [
                 'label' => 'Description',
@@ -55,8 +43,25 @@ return [
         ],
         'flash' => [
             'created' => 'A new feature has been created',
-            'updated' => 'The feature has been updated',
-            'deleted' => 'The feature has been deleted'
+            'updated' => 'The feature :feature has been updated',
+            'deleted' => 'The feature :featuer has been deleted'
+        ],
+    ],
+    'offers' => [
+        'index' => [
+            'header' => 'Offers',
+            'table'  => ['description' => 'Description', 'price' => 'Price'],
+        ],
+        'create' => ['header' => 'Create New Offer'],
+        'edit' => ['header' => 'Update The Offer :offer'],
+        'form' => [
+            'description' => ['label' => 'Description', 'placeholder' => 'Please write a simple and clear description of this offer'],
+            'price' => ['label' => 'Price', 'placeholder' => 'Please insert the price of the offer']
+        ],
+        'flash' => [
+            'created' => 'A new offer has been created',
+            'updated' => 'The offer :offer has been updated',
+            'deleted' => 'The offer :offer has been deleted'
         ],
     ],
     'packages' => [
@@ -119,10 +124,16 @@ return [
             ],
         ],
         'create' => [ 'header' => 'Create New Subscription', ],
-        'edit' => [ 'header' => 'Update Subscription :subscription', ],
+        'edit' => [ 'header' => 'Update Subscription :subscription','note' => ['label' => 'Note', 'content' => 'For editing client\'s halls data please refer to halls section and go to the required hall'] ],
         'form' => [
             'client' => ['label' => 'Client', 'placeholder' => 'Please select one of the available clients.'],
             'package' => ['label' => 'Package', 'placeholder' => 'Please select one of the available packages.'],
+            'hall' => [
+                'name' => ['label' => 'Hall Name', 'placeholder' => 'Please insert the name of the hall'],
+                'city' => ['label' => 'Hall City', 'placeholder' => 'Please select the city where the hall is located'],
+                'address' => ['label' => 'Hall Address', 'placeholder' => 'Please insert the address of the hall'],
+                'button' => 'Add Hall'
+            ]
         ],
         'flash' => [
             'created' => 'A new subscription has been created with :subscription',
@@ -154,13 +165,25 @@ return [
     'halls' => [
         'index' => [
             'header' => 'Halls',
-            'table' => ['#' => '#', 'period' => 'Period', 'from' => 'From', 'to' => 'To', 'price' => 'Price']
+            'table' => [
+                '#' => '#',
+                'name' => 'Name',
+                'city' => 'City',
+                'address' => 'Address',
+                'capacity' => 'Capacity',
+                'client' => 'Client',
+                'period' => 'Period',
+                'from' => 'From',
+                'to' => 'To',
+                'price' => 'Price'
+            ]
         ],
         'create' => ['header' => 'Create New Hall',],
         'edit' => [ 'header' => 'Update :hall Hall'],
         'form' => [
-            'name' => ['label' => 'Name', 'placeholder' => 'The hall name'],
-            'location' => ['label' => 'Location', 'placeholder' => 'City, Nabourhood, street name or number'],
+            'name' => ['label' => 'Name', 'placeholder' => 'Please insert the hall name'],
+            'city' => ['label' => 'City', 'placeholder' => 'Please select the city where hall is located'],
+            'address' => ['label' => 'Address', 'placeholder' => 'Please insert the hall address'],
             'capacity' => ['label' => 'Capacity', 'placeholder' => 'The number of people the hall can fit', 'person' => 'Person'],
             'bookingTimes' => [
                 'enter' => ['label' => 'Determine Booking Times'],
@@ -344,13 +367,13 @@ return [
         'create' => ['header' => 'Create New Advertisement'],
         'edit' => ['header' => 'Update The Advertisement :advertisement'],
         'form' => [
-            'name' => 'Name',
-            'start_date' => 'Start Date',
-            'end_date' => 'End Date',
-            'price' => 'Price',
-            'status' => 'Status',
-            'owner_name' => 'Owner Name',
-            'owner_phone' => 'Owner Phone',
+            'name' => ['label' => 'Name', 'placeholder' => 'Please write the name of advertisement'],
+            'start_date' => ['label' => 'Start Date', 'placeholder' => 'Please insert the start date of the advertisement'],
+            'start_date' => ['label' => 'End Date', 'placeholder' => 'Please insert the end date of the advertisement'],
+            'price' => ['label' => 'Price', 'placeholder' => 'Please write the advertisement price'],
+            'status' => ['label' => 'Status', 'placeholder' => 'Please write the status of the advertisement'],
+            'owner_name' => ['label' => 'Owner Name', 'placeholder' => 'Please write the owner\'s name'],
+            'owner_name' => ['label' => 'Owner Phone', 'placeholder' => 'Please write the owner\'s phone'],
         ],
         'flash' => [
             'created' => 'A new advertisement has been created',

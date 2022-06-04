@@ -34,10 +34,10 @@
         </div>
         <!-- end::Customer Name -->
 
-        <!-- begin::Date -->
         <div x-data class="grid grid-cols-2 items-end">
             <div class="col-span-1">
                 <div class="grid grid-cols-3 gap-x-6 items-end">
+                    <!-- begin::Date -->
                     <div class="col-span-1">
                         <div class="flex items-center justify-between">
                             <x-label for="date" :value="__('page.bookings.form.date.label')" />
@@ -49,7 +49,7 @@
 
                         <input
                             type="text" id="date" name="date" placeholder="{{ __('page.bookings.form.date.placeholder') }}"
-                            class="w-full text-sm rounded-sm placeholder-slate-300 border-none cursor-pointer shadow-sm mt-2 outline-none focus:ring-0" readonly
+                            class="date-picker w-full text-sm rounded-sm placeholder-slate-300 border-none cursor-pointer shadow-sm mt-2 outline-none focus:ring-0" readonly
                             x-init="$el.value = ''"
                         />
 
@@ -57,6 +57,7 @@
                             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
+                    <!-- end::Date -->
 
                     <div class="col-span-1">
                         <x-label for="period" :value="__('page.halls.form.bookingTimes.period.label')" />

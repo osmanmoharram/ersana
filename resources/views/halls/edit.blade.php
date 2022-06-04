@@ -7,62 +7,87 @@
         </div>
     </x-slot>
 
-    <form x-data action="{{ route('halls.update', $hall->id) }}" method="POST" class="space-y-4 pb-8">
+    <form x-data action="{{ route('halls.update', $hall->id) }}" method="POST" class="mt-2 pb-8">
         @csrf
         @method('PATCH')
 
-        <!-- begin::Name -->
-        <div class="grid grid-cols-2">
-            <div class="col-span-1">
-                <x-label for="name" :value="__('page.halls.form.name.label')" />
+        <div class="space-y-4">
+            <!-- begin::Name -->
+            <div class="grid grid-cols-2">
+                <div class="col-span-1">
+                    <x-label for="hall_name" :value="__('page.halls.form.name.label')" />
 
-                <x-input
-                    type="text" class="w-full" name="name" value="{{ $hall->name }}"
-                    placeholder="{{ __('page.halls.form.name.placeholder') }}"
-                />
+                    <x-input
+                        type="text" class="w-full" name="name" value="{{ $hall->name }}"
+                        placeholder="{{ __('page.halls.form.name.placeholder') }}"
+                    />
 
-                @error('name')
-                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                @enderror
+                    @error('name')
+                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
-        </div>
-        <!-- end::Name -->
+            <!-- end::Name -->
 
-        <!-- begin::Location -->
-        <div class="grid grid-cols-2">
-            <div class="col-span-1">
-                <x-label for="location" :value="__('page.halls.form.location.label')" />
+            <!-- begin::City -->
+            <div class="grid grid-cols-2">
+                <div class="col-span-1">
+                    <x-label for="city" :value="__('page.halls.form.city.label')" />
 
-                <x-input
-                    type="text" class="w-full" name="location" value="{{ $hall->location }}"
-                    placeholder="{{ __('page.halls.form.location.placeholder') }}"
-                />
+                    <x-select name="city" value="{{ $hall->city }}" display="{{ __('cities.' . $hall->city) }}" placeholder="{{ __('page.halls.form.city.placeholder') }}">
+                        @foreach (['bahri', 'khartoum', 'madani', 'omdurman','port Sudan'] as $city)
+                            <li
+                                class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
+                                @click="$store.selection.select($el, '{{ $city }}'); visible = false"
+                            >
+                                {{ __('cities.' . $city) }}
+                            </li>
+                        @endforeach
+                    </x-select>
 
-                @error('location')
-                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                @enderror
+                    @error('city')
+                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
-        </div>
-        <!-- end::Location -->
+            <!-- end::City -->
 
-        <!-- begin::Capacity -->
-        <div class="grid grid-cols-2">
-            <div class="col-span-1">
-                <x-label for="capacity" :value="__('page.halls.form.capacity.label')" />
+            <!-- begin::Address -->
+            <div class="grid grid-cols-2">
+                <div class="col-span-1">
+                    <x-label for="hall_address" :value="__('page.halls.form.address.label')" />
 
-                <x-input
-                    type="text" class="w-full" name="capacity" value="{{ $hall->capacity }}"
-                    placeholder="{{ __('page.halls.form.capacity.placeholder') }}"
-                />
+                    <x-input
+                        type="text" class="w-full" name="address" value="{{ $hall->address }}"
+                        placeholder="{{ __('page.halls.form.address.placeholder') }}"
+                    />
 
-                @error('capacity')
-                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                @enderror
+                    @error('address')
+                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
-        </div>
-        <!-- end::Capacity -->
+            <!-- end::Address -->
 
-        <!-- begin::Enter Booking Times -->
+            <!-- begin::Capacity -->
+            <div class="grid grid-cols-2">
+                <div class="col-span-1">
+                    <x-label for="capacity" :value="__('page.halls.form.capacity.label')" />
+
+                    <x-input
+                        type="text" class="w-full" name="capacity" value="{{ $hall->capacity }}"
+                        placeholder="{{ __('page.halls.form.capacity.placeholder') }}"
+                    />
+
+                    @error('capacity')
+                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+            <!-- end::Capacity -->
+        </div>
+
+        {{-- <!-- begin::Enter Booking Times -->
         <div class="grid grid-cols-2">
             <div class="col-span-1">
                 <x-label for="enter" :value="__('page.halls.form.bookingTimes.enter.label')" />
@@ -210,10 +235,10 @@
                 </x-table>
             </div>
         </div>
-        <!-- end::Display Booking Times -->
+        <!-- end::Display Booking Times --> --}}
 
         <!-- begin::Form Button -->
-        <div class="grid grid-cols-2">
+        <div class="grid grid-cols-2 mt-8">
             <div class="col-span-1 flex items-center justify-between">
                 <x-button>
                     {{ __('actions.edit.form')}}

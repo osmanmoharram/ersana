@@ -3,8 +3,10 @@
 return [
     'dashboard' => 'Dashboard',
     'subscriptions' => 'Subscriptions',
+    'halls' => 'Halls',
     'packages' => 'Packages',
     'features' => 'Features',
+    'offers' => 'Offers',
     'ads' => 'Ads',
     'expenses' => 'Expenses',
     'revenues' => 'Revenues',

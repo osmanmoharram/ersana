@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Client;
+namespace App\Models;
 
 use App\Models\Client\BookingTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +14,7 @@ class Hall extends Model
 
     public function client()
     {
-        return $this->belongsTo(\App\Models\Client::class);
+        return $this->belongsTo(\App\Models\Admin\Client::class);
     }
 
     public function customers()

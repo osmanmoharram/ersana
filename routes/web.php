@@ -12,13 +12,14 @@ use App\Http\Controllers\Client\{
     BookingController,
     BookingTimeController,
     CustomerController,
-    HallController
+    OfferController,
 };
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserController;
-use App\Models\Client\Hall;
+use App\Http\Controllers\HallController;
+use App\Models\Hall;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -49,8 +50,6 @@ Route::group([
         // Admin Routes
         Route::view('/dashboard', 'admin.dashboard')->name('admin.dashboard');
 
-        Route::view('/settings', 'admin.settings')->name('admin.settings');
-
         Route::resource('features', FeatureController::class)->except(['show']);
 
         Route::resource('packages', PackageController::class)->except(['show']);
@@ -68,7 +67,7 @@ Route::group([
             Route::get('dashboard', function (Hall $hall) {
                 Session::put('hall', $hall);
 
-                return view('client.halls.dashboard');
+                return view('halls.dashboard');
             })->name('dashboard');
 
             Route::resource('bookings', BookingController::class);
@@ -76,11 +75,13 @@ Route::group([
             Route::resource('booking-times', BookingTimeController::class);
 
             Route::resource('customers', CustomerController::class);
+
+            Route::resource('offers', OfferController::class);
         });
 
+        // Admin And Client Routes
         Route::resource('halls', HallController::class)->except(['show']);
 
-        // Admin And Client Routes
         Route::resource('users', UserController::class)->except(['show']);
 
         Route::resource('expenses', ExpenseController::class)->except(['show']);
@@ -88,6 +89,10 @@ Route::group([
         Route::resource('revenues', RevenueController::class)->except(['show']);
 
         Route::resource('reports', ReportController::class);
+
+        Route::view('/settings', 'settings')->name('settings');
+
+        Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
     });
 
     require __DIR__.'/auth.php';

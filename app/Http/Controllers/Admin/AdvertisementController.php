@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\NewAdvertisementRequest;
 use App\Http\Requests\Admin\UpdateAdvertisementRequest;
+use App\Models\Admin\BusinessField;
 use App\Models\Advertisement;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,9 @@ class AdvertisementController extends Controller
      */
     public function create()
     {
-        return view('admin.advertisements.create');
+        $business_fields = BusinessField::all();
+
+        return view('admin.advertisements.create', compact('business_fields'));
     }
 
     /**

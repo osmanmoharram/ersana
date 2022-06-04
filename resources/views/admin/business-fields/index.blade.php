@@ -1,16 +1,16 @@
 <x-settings-layout>
     <!-- begin::Page Content -->
-    <div class="flex items-center justify-between">
+    <div class="flex items-start justify-between mb-4">
         <span class="block">
             {{ __('page.businessFields.index.header') }}
         </span>
 
-        <a href="{{ route('business-fields.create') }}" class="inline-block py-1 px-6 mb-6 rounded-sm bg-slate-900 text-slate-300 text-sm hover:bg-slate-800 transition duration-150 ease-in-out">
+        <a href="{{ route('business-fields.create') }}" class="inline-block py-1 px-6 rounded-sm bg-slate-900 text-slate-300 text-sm hover:bg-slate-800 transition duration-150 ease-in-out">
             {{ __('actions.add.page')}}
         </a>
     </div>
 
-    <x-table page="businessFields" :columns="['field', 'type']">
+    <x-table page="businessFields" :columns="['field']">
         @foreach ($businessFields as $field)
             <tr>
                 <!-- begin::Field -->
@@ -20,14 +20,6 @@
                     </div>
                 </td>
                 <!-- end::Field -->
-
-                <!-- begin::Type -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm  text-slate-500">
-                        {{ __('page.businessFields.types.' . $field->type) }}
-                    </div>
-                </td>
-                <!-- end::Type -->
 
                 <!-- begin::Actions -->
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm space-s-1 flex items-center justify-end">

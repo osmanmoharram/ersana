@@ -11,23 +11,11 @@
                 <div class="w-full hidden lg:block">
                     <!-- begin::Sidebar Links -->
                     <div class="py-6 space-y-6">
-                        <!-- begin::Packages -->
-                        <a href="{{ route('packages.index') }}" class="block text-sm ps-6 hover:underline">
-                            {{ __('sidebar.packages') }}
-                        </a>
-                        <!-- end::Packages -->
-
-                        <!-- begin::Features -->
-                        <a href="{{ route('features.index') }}" class="block text-sm ps-6 hover:underline">
-                            {{ __('sidebar.features') }}
-                        </a>
-                        <!-- end::Features -->
-
-                        <!-- begin::Business Fields -->
-                        <a href="{{ route('business-fields.index') }}" class="block text-sm ps-6 hover:underline">
-                            {{ __('sidebar.business-fields') }}
-                        </a>
-                        <!-- end::Business Fields -->
+                        @if (Auth::user()->isClient())
+                            @include('partials.client-settings-sidebar')
+                        @else
+                            @include('partials.admin-settings-sidebar')
+                        @endif
                     </div>
                     <!-- end::Sidebar Links -->
                 </div>

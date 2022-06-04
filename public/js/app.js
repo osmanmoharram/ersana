@@ -5103,7 +5103,7 @@ datePickers.forEach(function (item) {
     }
   });
 });
-var timePickers = document.querySelectorAll('time-pickers');
+var timePickers = document.querySelectorAll('.time-pickers');
 timePickers.forEach(function (item) {
   (0,flatpickr__WEBPACK_IMPORTED_MODULE_2__["default"])(item, {
     enableTime: true,
@@ -5132,8 +5132,7 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('selection', {
   },
   period: function period() {
     // area where times will be inserted
-    var bookingTimes = $('#bookingTimes tbody');
-    console.log(bookingTimes[0]); // number of inserted times
+    var bookingTimes = $('#bookingTimes tbody'); // number of inserted times
 
     var counter = bookingTimes.children().length; // new time values
 
@@ -5176,6 +5175,22 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('bookingTimes', {
   },
   formatPeriod: function formatPeriod(period) {
     return period === 'day' ? 'Day / صباحاً' : 'Evening / مساءاً';
+  }
+});
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('halls', {
+  add: function add() {
+    // area where halls will be inserted
+    var halls = $('#halls tbody'); // number of inserted halls
+
+    var counter = halls.children().length; // new hall values
+
+    var name = $('#hallName').val();
+    var cityDisplayValue = $('#hallCity input')[0].value;
+    var citySendValue = $('#hallCity input')[1].value;
+    var address = $('#address').val();
+    var capacity = $('#capacity').val();
+    var hall = "\n            <tr>\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ".concat(name, "\n                        <input type=\"hidden\" name=\"halls[").concat(counter, "][name]\" value=\"").concat(name, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(cityDisplayValue, "\n                        <input type=\"hidden\" name=\"halls[").concat(counter, "][city]\" value=\"").concat(citySendValue, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(address, "\n                        <input type=\"hidden\" name=\"halls[").concat(counter, "][address]\" value=\"").concat(address, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(capacity, "\n                        <input type=\"hidden\" name=\"halls[").concat(counter, "][capacity]\" value=\"").concat(capacity, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <button @click.prevent=\"$el.parentElement.parentElement.remove()\" class=\"text-red-400 hover:text-red-500 py-2 px-4 transition duration-150 ease-in-out\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6\" viewBox=\"0 0 20 20\" fill=\"currentColor\">\n                            <path fill-rule=\"evenodd\" d=\"M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z\" clip-rule=\"evenodd\" />\n                        </svg>\n                    </button>\n                <td>\n            </tr>\n        ");
+    halls.append(hall);
   }
 });
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('computeTotal', {

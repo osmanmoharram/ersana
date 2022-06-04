@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\NewSubscriptionRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Client;
 use App\Models\Admin\Package;
 use App\Models\Admin\Subscription;
+use App\Models\Hall;
 use Illuminate\Http\Request;
 
 class SubscriptionController extends Controller
@@ -41,17 +43,14 @@ class SubscriptionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewSubscriptionRequest $request)
     {
-        $request->validate([
-            'client_id' => ['required', 'exists:clients,id'],
-            'package_id' => ['required', 'exists:packages,id']
-        ]);
-
         Subscription::create([
             'client_id' => $request->client_id,
             'package_id' => $request->package_id
         ]);
+
+        $this->createClientHalls($request);
 
         return redirect()
             ->route('subscriptions.index')
@@ -95,7 +94,7 @@ class SubscriptionController extends Controller
 
         return redirect()
             ->route('subscriptions.index')
-            ->withMessage(__('page.subscriptions.flash.updated'));
+            ->withMessage(__('page.subscriptions.flash.updated', ['subscription' => $subscription->id]));
     }
 
     /**
@@ -111,5 +110,18 @@ class SubscriptionController extends Controller
         $subscription->delete();
 
         return back()->withMessage(__('page.subscriptions.flash.deleted', ['subscription' => $slug]));
+    }
+
+    protected function createClientHalls($request)
+    {
+        foreach ($request->halls as $hall) {
+            Hall::create([
+                'name' => $hall['name'],
+                'city' => $hall['city'],
+                'address' => $hall['address'],
+                'capacity' => $hall['capacity'],
+                'client_id' => $request->client_id
+            ]);
+        }
     }
 }

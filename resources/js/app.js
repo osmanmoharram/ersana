@@ -26,7 +26,7 @@ datePickers.forEach(item => {
     });
 });
 
-const timePickers = document.querySelectorAll('time-pickers');
+const timePickers = document.querySelectorAll('.time-pickers');
 
 timePickers.forEach(item => {
     flatpickr(item, {
@@ -62,8 +62,6 @@ Alpine.store('selection', {
     period() {
         // area where times will be inserted
         const bookingTimes = $('#bookingTimes tbody');
-
-        console.log(bookingTimes[0]);
 
         // number of inserted times
         let counter = bookingTimes.children().length;
@@ -200,6 +198,65 @@ Alpine.store('bookingTimes', {
 
     formatPeriod(period) {
         return period === 'day' ? 'Day / صباحاً' : 'Evening / مساءاً';
+    }
+})
+
+Alpine.store('halls', {
+    add() {
+        // area where halls will be inserted
+        const halls = $('#halls tbody');
+
+        // number of inserted halls
+        let counter = halls.children().length;
+
+        // new hall values
+        const name = $('#hallName').val();
+        const cityDisplayValue = $('#hallCity input')[0].value;
+        const citySendValue = $('#hallCity input')[1].value;
+        const address = $('#address').val();
+        const capacity = $('#capacity').val();
+
+        let hall = `
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-slate-500">
+                        ${name}
+                        <input type="hidden" name="halls[${counter}][name]" value="${name}">
+                    </div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-slate-500">
+                        ${cityDisplayValue}
+                        <input type="hidden" name="halls[${counter}][city]" value="${citySendValue}">
+                    </div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-slate-500">
+                        ${address}
+                        <input type="hidden" name="halls[${counter}][address]" value="${address}">
+                    </div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-slate-500">
+                        ${capacity}
+                        <input type="hidden" name="halls[${counter}][capacity]" value="${capacity}">
+                    </div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <button @click.prevent="$el.parentElement.parentElement.remove()" class="text-red-400 hover:text-red-500 py-2 px-4 transition duration-150 ease-in-out">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                <td>
+            </tr>
+        `;
+
+        halls.append(hall);
     }
 })
 

@@ -3,8 +3,10 @@
 return [
     'dashboard' => 'لوحة التحكم',
     'subscriptions' => 'الإشتراكات',
+    'halls' => 'القاعات',
     'packages' => 'الباقات',
     'features' => 'الميزات',
+    'offers' => 'العروض',
     'ads' => 'الإعلانات',
     'expenses' => 'المصروفات',
     'revenues' => 'الإيرادات',

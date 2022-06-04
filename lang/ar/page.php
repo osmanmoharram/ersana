@@ -30,12 +30,26 @@ return [
     'features' => [
         'index' => ['header' => 'الميزات', 'table' => ['description' => 'الوصف']],
         'create' => ['header' => 'إنشاء ميزة جديدة'],
-        'edit' => ['header' => 'تحديث الميزة', ],
+        'edit' => ['header' => 'تحديث الميزة :feature', ],
         'form' => ['description' => ['label' => 'الوصف', 'placeholder' => 'اكتب شرحا مبسطا لهذه الميزة']],
         'flash' => [
             'created' => 'تم إنشاء ميزة جديدة ',
-            'updated' => 'تم تحديث بيانات الميزة',
-            'deleted' => 'تم حذف الميزة'
+            'updated' => 'تم تحديث بيانات الميزة :feature',
+            'deleted' => 'تم حذف الميزة :feature'
+        ]
+    ],
+    'offers' => [
+        'index' => ['header' => 'العروض', 'table' => ['description' => 'الوصف', 'price' => 'السعر']],
+        'create' => ['header' => 'إنشاء عرض جديد'],
+        'edit' => ['header' => 'تحديث العرض :offer'],
+        'form' => [
+            'description' => ['label' => 'الوصف', 'placeholder' => 'اكتب شرحا مبسطا لهذا العرض'],
+            'price' => ['label' => 'السعر', 'placeholder' => 'الرجاء إدخال سعر العرض']
+        ],
+        'flash' => [
+            'created' => 'تم إنشاء عرض جديد',
+            'updated' => 'تم تحديث بيانات العرض :offer',
+            'deleted' => 'تم حذف العرض :offer'
         ]
     ],
     'packages' => [
@@ -91,10 +105,17 @@ return [
             'table' => ['#' => '#', 'package' => 'الباقة', 'client' => 'العميل', 'status' => 'الحالة'],
         ],
         'create' => ['header' => 'إنشاء إشتراك جديد'],
-        'edit' => ['header' => 'تحديث بيانات الإشتراك :subscription'],
+        'edit' => ['header' => 'تحديث بيانات الإشتراك :subscription', 'note' => ''],
         'form' => [
             'client' => ['label' => 'العميل', 'placeholder' => 'الرجاء اختيار واحد من العملاء الموجودين.'],
             'package' => ['label' => 'الباقة', 'placeholder' => 'الرجاء اختيار واحدة من الباقات الموجودة.'],
+            'hall' => [
+                'name' => ['label' => 'إسم القاعة', 'placeholder' => 'الرجاء كتابة إسم القاعة'],
+                'city' => ['label' => 'المدينة المتواجدة بها القاعة', 'placeholder' => 'الرجاء اختيار المدينة الموجودة بها القاعة'],
+                'address' => ['label' => 'عنوان القاعة', 'placeholder' => 'الرجاء كتابة عنوان القاعة'],
+                'button' => 'إضافة قاعة'
+            ],
+            'note' => ['label' => 'ملاحظة', 'content' => 'لتعديل بيانات قاعات العميل الرجاء التوجه إلى قسم القاعات ثم اختيار القاعات الخاصة بالعميل المحدد']
         ],
         'flash' => [
             'created' => 'تم إنشاء إشتراك جديد',
@@ -103,12 +124,11 @@ return [
         ],
     ],
     'businessFields' => [
-        'index' => ['header' => 'مجالات العمل', 'table' => ['field' => 'المجال', 'type' => 'النوع']],
+        'index' => ['header' => 'مجالات العمل', 'table' => ['field' => 'المجال']],
         'create' => [ 'header' => 'إنشاء مجال عمل جديد', ],
         'edit' => ['header' => 'تحديث بيانات مجال العمل :field'],
         'form' => [
             'name' => ['label' => 'الإسم', 'placeholder' => 'الأعراس و المناسبات'],
-            'type' => ['label' => 'النوع', 'placeholder' => 'الرجاء اختيار واحدة من الأنواع الموجودة.'],
         ],
         'flash' => [
             'created' => 'تم إنشاء مجال عمل جديد',
@@ -120,13 +140,25 @@ return [
     'halls' => [
         'index' => [
             'header' => 'القاعات',
-            'table' => ['#' => '#', 'period' => 'الفترة', 'from' => 'من', 'to' => 'إلى', 'price' => 'السعر']
+            'table' => [
+                '#' => '#',
+                'name' => 'الإسم',
+                'city' => 'المدينة',
+                'address' => 'العنوان',
+                'capacity' => 'السعة',
+                'client' => 'العميل',
+                'period' => 'الفترة',
+                'from' => 'من',
+                'to' => 'إلى',
+                'price' => 'السعر'
+            ]
         ],
         'create' => ['header' => 'إنشاء قاعة جديدة'],
         'edit' => ['header' => 'تحديث بيانات القاعة :hall'],
         'form' => [
-            'name' => ['label' => 'إسم القاعة', 'placeholder' => 'اسم القاعة'],
-            'location' => ['label' => 'الموقع', 'placeholder' => 'المدينة، الحي، اسم أو رقم الشارع'],
+            'name' => ['label' => 'إسم القاعة', 'placeholder' => 'الرجاء إدخال إسم القاعة'],
+            'city' => ['label' => 'المدينة', 'placeholder' => 'الرجاء اختيار المدينة المتواجدة بها القاعة'],
+            'address' => ['label' => 'العنوان', 'placeholder' => 'الرجاء كتابة عنوان القاعة'],
             'capacity' => ['label' => 'السعة', 'placeholder' => 'عدد الأشخاص الذين تسعهم القاعة', 'person' => 'شخص'],
             'bookingTimes' => [
                 'enter' => ['label' => 'تحديد أوقات الحجوزات'],
@@ -317,13 +349,13 @@ return [
         'create' => ['header' => 'إنشاء إعلان جديد'],
         'edit' => ['header' => 'تحديث بيانات الإعلان :advertisement'],
         'form' => [
-            'name' => 'الإسم',
-            'start_date' => 'تاريخ بداية الإعلان',
-            'end_date' => 'تاريخ نهاية الإعلان',
-            'price' => 'السعر',
-            'status' => 'الحالة',
-            'owner_name' => 'المالك',
-            'owner_phone' => 'الهاتف',
+            'name' => ['label' => 'الإسم', 'placeholder' => 'الرجاء كتابة إسم الإعلان'],
+            'start_date' => ['label' => 'تاريخ البداية', 'placeholder' => 'الرجاء إدخال تاريخ بداية الإعلان'],
+            'end_date' => ['label' => 'تاريخ الإنتهاء', 'placeholder' => 'الرجاء إدخال تاريخ إنتهاء الإعلان'],
+            'price' => ['label' => 'السعر', 'placeholder' => 'الرجاء كتابة سعر الإعلان'],
+            'status' => ['label' => 'الحالة', 'placeholder' => 'الرجاء إدخال حالة الإعلان'],
+            'owner_name' => ['label' => 'إسم صاحب الإعلان', 'placeholder' => 'الرجاء كتابة إسم صاحب الإعلان'],
+            'owner_phone' => ['label' => 'هاتف صاحب الإعلان', 'placeholder' => 'الرجاء كتابة هاتف صاحب الإعلان'],
         ],
         'flash' => [
             'created' => 'تم إنشاء إعلان جديد',
