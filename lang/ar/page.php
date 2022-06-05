@@ -160,25 +160,30 @@ return [
             'city' => ['label' => 'المدينة', 'placeholder' => 'الرجاء اختيار المدينة المتواجدة بها القاعة'],
             'address' => ['label' => 'العنوان', 'placeholder' => 'الرجاء كتابة عنوان القاعة'],
             'capacity' => ['label' => 'السعة', 'placeholder' => 'عدد الأشخاص الذين تسعهم القاعة', 'person' => 'شخص'],
-            'bookingTimes' => [
-                'enter' => ['label' => 'تحديد أوقات الحجوزات'],
-                'display' => ['label' => 'أوقات الحجوزات'],
-                'period' => [
-                    'label' => 'الفترة',
-                    'items' => [
-                        'day' => 'صباحاً',
-                        'evening' => 'مساءاً'
-                    ],
-                ],
-                'from' => ['label' => 'من', 'placeholder' => 'الرجاء تحديد وقت'],
-                'to' => ['label' => 'إلى', 'placeholder' => 'الرجاء تحديد وقت'],
-                'price' => ['label' => 'السعر', 'placeholder' => 'الرجاء تحديد سعر وقت الحجةز']
-            ]
         ],
         'flash' => [
             'created' => 'تم إنشاء قاعة جديدة',
             'updated' => 'تم تحديث بيانات القاعة :hall',
             'deleted' => 'تم حذف القاعة :hall'
+        ],
+    ],
+    'bookingTimes' => [
+        'index' => [
+            'header' => 'أوقات الحجوزات',
+            'table' => ['period' => 'الفترة', 'from' => 'من', 'to' => 'إلى', 'price' => 'السعر']
+        ],
+        'create' => ['header' => 'إنشاء وقت حجز جديد'],
+        'edit' => ['header' => 'تحديث بيانات وقت الحجز :bookingTime'],
+        'form' => [
+            'period' => ['label' => 'الفترة', 'items' => ['day' => 'صباحاً', 'evening' => 'مساءاً']],
+            'from' => ['label' => 'من', 'placeholder' => 'الرجاء تحديد وقت'],
+            'to' => ['label' => 'إلى', 'placeholder' => 'الرجاء تحديد وقت'],
+            'price' => ['label' => 'السعر', 'placeholder' => 'الرجاء تحديد سعر وقت الحجز']
+        ],
+        'flash' => [
+            'created' => 'تم إنشاء وقت حجز جديد',
+            'updated' => 'تم تحديث بيانات وقت الحجز :bookingTime',
+            'deleted' => 'تم حذف الوقت :bookingTime'
         ],
     ],
     'customers' => [

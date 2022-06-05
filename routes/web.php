@@ -76,6 +76,8 @@ Route::group([
 
             Route::resource('customers', CustomerController::class);
 
+            Route::resource('booking-times', BookingTimeController::class);
+
             Route::resource('offers', OfferController::class);
         });
 

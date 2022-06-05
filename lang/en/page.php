@@ -185,25 +185,30 @@ return [
             'city' => ['label' => 'City', 'placeholder' => 'Please select the city where hall is located'],
             'address' => ['label' => 'Address', 'placeholder' => 'Please insert the hall address'],
             'capacity' => ['label' => 'Capacity', 'placeholder' => 'The number of people the hall can fit', 'person' => 'Person'],
-            'bookingTimes' => [
-                'enter' => ['label' => 'Determine Booking Times'],
-                'display' => ['label' => 'Booking Times'],
-                'period' => [
-                    'label' => 'Period',
-                    'items' => [
-                        'day' => 'Day',
-                        'evening' => 'Evening'
-                    ],
-                ],
-                'from' => ['label' => 'From', 'placeholder' => 'Please insert time'],
-                'to' => ['label' => 'To', 'placeholder' => 'Please insert time'],
-                'price' => ['label' => 'Price', 'placeholder' => 'Please insert the booking time price']
-            ]
         ],
         'flash' => [
             'created' => 'A new hall has been created',
             'updated' => 'The hall :hall information has been updated',
             'deleted' => 'The hall :hall is deleted'
+        ],
+    ],
+    'bookingTimes' => [
+        'index' => [
+            'header' => 'Booking Times',
+            'table' => ['period' => 'Period', 'from' => 'From', 'to' => 'To', 'price' => 'Price']
+        ],
+        'create' => ['header' => 'Create New Booking Time'],
+        'edit' => ['header' => 'Update The Booking Time :bookingTime'],
+        'form' => [
+            'period' => ['label' => 'Period', 'items' => ['day' => 'Day', 'evening' => 'Evening']],
+            'from' => ['label' => 'From', 'placeholder' => 'Please select time'],
+            'to' => ['label' => 'To', 'placeholder' => 'Please select time'],
+            'price' => ['label' => 'Price', 'placeholder' => 'Please insert the booking time price']
+        ],
+        'flash' => [
+            'created' => 'A new booking time has been created',
+            'updated' => 'The booking time :bookingTime data has been updated',
+            'deleted' => 'The booking Time :bookingTime is deleted'
         ],
     ],
     'customers' => [

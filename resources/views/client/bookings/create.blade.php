@@ -5,7 +5,7 @@
 
     <form action="{{ route('halls.bookings.store', session('hall')->id) }}" method="POST" class="space-y-4 pb-8">
         @csrf
-
+        
         <!-- begin::Customer Name -->
         <div  class="grid grid-cols-2">
             <div class="col-span-1">

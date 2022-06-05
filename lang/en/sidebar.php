@@ -13,6 +13,7 @@ return [
     'reports' => 'Reports',
     'clients' => 'Clients',
     'bookings' => 'Bookings',
+    'booking_times' => 'Booking Times',
     'customers' => 'Customers',
     'business-fields' => 'Business Fields',
     'users' => 'Users',

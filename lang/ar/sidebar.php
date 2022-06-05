@@ -14,6 +14,7 @@ return [
     'clients' => 'العملاء',
     'customers' => 'أصحاب الحجوزات',
     'bookings' => 'الحجوزات',
+    'booking_times' => 'أوقات الحجوزات',
     'business-fields' => 'مجالات العمل',
     'users' => 'المستخدمون',
     'roles' => 'الأدوار',
