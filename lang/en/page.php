@@ -195,7 +195,7 @@ return [
     'bookingTimes' => [
         'index' => [
             'header' => 'Booking Times',
-            'table' => ['period' => 'Period', 'from' => 'From', 'to' => 'To', 'price' => 'Price']
+            'table' => ['#' => '#', 'period' => 'Period', 'from' => 'From', 'to' => 'To', 'price' => 'Price']
         ],
         'create' => ['header' => 'Create New Booking Time'],
         'edit' => ['header' => 'Update The Booking Time :bookingTime'],

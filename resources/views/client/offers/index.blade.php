@@ -15,7 +15,7 @@
             <tr>
                 <!-- begin::Description -->
                 <td class="px-6 py-3 whitespace-nowrap">
-                    <div class="text-sm  text-slate-500">
+                    <div class="text-sm  text-slate-500 line-clamp-1 max-w-xs">
                         {{ $offer->description }}
                     </div>
                 </td>
@@ -31,6 +31,16 @@
 
                 <!-- begin::Actions -->
                 <td class="px-6 py-3 whitespace-nowrap text-right text-sm space-s-1 flex items-center justify-end">
+                    <!-- begin::Show -->
+                    <x-modal>
+                        <x-slot name="trigger">
+                            <x-actions.show @click.prevent="isOpen = ! isOpen" class="cursor-pointer"/>
+                        </x-slot>
+
+                        {{ $offer->description }}
+                    </x-modal>
+                    <!-- end::Show -->
+
                     <!-- begin::Edit -->
                     <x-actions.edit href="{{ route('halls.offers.edit', ['hall' => session('hall')->id, 'offer' => $offer->id]) }}" />
                     <!-- end::Edit -->

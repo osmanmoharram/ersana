@@ -3,7 +3,6 @@
 <div x-data="{ isOpen: false }">
     <!-- begin::Trigger -->
     {{ $trigger }}
-
     <!-- end::Trigger -->
 
     <!-- begin::Content -->
@@ -57,7 +56,6 @@
                         </button>
                     </div>
                     <!-- end::Close Button -->
-
 
                     {{ $slot }}
                 </div>

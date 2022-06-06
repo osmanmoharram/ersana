@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\NewBookingTimeRequest;
 use App\Http\Requests\Client\UpdateBookingTimeRequest;
-use App\Models\Client\Booking;
 use App\Models\Client\BookingTime;
 use App\Models\Hall;
-use Illuminate\Http\Request;
 
 class BookingTimeController extends Controller
 {

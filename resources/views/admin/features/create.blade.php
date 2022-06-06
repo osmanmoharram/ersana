@@ -13,7 +13,7 @@
 
                 <textarea
                     name="description" rows="4" placeholder="{{ __('page.features.form.description.placeholder') }}"
-                    class="shadow-sm mt-1 p-4 block w-full sm:text-sm border-none rounded-sm
+                    class="shadow-sm mt-1 placeholder-slate-300 p-4 block w-full sm:text-sm border-none rounded-sm
                     resize-none outline-none focus:outline-none focus:border-slate-300 focus:ring-0"
                 ></textarea>
 

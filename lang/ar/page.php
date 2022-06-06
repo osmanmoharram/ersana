@@ -170,7 +170,7 @@ return [
     'bookingTimes' => [
         'index' => [
             'header' => 'أوقات الحجوزات',
-            'table' => ['period' => 'الفترة', 'from' => 'من', 'to' => 'إلى', 'price' => 'السعر']
+            'table' => ['#' => '#', 'period' => 'الفترة', 'from' => 'من', 'to' => 'إلى', 'price' => 'السعر']
         ],
         'create' => ['header' => 'إنشاء وقت حجز جديد'],
         'edit' => ['header' => 'تحديث بيانات وقت الحجز :bookingTime'],
@@ -230,19 +230,7 @@ return [
         'form' => [
             'customer' => ['label' => 'إسم صاحب الحجز'],
             'date' => ['label' => 'تاريخ الحجز', 'placeholder' => 'الرجاء اختيار تاريخ'],
-            'bookingTimes' => ['label' => 'أوقات الحجز المتوفرة', 'button' => 'الأوقات المتوفرة'],
-            'from' => ['label' => 'من', 'placeholder' => 'الرجاء إدخال وقت'],
-            'to' => ['label' => 'إلى', 'placeholder' => 'الرجاء إدخال وقت'],
-            'discount' => ['label' => 'سعر الخصم'],
-            'insurance' => ['label' => 'سعر التأمين'],
-            'total' => ['label' => 'الإجمالي'],
-            'status' => [
-                'label' => 'حالة الحجز',
-                'items' => [
-                    'confirmed' => 'مؤكد',
-                    'temporary' => 'مؤقت',
-                ],
-            ],
+            'bookingTimes' => ['label' => 'أوقات الحجز المتوفرة', 'button' => 'بحث'],
             'notes' => ['label' => 'ملاحظات']
         ],
         'flash' => [

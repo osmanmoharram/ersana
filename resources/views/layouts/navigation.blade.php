@@ -6,7 +6,7 @@
 
             <div class="hidden justify-between space-s-16 sm:flex md:items-center ">
                 <!-- begin::Languages Links -->
-                <div class="flex items-center divide-s-2 divide-gray-400 pb-1">
+                <div class="flex items-center divide-s divide-gray-400 pb-1">
                     <!-- begin::English -->
                     <a href="{{ LaravelLocalization::getLocalizedURL('en') }}" class="pe-3 block font-normal text-sm ms-3 text-gray-700 text-opacity-50 hover:text-opacity-70 hover:underline tranisition duration-150 ease-in-out">English</a>
                     <!-- end::English -->
