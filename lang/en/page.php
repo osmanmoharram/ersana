@@ -50,7 +50,7 @@ return [
     'offers' => [
         'index' => [
             'header' => 'Offers',
-            'table'  => ['description' => 'Description', 'price' => 'Price'],
+            'table'  => ['#' => '#', 'description' => 'Description', 'price' => 'Price'],
         ],
         'create' => ['header' => 'Create New Offer'],
         'edit' => ['header' => 'Update The Offer :offer'],
@@ -225,11 +225,6 @@ return [
         'create' => ['header' => 'Create New Customer'],
         'edit' => [ 'header' => 'Update :customer Data', ],
         'form' => [
-            'name' => ['label' => 'Name', 'placeholder' => 'Please write the customer\'s full name'],
-            'company' => ['label' => 'Company', 'placeholder' => 'Please write the customer\'s company name'],
-            'email' => ['label' => 'Email', 'placeholder' => 'customer@example.com'],
-            'phone' => ['label' => 'Phone', 'placeholder' => 'Please write the customer\'s phone number'],
-            'address' => ['label' => 'Address', 'placeholder' => 'Please write the customer\'s address',],
         ]
     ],
     'bookings' => [
@@ -245,23 +240,43 @@ return [
                 'status' => 'Status'
             ]
         ],
-        'create' => ['header' => 'Create New Booking'],
+        'create' => [
+            'header' => 'Create New Booking',
+            'customer_information' => 'Customer Information',
+            'booking_times' => 'Booking Times',
+            'offers' => 'Offers',
+            'payment' => 'Payment',
+            'additional_information' => 'Additional Information'
+        ],
         'edit' => ['header' => 'Update Booking :booking Data'],
         'form' => [
-            'customer' => ['label' => 'Customer Name'],
+            'customer' => [
+                'name' => ['label' => 'Name', 'placeholder' => 'Please write the customer\'s full name'],
+                'company' => ['label' => 'Company', 'placeholder' => 'Please write the customer\'s company name'],
+                'email' => ['label' => 'Email', 'placeholder' => 'customer@example.com'],
+                'phone' => ['label' => 'Phone', 'placeholder' => 'Please write the customer\'s phone number'],
+                'address' => ['label' => 'Address', 'placeholder' => 'Please write the customer\'s address',],
+            ],
             'date' => ['label' => 'Booking Date', 'placeholder' => 'Please select a date'],
             'bookingTimes' => ['label' => 'Available Booking Times', 'button' => 'Available Times'],
-            'discount' => ['label' => 'Discount'],
-            'insurance' => ['label' => 'Insurance'],
+            'payment_method' => [
+                'label' => 'Payment Method',
+                'placeholder' => 'Please select the desired payment method',
+                'items' => ['bank' => 'Bank Transfer', 'cash' => 'Cash']
+            ],
+            'paid_amount' => ['label' => 'Paid Amount', 'placeholder' => 'Please insert the paid amount'],
+            'remaining_amount' => ['label' => 'Remaining Amount', 'placeholder' => ''],
             'total' => ['label' => 'Total'],
             'status' => [
                 'label' => 'Status',
                 'items' => [
                     'confirmed' => 'Confirmed',
                     'temporary' => 'Temporary',
+                    'paid' => 'Paid',
+                    'canceled' => 'Canceled',
                 ],
             ],
-            'notes' => ['label' => 'Notes']
+            'notes' => ['label' => 'Notes', 'placeholder' => 'Please write any additional notes']
         ]
     ],
     'expenses' => [

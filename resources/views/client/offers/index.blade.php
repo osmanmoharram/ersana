@@ -14,7 +14,7 @@
         @foreach ($offers as $offer)
             <tr>
                 <!-- begin::Description -->
-                <td class="px-6 py-3 whitespace-nowrap">
+                <td class="px-6 py-3">
                     <div class="text-sm  text-slate-500 line-clamp-1 max-w-xs">
                         {{ $offer->description }}
                     </div>
@@ -30,14 +30,16 @@
                 <!-- end::Price -->
 
                 <!-- begin::Actions -->
-                <td class="px-6 py-3 whitespace-nowrap text-right text-sm space-s-1 flex items-center justify-end">
+                <td class="px-6 py-3 text-right text-sm space-s-1 flex items-center justify-end">
                     <!-- begin::Show -->
                     <x-modal>
                         <x-slot name="trigger">
                             <x-actions.show @click.prevent="isOpen = ! isOpen" class="cursor-pointer"/>
                         </x-slot>
 
-                        {{ $offer->description }}
+                        <div class="px-6 py-4 flex items-center justify-center">
+                            {{ $offer->description }}
+                        </div>
                     </x-modal>
                     <!-- end::Show -->
 

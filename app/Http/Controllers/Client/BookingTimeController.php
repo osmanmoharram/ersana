@@ -7,6 +7,7 @@ use App\Http\Requests\Client\NewBookingTimeRequest;
 use App\Http\Requests\Client\UpdateBookingTimeRequest;
 use App\Models\Client\BookingTime;
 use App\Models\Hall;
+use Illuminate\Http\Request;
 
 class BookingTimeController extends Controller
 {
@@ -20,30 +21,6 @@ class BookingTimeController extends Controller
         $bookingTimes = BookingTime::where('hall_id', session('hall')->id)->latest()->paginate(30);
 
         return view('client.booking-times.index', compact('bookingTimes'));
-        // $bookings_bookingTimes = [];
-
-        // $hall_bookingTimes = BookingTime::where('hall_id', session('hall')->id)
-        //                         ->where('period', request('period'))->get();
-
-
-        // $bookings = Booking::where('date', request('date')[0])
-        //                 ->whereHas('bookingTime', function ($query) {
-        //                     $query
-        //                         ->where('hall_id', session('hall')->id)
-        //                         ->where('period', '=', request('period'));
-        //                 })->get();
-
-        // if ($bookings) {
-        //     foreach ($bookings as $booking) {
-        //         $bookings_bookingTimes[] = $booking->bookingTime;
-        //     }
-        // }
-
-        // $available = $hall_bookingTimes->filter(function ($value) use ($bookings_bookingTimes) {
-        //     return ! in_array($value, $bookings_bookingTimes);
-        // });
-
-        // return response()->json(['times' => $available->toArray()], 200);
     }
 
     /**

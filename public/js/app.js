@@ -5154,10 +5154,10 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('bookingTimes', {
   setPeriod: function setPeriod(period) {
     this.period = period;
   },
-  get: function get(hall) {
+  fetch: function fetch(hall) {
     var _this = this;
 
-    axios__WEBPACK_IMPORTED_MODULE_3___default().get("/halls/".concat(hall, "/booking-times"), {
+    axios__WEBPACK_IMPORTED_MODULE_3___default().get("/halls/".concat(hall, "/booking-times/available"), {
       params: {
         date: this.date,
         period: this.period

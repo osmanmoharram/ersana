@@ -129,8 +129,8 @@ Alpine.store('bookingTimes', {
         this.period = period;
     },
 
-    get(hall) {
-        axios.get(`/halls/${hall}/booking-times`, {
+    fetch(hall) {
+        axios.get(`/halls/${hall}/booking-times/available`, {
             params: {
                 date: this.date,
                 period: this.period

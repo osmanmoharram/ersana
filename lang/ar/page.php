@@ -39,7 +39,7 @@ return [
         ]
     ],
     'offers' => [
-        'index' => ['header' => 'العروض', 'table' => ['description' => 'الوصف', 'price' => 'السعر']],
+        'index' => ['header' => 'العروض', 'table' => ['#' => '#', 'description' => 'الوصف', 'price' => 'السعر']],
         'create' => ['header' => 'إنشاء عرض جديد'],
         'edit' => ['header' => 'تحديث العرض :offer'],
         'form' => [
@@ -217,7 +217,7 @@ return [
             'header' => 'الحجوزات',
             'table' => [
                 '#' => '#',
-                'customer' => 'إسم صاحب الحجز',
+                'customer' => 'الإسم',
                 'date' => 'تاريخ الحجز',
                 'from' => 'من',
                 'to' => 'إلى',
@@ -225,13 +225,43 @@ return [
                 'status' => 'حالة الحجز'
             ]
         ],
-        'create' => ['header' => 'إنشاء حجز جديد'],
+        'create' => [
+            'header' => 'إنشاء حجز جديد',
+            'customer_information' => 'بيانات صاحب الحجز',
+            'booking_times' => 'أوقات الحجوزات',
+            'offers' => 'العروض',
+            'payment' => 'الدفع',
+            'additional_information' => 'معلومات إضافية'
+        ],
         'edit' => ['header' => 'تحديث بيانات الحجز رقم :booking'],
         'form' => [
-            'customer' => ['label' => 'إسم صاحب الحجز'],
+            'customer' => [
+                'name' => ['label' => 'الإسم', 'placeholder' => 'الرجاء إدخال إسم صاحب الحجز'],
+                // 'company' => ['label' => 'Company', 'placeholder' => 'Please write the customer\'s company name'],
+                'email' => ['label' => 'البريد الإلكتروني', 'placeholder' => 'الرجاء كتابة البريد الإلكتروني لصاحب الحجز'],
+                'phone' => ['label' => 'الهاتف', 'placeholder' => 'الرجاء كتابة هاتف صاحب الحجز'],
+                'address' => ['label' => 'العنوان', 'placeholder' => 'الرجاء كتابة عنوان صاحب الحجز',],
+            ],
             'date' => ['label' => 'تاريخ الحجز', 'placeholder' => 'الرجاء اختيار تاريخ'],
             'bookingTimes' => ['label' => 'أوقات الحجز المتوفرة', 'button' => 'بحث'],
-            'notes' => ['label' => 'ملاحظات']
+            'payment_method' => [
+                'label' => 'طريقة الدفع',
+                'placeholder' => 'الرجاء اختيار طريقة',
+                'items' => ['bank' => 'حوالة بنكية', 'cash' => 'نقداً']
+            ],
+            'paid_amount' => ['label' => 'المبلغ المدفوع', 'placeholder' => 'الرجاء إدخال المبلغ الذي يراد دفعه'],
+            'remaining_amount' => ['label' => 'المبلغ المتبقي', 'placeholder' => ''],
+            'total' => ['label' => 'الإجمالي'],
+            'status' => [
+                'label' => ' الحالة',
+                'items' => [
+                    'confirmed' => 'مؤكد',
+                    'temporary' => 'مؤقت',
+                    'paid' => 'مدفوع',
+                    'canceled' => 'ملغي',
+                ],
+            ],
+            'notes' => ['label' => 'ملاحظات', 'placeholder' => 'الرجاء كتابة أي ملاحظات إضافية']
         ],
         'flash' => [
             'created' => 'تم إنشاء حجز جديد',

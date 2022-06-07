@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\{
     SubscriptionController,
 };
 use App\Http\Controllers\Client\{
+    AvailableBookingTimeController,
     BookingController,
     BookingTimeController,
     CustomerController,
@@ -77,6 +78,8 @@ Route::group([
             Route::resource('customers', CustomerController::class);
 
             Route::resource('booking-times', BookingTimeController::class);
+
+            Route::resource('availabe-booking-times', AvailableBookingTimeController::class);
 
             Route::resource('offers', OfferController::class);
         });

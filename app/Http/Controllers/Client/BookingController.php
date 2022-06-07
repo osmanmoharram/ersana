@@ -8,6 +8,7 @@ use App\Http\Requests\Client\UpdateBookingRequest;
 use App\Models\Client\Booking;
 use App\Models\Client\Customer;
 use App\Models\Client\Hall;
+use App\Models\Client\Offer;
 
 class BookingController extends Controller
 {
@@ -30,8 +31,8 @@ class BookingController extends Controller
      */
     public function create()
     {
-        $customers = Customer::all();
-        return view('client.bookings.create', compact('customers'));
+        $offers = Offer::all();
+        return view('client.bookings.create', compact('offers'));
     }
 
     /**
@@ -42,6 +43,7 @@ class BookingController extends Controller
      */
     public function store(NewBookingRequest $request)
     {
+        dd($request->all());
         Booking::create($request->validated());
 
         return redirect()
