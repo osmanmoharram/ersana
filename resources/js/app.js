@@ -150,6 +150,7 @@ Alpine.store('bookingTimes', {
                                     name="bookingTime_id"
                                     value="${time.id}"
                                     type="radio"
+                                    @click="$store.bookingTimes.getPrice($el)"
                                     class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
                                 >
                             </div>
@@ -168,15 +169,13 @@ Alpine.store('bookingTimes', {
                         </td>
 
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="price-input text-sm text-slate-500">
+                            <div class="price text-sm text-slate-500">
                                 ${time.price}
                             </div>
                         </td>
 
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-slate-500">
-
-                            </div>
+                            <div class="text-sm text-slate-500"></div>
                         </td>
                     </tr>
                 `;
@@ -189,8 +188,10 @@ Alpine.store('bookingTimes', {
         })
     },
 
-    formatPeriod(period) {
-        return period === 'day' ? 'Day / صباحاً' : 'Evening / مساءاً';
+    getPrice(element) {
+        const price = $(element).parents('tr').find('.price').text();
+
+        total.value = price.trim();
     }
 })
 
@@ -255,16 +256,7 @@ Alpine.store('halls', {
 
 Alpine.store('computeTotal', {
     compute(element) {
-        const bookingTimes = Array.from(document.querySelectorAll('input.booking-time'));
         const price = $(element).parents('tr').find('.price-input').text();
-
-        // unselectedBookingTimes = bookingTimes.filter(item => {
-        //     item !== element;
-        // });
-
-        // unselectedBookingTimes.forEach(item => {
-        //     item.checked = false;
-        // });
 
         total.value = price.trim();
     },

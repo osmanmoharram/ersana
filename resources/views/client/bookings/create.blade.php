@@ -173,7 +173,7 @@
                             </td>
             
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-slate-500">
+                                <div class="price text-sm text-slate-500">
                                     {{ $offer->price }}
                                 </div>
                             </td>

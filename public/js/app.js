@@ -5164,15 +5164,16 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('bookingTimes', {
       $('#availableBookingTimes').removeClass('hidden');
       var bookingTimes = $('#availableBookingTimes tbody');
       response.data.times.forEach(function (time) {
-        var row = "\n                    <tr>\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n                                <input\n                                    name=\"bookingTime_id\"\n                                    value=\"".concat(time.id, "\"\n                                    type=\"radio\"\n                                    class=\"focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer\"\n                                >\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n                                ").concat(time.from, "\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n                                ").concat(time.to, "\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"price-input text-sm text-slate-500\">\n                                ").concat(time.price, "\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n\n                            </div>\n                        </td>\n                    </tr>\n                ");
+        var row = "\n                    <tr>\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n                                <input\n                                    name=\"bookingTime_id\"\n                                    value=\"".concat(time.id, "\"\n                                    type=\"radio\"\n                                    @click=\"$store.bookingTimes.getPrice($el)\"\n                                    class=\"focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer\"\n                                >\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n                                ").concat(time.from, "\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n                                ").concat(time.to, "\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"price text-sm text-slate-500\">\n                                ").concat(time.price, "\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\"></div>\n                        </td>\n                    </tr>\n                ");
         bookingTimes.append(row);
       });
     })["catch"](function (errors) {
       console.log(errors);
     });
   },
-  formatPeriod: function formatPeriod(period) {
-    return period === 'day' ? 'Day / صباحاً' : 'Evening / مساءاً';
+  getPrice: function getPrice(element) {
+    var price = $(element).parents('tr').find('.price').text();
+    total.value = price.trim();
   }
 });
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('halls', {
@@ -5193,14 +5194,7 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('halls', {
 });
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('computeTotal', {
   compute: function compute(element) {
-    var bookingTimes = Array.from(document.querySelectorAll('input.booking-time'));
-    var price = $(element).parents('tr').find('.price-input').text(); // unselectedBookingTimes = bookingTimes.filter(item => {
-    //     item !== element;
-    // });
-    // unselectedBookingTimes.forEach(item => {
-    //     item.checked = false;
-    // });
-
+    var price = $(element).parents('tr').find('.price-input').text();
     total.value = price.trim();
   }
 });
