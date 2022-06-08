@@ -79,7 +79,7 @@ Route::group([
 
             Route::resource('booking-times', BookingTimeController::class);
 
-            Route::resource('availabe-booking-times', AvailableBookingTimeController::class);
+            Route::get('available-booking-times', AvailableBookingTimeController::class)->name('available-booking-times');
 
             Route::resource('offers', OfferController::class);
         });

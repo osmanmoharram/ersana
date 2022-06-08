@@ -130,7 +130,7 @@ Alpine.store('bookingTimes', {
     },
 
     fetch(hall) {
-        axios.get(`/halls/${hall}/booking-times/available`, {
+        axios.get(`/halls/${hall}/available-booking-times`, {
             params: {
                 date: this.date,
                 period: this.period
@@ -147,18 +147,11 @@ Alpine.store('bookingTimes', {
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-slate-500">
                                 <input
-                                    type="checkbox"
-                                    class="booking-time bg-white rounded-sm cursor-pointer border border-slate-300"
-                                    @click="$store.computeTotal.compute($el)"
+                                    name="bookingTime_id"
+                                    value="${time.id}"
+                                    type="radio"
+                                    class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
                                 >
-
-                                <input type="hidden" name="bookingTime_id" value="${time.id}">
-                            </div>
-                        </td>
-
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-slate-500">
-                                ${this.formatPeriod(time.period)}
                             </div>
                         </td>
 

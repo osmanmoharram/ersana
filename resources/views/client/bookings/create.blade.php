@@ -62,7 +62,7 @@
         </div>
 
         <!-- begin::Booking Times -->
-        <div class="grid grid-cols-5">
+        <div x-data class="grid grid-cols-5">
             <div class="col-span-1">
                 <x-label value="{{ __('page.bookings.create.booking_times') }}" />
             </div>
@@ -130,7 +130,7 @@
                     </label>
 
                     <div class="mt-2" id="availableBookingTimes">
-                        <x-table page="bookingTimes" :columns="['#', 'period', 'from', 'to', 'price']" class="text-xs">
+                        <x-table page="bookingTimes" :columns="['#', 'from', 'to', 'price']" class="text-xs">
 
                             <x-slot name="pagination"></x-slot>
                         </x-table>
@@ -162,7 +162,7 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div>
-                                    <input id="offer_id" name="offer" value="{{ $offer->id }}" type="radio" class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer">
+                                    <input id="offer_id" name="offer_id" value="{{ $offer->id }}" type="radio" class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer">
                                 </div>
                             </td>
                             
@@ -263,8 +263,9 @@
                     </label>
 
                     <x-input
-                        type="text" class="w-full mt-1" name="remaining_amount" value="{{ old('name') }}"
-                        placeholder="{{ __('page.customers.form.name.placeholder') }}"
+                        type="text" name="remaining_amount" id="remaining_amount" dir="ltr" readonly
+                        class="w-full mt-2 bg-slate-200/40 cursor-not-allowed text-slate-500
+                        {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}"
                     />
 
                     @error('remaining_amount')

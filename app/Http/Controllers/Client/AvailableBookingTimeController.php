@@ -14,7 +14,7 @@ class AvailableBookingTimeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function __invoke()
     {
         $bookings_bookingTimes = [];
 
@@ -39,71 +39,5 @@ class AvailableBookingTimeController extends Controller
         });
 
         return response()->json(['times' => $available->toArray()], 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Client\BookingTime  $bookingTime
-     * @return \Illuminate\Http\Response
-     */
-    public function show(BookingTime $bookingTime)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Client\BookingTime  $bookingTime
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(BookingTime $bookingTime)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Client\BookingTime  $bookingTime
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, BookingTime $bookingTime)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Client\BookingTime  $bookingTime
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(BookingTime $bookingTime)
-    {
-        //
     }
 }
