@@ -74,12 +74,8 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        $booking_id = $booking->id;
-
         $booking->delete();
 
-        return redirect()
-            ->route('halls.bookings.index', session('hall')->id)
-            ->withMessage(__('page.bookings.flash.deleted', ['hall' => $booking_id]));
+        return response()->json(200);
     }
 }

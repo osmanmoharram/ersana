@@ -7,8 +7,11 @@ use App\Http\Requests\Client\NewBookingRequest;
 use App\Http\Requests\Client\UpdateBookingRequest;
 use App\Models\Client\Booking;
 use App\Models\Client\Customer;
-use App\Models\Client\Hall;
+use App\Models\Hall;
 use App\Models\Client\Offer;
+use App\Models\Revenue;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 
 class BookingController extends Controller
 {
@@ -43,20 +46,15 @@ class BookingController extends Controller
      */
     public function store(NewBookingRequest $request)
     {
-        Booking::create([
-            'customer_name' => $request->customer['name'],
-            'customer_email' =>  $request->customer['email'],
-            'customer_phone' => $request->customer['phone'],
-            'date' => $request->date,
-            'bookingTime_id' => $request->bookingTime_id,
-            'offer_id' => $request->offer_id,
-            'payment_method' => $request->payment_method,
-            'paid_amount' => $request->paid_amount,
-            'remaining_amount' => $request->remaining_amount,
-            'total' => $request->total,
-            'status' => $request->status,
-            'notes' => $request->notes
-        ]);
+        $attributes = $request->except(['customer']);
+
+        $attributes['customer_name'] = $request->customer['name'];
+        $attributes['customer_email'] = $request->customer['email'];
+        $attributes['customer_phone'] = $request->customer['phone'];
+
+        $booking = Booking::create($attributes);
+
+        // event(new RevenueCreated($booking));
 
         return redirect()
             ->route('halls.bookings.index', session('hall')->id)
@@ -82,8 +80,8 @@ class BookingController extends Controller
      */
     public function edit(Hall $hall, Booking $booking)
     {
-        $customers = Customer::all();
-        return view('client.bookings.edit', compact('customers', 'booking'));
+        $offers = Offer::all();
+        return view('client.bookings.edit', compact('offers', 'booking'));
     }
 
     /**
@@ -95,7 +93,21 @@ class BookingController extends Controller
      */
     public function update(UpdateBookingRequest $request, Hall $hall, Booking $booking)
     {
-        $booking->update($request->validated());
+        $attributes = $request->except(['customer', 'date', 'bookingTime_id']);
+
+        $attributes['customer_name'] = $request->customer['name'];
+        $attributes['customer_email'] = $request->customer['email'];
+        $attributes['customer_phone'] = $request->customer['phone'];
+
+        if ($date = $request->date) {
+            $attributes['date'] = $date;
+        }
+
+        if ($request->has('bookingTime_id')) {
+            $attributes['date'] = $request->bookingTime_id;
+        }
+
+        $booking->update($attributes);
 
         return redirect()
             ->route('halls.bookings.index', session('hall')->id)
@@ -108,10 +120,14 @@ class BookingController extends Controller
      * @param  \App\Models\Client\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Booking $booking)
+    public function destroy(Hall $hall, Booking $booking)
     {
+        $booking_id = $booking->id;
+
         $booking->delete();
 
-        return response()->json(200);
+        return redirect()
+            ->route('halls.bookings.index', session('hall')->id)
+            ->withMessage(__('page.bookings.flash.deleted', ['hall' => $booking_id]));
     }
 }

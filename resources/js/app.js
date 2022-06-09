@@ -3,6 +3,7 @@ require('./bootstrap');
 import Alpine from 'alpinejs';
 import jQuery from 'jquery-slim';
 import flatpickr from "flatpickr";
+import moment from 'moment';
 import axios from 'axios';
 
 window.Alpine = Alpine;
@@ -14,8 +15,9 @@ const datePickers = document.querySelectorAll('.date-picker');
 
 datePickers.forEach(item => {
     flatpickr(item, {
+        dateFormat: 'M j, Y',
         altInput: true,
-        altFormat: 'M j, Y',
+        altFormat: 'Y-m-d',
         enableTime: false,
         onChange: function(selectedDate, config, instance) {
             // Close picker on date select
@@ -132,14 +134,14 @@ Alpine.store('bookingTimes', {
     fetch(hall) {
         axios.get(`/halls/${hall}/available-booking-times`, {
             params: {
-                date: this.date,
+                date: new Date(this.date[0]).toDateString(),
                 period: this.period
             }
         })
         .then(response => {
             const bookingTimes = $('#availableBookingTimes tbody');
 
-            console.log($('#availableBookingTimes tbody'));
+            console.log(response.data);
 
             response.data.times.forEach(time => {
                 let row = `
@@ -254,18 +256,23 @@ Alpine.store('payment', {
     totalPrice: 0,
 
     remainingAmount(element) {
-        remainingAmount.value = element.value - this.totalPrice;
+        remainingAmount.value = (element.value - this.totalPrice) * (-1);
     },
 
     total(element, type) {
-        if (type === 'bookingTime') {
-            this.bookingTimePrice = parseFloat($(element).parents('tr').find('.booking-time-price').text().trim());
-        }
+        if (element.checked = true) {
+            console.log('checked');
+            if (type === 'bookingTime') {
+                this.bookingTimePrice = parseFloat($(element).parents('tr').find('.booking-time-price').text().trim());
+            }
 
-        if (type === 'offer') {
-            this.offerPrice = parseFloat($(element).parents('tr').find('.offer-price').text().trim());
-        }
+            if (type === 'offer') {
+                this.offerPrice = parseFloat($(element).parents('tr').find('.offer-price').text().trim());
+            }
 
-        total.value = this.totalPrice = this.bookingTimePrice + this.offerPrice;
+            total.value = this.totalPrice = this.bookingTimePrice + this.offerPrice;
+        } else {
+            element.checked = false;
+        }
     },
 });

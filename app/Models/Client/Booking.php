@@ -29,30 +29,31 @@ class Booking extends Model
         return $this->belongsTo(BookingTime::class, 'bookingTime_id');
     }
 
-    protected function setTotalAttribute($value)
+    public function setTotalAttribute($value)
     {
         $this->attributes['total'] = $value * 100;
     }
 
-    protected function getTotalAttribute($value)
+    public function getTotalAttribute($value)
     {
         return $this->attributes['total'] = $value / 100;
     }
-    protected function setPaidAmountAttribute($value)
+
+    public function setPaidAmountAttribute($value)
     {
         $this->attributes['paid_amount'] = $value * 100;
     }
 
-    protected function getPaidAmountAttribute($value)
+    public function getPaidAmountAttribute($value)
     {
         return $this->attributes['paid_amount'] = $value / 100;
     }
-    protected function setRemainingAmountAttribute($value)
+    public function setRemainingAmountAttribute($value)
     {
         $this->attributes['remaining_amount'] = $value * 100;
     }
 
-    protected function getRemainingAmountAttribute($value)
+    public function getRemainingAmountAttribute($value)
     {
         return $this->attributes['remaining_amount'] = $value / 100;
     }

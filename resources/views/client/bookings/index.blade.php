@@ -16,7 +16,7 @@
                 <!-- begin::Slug -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-xs  text-slate-500">
-                        {{ $booking->slug }}
+                        {{ $booking->id}}
                     </div>
                 </td>
                 <!-- end::Slug -->
@@ -24,7 +24,7 @@
                 <!-- begin::Customer -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-xs  text-slate-500">
-                        {{ $booking->customer->name }}
+                        {{ $booking->customer_name }}
                     </div>
                 </td>
                 <!-- end::Customer -->
@@ -32,7 +32,7 @@
                 <!-- begin::Date -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-xs  text-slate-500">
-                        {{ $booking->date }}
+                        {{ \Illuminate\Support\Carbon::parse($booking->date)->toFormattedDateString() }}
                     </div>
                 </td>
                 <!-- end::Date -->
