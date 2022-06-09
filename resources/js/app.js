@@ -137,9 +137,9 @@ Alpine.store('bookingTimes', {
             }
         })
         .then(response => {
-            $('#availableBookingTimes').removeClass('hidden');
-
             const bookingTimes = $('#availableBookingTimes tbody');
+
+            console.log($('#availableBookingTimes tbody'));
 
             response.data.times.forEach(time => {
                 let row = `
