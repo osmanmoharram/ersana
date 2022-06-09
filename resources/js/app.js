@@ -150,7 +150,7 @@ Alpine.store('bookingTimes', {
                                     name="bookingTime_id"
                                     value="${time.id}"
                                     type="radio"
-                                    @click="$store.bookingTimes.getPrice($el)"
+                                    @click="$store.payment.total($el, 'bookingTime')"
                                     class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
                                 >
                             </div>
@@ -169,7 +169,7 @@ Alpine.store('bookingTimes', {
                         </td>
 
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="price text-sm text-slate-500">
+                            <div class="booking-time-price text-sm text-slate-500">
                                 ${time.price}
                             </div>
                         </td>
@@ -187,13 +187,7 @@ Alpine.store('bookingTimes', {
             console.log(errors);
         })
     },
-
-    getPrice(element) {
-        const price = $(element).parents('tr').find('.price').text();
-
-        total.value = price.trim();
-    }
-})
+});
 
 Alpine.store('halls', {
     add() {
@@ -254,10 +248,24 @@ Alpine.store('halls', {
     }
 })
 
-Alpine.store('computeTotal', {
-    compute(element) {
-        const price = $(element).parents('tr').find('.price-input').text();
+Alpine.store('payment', {
+    bookingTimePrice: 0,
+    offerPrice: 0,
+    totalPrice: 0,
 
-        total.value = price.trim();
+    remainingAmount(element) {
+        remainingAmount.value = element.value - this.totalPrice;
+    },
+
+    total(element, type) {
+        if (type === 'bookingTime') {
+            this.bookingTimePrice = parseFloat($(element).parents('tr').find('.booking-time-price').text().trim());
+        }
+
+        if (type === 'offer') {
+            this.offerPrice = parseFloat($(element).parents('tr').find('.offer-price').text().trim());
+        }
+
+        total.value = this.totalPrice = this.bookingTimePrice + this.offerPrice;
     },
 });

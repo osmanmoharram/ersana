@@ -3,7 +3,7 @@
         {{ __('page.bookings.create.header') }}
     </x-slot>
 
-    <form action="{{ route('halls.bookings.store', session('hall')->id) }}" method="POST" class="pb-8">
+    <form x-data action="{{ route('halls.bookings.store', session('hall')->id) }}" method="POST" class="pb-8">
         @csrf
 
         <!-- begin::Customer Information -->
@@ -14,7 +14,7 @@
                 </label>
             </div>
 
-            
+
             <!-- begin::Full Name / Email / Phone -->
             <div class="col-span-2 space-y-4">
                 <!-- begin::Full Name -->
@@ -62,7 +62,7 @@
         </div>
 
         <!-- begin::Booking Times -->
-        <div x-data class="grid grid-cols-5">
+        <div class="grid grid-cols-5">
             <div class="col-span-1">
                 <x-label value="{{ __('page.bookings.create.booking_times') }}" />
             </div>
@@ -140,7 +140,7 @@
             </div>
         </div>
         <!-- end::Booking Times -->
-            
+
         <div class="grid grid-cols-5 pb-6">
             <div class="col-span-3">
                 <hr>
@@ -154,7 +154,7 @@
                     {{ __('page.bookings.create.offers') }}
                 </label>
             </div>
-            
+
             <!-- begin::Display Offers -->
             <div class="col-span-2">
                 <x-table page="offers" :columns="['#', 'description', 'price']" class="text-xs">
@@ -162,18 +162,25 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div>
-                                    <input id="offer_id" name="offer_id" value="{{ $offer->id }}" type="radio" class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer">
+                                    <input
+                                        id="offer_id"
+                                        name="offer_id"
+                                        value="{{ $offer->id }}"
+                                        type="radio"
+                                        class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
+                                        @click="$store.payment.total($el, 'offer')"
+                                    >
                                 </div>
                             </td>
-                            
+
                             <td class="px-6 py-4">
                                 <div class="text-sm text-slate-500 line-clamp-2 max-w-xs">
                                     {{ $offer->description }}
                                 </div>
                             </td>
-            
+
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="price text-sm text-slate-500">
+                                <div class="offer-price text-sm text-slate-500">
                                     {{ $offer->price }}
                                 </div>
                             </td>
@@ -241,13 +248,18 @@
 
                 <!-- begin::Paid Amount -->
                 <div class="w-full">
-                    <label for="" class="text-sm text-slate-400">
-                        {{ __('page.bookings.form.paid_amount.label') }}
-                    </label>
+                    <x-label
+                        for="" value="{{ __('page.bookings.form.paid_amount.label') }}"
+                        class="text-sm text-slate-400"
+                    />
 
                     <x-input
-                        type="text" class="w-full mt-1" name="paid_amount" value="{{ old('name') }}"
+                        type="text"
+                        class="w-full mt-1"
+                        name="paid_amount"
+                        value="{{ old('name') }}"
                         placeholder="{{ __('page.customers.form.name.placeholder') }}"
+                        @blur="$store.payment.remainingAmount($el)"
                     />
 
                     @error('paid_amount')
@@ -263,7 +275,7 @@
                     </label>
 
                     <x-input
-                        type="text" name="remaining_amount" id="remaining_amount" dir="ltr" readonly
+                        type="text" name="remaining_amount" id="remainingAmount" dir="ltr" readonly
                         class="w-full mt-2 bg-slate-200/40 cursor-not-allowed text-slate-500
                         {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}"
                     />
@@ -282,6 +294,7 @@
                         type="text" name="total" id="total" dir="ltr" readonly
                         class="w-full mt-2 bg-slate-200/40 cursor-not-allowed text-slate-500
                         {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}"
+                        x-init="$el.value = ''"
                     />
 
                     @error('total')

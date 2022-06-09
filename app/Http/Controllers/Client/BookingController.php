@@ -43,8 +43,20 @@ class BookingController extends Controller
      */
     public function store(NewBookingRequest $request)
     {
-        dd($request->all());
-        Booking::create($request->validated());
+        Booking::create([
+            'customer_name' => $request->customer['name'],
+            'customer_email' =>  $request->customer['email'],
+            'customer_phone' => $request->customer['phone'],
+            'date' => $request->date,
+            'bookingTime_id' => $request->bookingTime_id,
+            'offer_id' => $request->offer_id,
+            'payment_method' => $request->payment_method,
+            'paid_amount' => $request->paid_amount,
+            'remaining_amount' => $request->remaining_amount,
+            'total' => $request->total,
+            'status' => $request->status,
+            'notes' => $request->notes
+        ]);
 
         return redirect()
             ->route('halls.bookings.index', session('hall')->id)
