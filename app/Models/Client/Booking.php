@@ -36,7 +36,9 @@ class Booking extends Model
 
     public function getTotalAttribute($value)
     {
-        return $this->attributes['total'] = $value / 100;
+        $formatted = $this->attributes['total'] = $value / 100;
+
+        return number_format($formatted, 2);
     }
 
     public function setPaidAmountAttribute($value)
