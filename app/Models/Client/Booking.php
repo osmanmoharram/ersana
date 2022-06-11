@@ -17,12 +17,7 @@ class Booking extends Model
         'updated_at',
     ];
 
-    protected $with = ['bookingTime', 'customer'];
-
-    public function customer()
-    {
-        return $this->belongsTo(Customer::class);
-    }
+    protected $with = ['bookingTime'];
 
     public function bookingTime()
     {

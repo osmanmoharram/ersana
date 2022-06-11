@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\RevenueCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\NewBookingRequest;
 use App\Http\Requests\Api\UpdateBookingRequest;
 use App\Models\Client\Booking;
-use App\Models\Client\Customer;
-use App\Models\Client\Hall;
+use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
@@ -19,22 +19,9 @@ class BookingController extends Controller
      */
     public function store(NewBookingRequest $request)
     {
-        $data = $request->except(['name', 'email', 'phone']);
+        $booking = Booking::create($request->validated());
 
-        if ($customer = Customer::where('email', $request->email)->first()) {
-            $data['customer_id'] = $customer->id;
-        } else {
-            $customer = Customer::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'hall_id' => request('hall')
-            ]);
-
-            $data['customer_id'] = $customer->id;
-        }
-
-        Booking::create($data);
+        // event(new RevenueCreated($booking));
 
         return response()->json(200);
     }
@@ -47,7 +34,7 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking)
     {
-        return response()->json(['booking' => $booking], 200);
+        return response()->json(['booking' => $booking]);
     }
 
     /**
@@ -59,11 +46,11 @@ class BookingController extends Controller
      */
     public function update(UpdateBookingRequest $request, Booking $booking)
     {
-        $booking->customer->update($request->only(['name', 'email', 'phone']));
+        $booking->update($request->validated());
 
-        $booking->update($request->except(['name', 'email', 'phone']));
-
-        return response()->json(200);
+        return response()->json([
+            'request' => $request->validated()
+        ]);
     }
 
     /**

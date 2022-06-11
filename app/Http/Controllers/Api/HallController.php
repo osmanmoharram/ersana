@@ -7,6 +7,7 @@ use App\Http\Requests\NewHallRequest;
 use App\Http\Requests\UpdateHallRequest;
 use App\Models\Client\BookingTime;
 use App\Models\Hall;
+use Illuminate\Http\Request;
 
 class HallController extends Controller
 {
@@ -15,9 +16,11 @@ class HallController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $halls = Hall::where('client_id', request('client'))->get();
+        $request->validate(['client' => 'exists:clients,id']);
+
+        $halls = Hall::where('client_id', $request->client)->get();
 
         return response()->json(['halls' => $halls], 200);
     }

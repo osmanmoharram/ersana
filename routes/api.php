@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\HallController;
+use App\Http\Controllers\Client\AvailableBookingTimeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,21 +17,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('halls/{hall}/booking-times', [\App\Http\Controllers\Api\BookingTimeController::class, 'index'])
-    ->name('booking_times.index');
+Route::get('/{client}/halls', [HallController::class, 'index']);
+
+Route::get('halls/{hall}/available-booking-times', AvailableBookingTimeController::class);
 
 // Make a new booking
-Route::post('/bookings', [\App\Http\Controllers\Api\BookingController::class, 'store'])
-    ->name('halls.bookings.store');
+Route::post('/bookings', [BookingController::class, 'store']);
 
 // Edit existing booking
-Route::get('/bookings/{booking}/edit', [\App\Http\Controllers\Api\BookingController::class, 'edit'])
-    ->name('halls.bookings.edit');
+Route::get('bookings/{booking}/edit', [BookingController::class, 'edit']);
 
 // Update existing booking
-Route::patch('/bookings/{booking}', [\App\Http\Controllers\Api\BookingController::class, 'update'])
-    ->name('halls.bookings.edit');
+Route::patch('/bookings/{booking}', [BookingController::class, 'update']);
 
 // Delete existing booking
-Route::delete('/bookings/{booking}', [\App\Http\Controllers\Client\BookingController::class, 'destroy'])
-    ->name('halls.bookings.destroy');
+Route::delete('/bookings/{booking}', [BookingController::class, 'destroy']);

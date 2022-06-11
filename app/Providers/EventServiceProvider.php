@@ -25,6 +25,10 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\CreatedClient::class => [
             \App\Listeners\CreatedClientEventListener::class
         ],
+
+        \App\Events\RevenueCreated::class => [
+            \App\Listeners\RevenueCreatedEventListener::class
+        ],
     ];
 
     /**
