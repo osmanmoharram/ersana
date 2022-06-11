@@ -130,6 +130,8 @@
 
                 <!-- begin::Available Booking Times -->
                 <div class="w-full mt-4">
+                    <p id="noBookingTimes" class="py-2 text-sm text-red-500"></p>
+
                     <label for="" class="text-sm text-slate-400">
                         {{ __('page.bookings.form.bookingTimes.label') }}
                     </label>

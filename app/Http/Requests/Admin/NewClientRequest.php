@@ -26,7 +26,7 @@ class NewClientRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email'],
-            'phone' => ['required', 'string'],
+            'phone' => ['required', 'string', 'unique:users,phone'],
             'address' => ['required', 'string'],
             'business_field_id' => ['required', 'exists:business_fields,id']
         ];

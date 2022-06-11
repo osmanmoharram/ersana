@@ -140,50 +140,54 @@ Alpine.store('bookingTimes', {
         })
         .then(response => {
             const bookingTimes = $('#availableBookingTimes tbody');
+            const noBookingTimes = $('#noBookingTimes');
 
-            console.log(response.data);
+            if (response.data.no_times) {
+                noBookingTimes.append(response.data.no_times);
+            } else {
+                noBookingTimes.textContent = '';
+                response.data.times.forEach(time => {
+                    let row = `
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-slate-500">
+                                    <input
+                                        name="bookingTime_id"
+                                        value="${time.id}"
+                                        type="radio"
+                                        @click="$store.payment.total($el, 'bookingTime')"
+                                        class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
+                                    >
+                                </div>
+                            </td>
 
-            response.data.times.forEach(time => {
-                let row = `
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-slate-500">
-                                <input
-                                    name="bookingTime_id"
-                                    value="${time.id}"
-                                    type="radio"
-                                    @click="$store.payment.total($el, 'bookingTime')"
-                                    class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
-                                >
-                            </div>
-                        </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-slate-500">
+                                    ${time.from}
+                                </div>
+                            </td>
 
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-slate-500">
-                                ${time.from}
-                            </div>
-                        </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-slate-500">
+                                    ${time.to}
+                                </div>
+                            </td>
 
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-slate-500">
-                                ${time.to}
-                            </div>
-                        </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="booking-time-price text-sm text-slate-500">
+                                    ${time.price}
+                                </div>
+                            </td>
 
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="booking-time-price text-sm text-slate-500">
-                                ${time.price}
-                            </div>
-                        </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-slate-500"></div>
+                            </td>
+                        </tr>
+                    `;
 
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-slate-500"></div>
-                        </td>
-                    </tr>
-                `;
-
-                bookingTimes.append(row);
-            });
+                    bookingTimes.append(row);
+                });
+            }
         })
         .catch(errors => {
             console.log(errors);

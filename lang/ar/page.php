@@ -183,7 +183,8 @@ return [
         'flash' => [
             'created' => 'تم إنشاء وقت حجز جديد',
             'updated' => 'تم تحديث بيانات وقت الحجز :bookingTime',
-            'deleted' => 'تم حذف الوقت :bookingTime'
+            'deleted' => 'تم حذف الوقت :bookingTime',
+            'unavailable' => 'عذراً، جميع المواعيد محجوزة في هذه الفترة من هذا التاريخ'
         ],
     ],
     'customers' => [

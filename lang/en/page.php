@@ -208,7 +208,8 @@ return [
         'flash' => [
             'created' => 'A new booking time has been created',
             'updated' => 'The booking time :bookingTime data has been updated',
-            'deleted' => 'The booking Time :bookingTime is deleted'
+            'deleted' => 'The booking Time :bookingTime is deleted',
+            'unavailable' => 'Sorry! All times are booked for this period of this date'
         ],
     ],
     'customers' => [

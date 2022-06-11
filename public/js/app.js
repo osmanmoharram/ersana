@@ -5166,11 +5166,17 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('bookingTimes', {
       }
     }).then(function (response) {
       var bookingTimes = $('#availableBookingTimes tbody');
-      console.log(response.data);
-      response.data.times.forEach(function (time) {
-        var row = "\n                    <tr>\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n                                <input\n                                    name=\"bookingTime_id\"\n                                    value=\"".concat(time.id, "\"\n                                    type=\"radio\"\n                                    @click=\"$store.payment.total($el, 'bookingTime')\"\n                                    class=\"focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer\"\n                                >\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n                                ").concat(time.from, "\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\">\n                                ").concat(time.to, "\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"booking-time-price text-sm text-slate-500\">\n                                ").concat(time.price, "\n                            </div>\n                        </td>\n\n                        <td class=\"px-6 py-4 whitespace-nowrap\">\n                            <div class=\"text-sm text-slate-500\"></div>\n                        </td>\n                    </tr>\n                ");
-        bookingTimes.append(row);
-      });
+      var noBookingTimes = $('#noBookingTimes');
+
+      if (response.data.no_times) {
+        noBookingTimes.append(response.data.no_times);
+      } else {
+        noBookingTimes.textContent = '';
+        response.data.times.forEach(function (time) {
+          var row = "\n                        <tr>\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    <input\n                                        name=\"bookingTime_id\"\n                                        value=\"".concat(time.id, "\"\n                                        type=\"radio\"\n                                        @click=\"$store.payment.total($el, 'bookingTime')\"\n                                        class=\"focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer\"\n                                    >\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    ").concat(time.from, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    ").concat(time.to, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"booking-time-price text-sm text-slate-500\">\n                                    ").concat(time.price, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\"></div>\n                            </td>\n                        </tr>\n                    ");
+          bookingTimes.append(row);
+        });
+      }
     })["catch"](function (errors) {
       console.log(errors);
     });

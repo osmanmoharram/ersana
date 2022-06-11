@@ -120,10 +120,13 @@
                         </button>
                     </div>
                     <!-- end::Search Button -->
+
                 </div>
                 <!-- end::Date / Period / Search Button -->
 
                 <!-- begin::Available Booking Times -->
+                <p id="noBookingTimes" class="py-2 text-sm text-red-500"></p>
+
                 <div class="w-full mt-4">
                     <label for="" class="text-sm text-slate-400">
                         {{ __('page.bookings.form.bookingTimes.label') }}

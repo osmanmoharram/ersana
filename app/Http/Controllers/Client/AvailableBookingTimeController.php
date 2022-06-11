@@ -42,6 +42,8 @@ class AvailableBookingTimeController extends Controller
             return ! in_array($value->id, $bookings_bookingTimes);
         });
 
-        return response()->json(['times' => $available->toArray()], 200);
+        return $available->count() > 0
+            ? response()->json(['times' => $available->toArray()], 200)
+            : response()->json(['no_times' => __('page.bookingTimes.flash.unavailable')], 200);
     }
 }

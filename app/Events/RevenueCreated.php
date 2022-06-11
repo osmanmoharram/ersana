@@ -14,14 +14,16 @@ class RevenueCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    protected $booking;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($booking)
     {
-        //
+        $this->booking = $booking;
     }
 
     /**

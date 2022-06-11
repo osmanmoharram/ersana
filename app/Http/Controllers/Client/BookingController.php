@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Events\RevenueCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\NewBookingRequest;
 use App\Http\Requests\Client\UpdateBookingRequest;
 use App\Models\Client\Booking;
+use App\Models\Client\BookingTime;
 use App\Models\Client\Customer;
 use App\Models\Hall;
 use App\Models\Client\Offer;
 use App\Models\Revenue;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -34,7 +37,10 @@ class BookingController extends Controller
      */
     public function create()
     {
+        $dates = $this->getUnavailableDates();
+
         $offers = Offer::all();
+
         return view('client.bookings.create', compact('offers'));
     }
 
@@ -54,7 +60,7 @@ class BookingController extends Controller
 
         $booking = Booking::create($attributes);
 
-        // event(new RevenueCreated($booking));
+        event(new RevenueCreated($booking));
 
         return redirect()
             ->route('halls.bookings.index', session('hall')->id)
@@ -128,6 +134,17 @@ class BookingController extends Controller
 
         return redirect()
             ->route('halls.bookings.index', session('hall')->id)
-            ->withMessage(__('page.bookings.flash.deleted', ['hall' => $booking_id]));
+            ->withMessage(__('page.bookings.flash.deleted', ['booking' => $booking_id]));
+    }
+
+    protected function getUnavailableDates()
+    {
+        $dates = Booking::pluck('date')->unique();
+
+        $booking_times = BookingTime::pluck('id')->unique();
+
+        return $dates->filter(function ($value) use ($booking_times) {
+
+        });
     }
 }
