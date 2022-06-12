@@ -3,7 +3,6 @@ require('./bootstrap');
 import Alpine from 'alpinejs';
 import jQuery from 'jquery-slim';
 import flatpickr from "flatpickr";
-import moment from 'moment';
 import axios from 'axios';
 
 window.Alpine = Alpine;
@@ -259,13 +258,24 @@ Alpine.store('payment', {
     offerPrice: 0,
     totalPrice: 0,
 
-    remainingAmount(element) {
-        remainingAmount.value = (element.value - this.totalPrice) * (-1);
+    remainingAmount(element, totalAmount) {
+        if (totalAmount) {
+            let amount = (element.value - parseFloat(totalAmount)) * (-1);
+
+            remainingAmount.value = amount;
+        } else {
+            let amount = (element.value - this.totalPrice) * (-1);
+
+            if (amount < 0) {
+                remainingAmount.value = 0;
+            } else {
+                remainingAmount.value = amount
+            }
+        }
     },
 
     total(element, type) {
         if (element.checked = true) {
-            console.log('checked');
             if (type === 'bookingTime') {
                 this.bookingTimePrice = parseFloat($(element).parents('tr').find('.booking-time-price').text().trim());
             }
@@ -276,7 +286,7 @@ Alpine.store('payment', {
 
             total.value = this.totalPrice = this.bookingTimePrice + this.offerPrice;
         } else {
-            element.checked = false;
+            total.value = this.bookingTimePrice + this.offerPrice;
         }
     },
 });

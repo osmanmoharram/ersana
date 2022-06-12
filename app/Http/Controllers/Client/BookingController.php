@@ -37,8 +37,6 @@ class BookingController extends Controller
      */
     public function create()
     {
-        $dates = $this->getUnavailableDates();
-
         $offers = Offer::all();
 
         return view('client.bookings.create', compact('offers'));
@@ -60,7 +58,7 @@ class BookingController extends Controller
 
         $booking = Booking::create($attributes);
 
-        event(new RevenueCreated($booking));
+        // event(new RevenueCreated($booking));
 
         return redirect()
             ->route('halls.bookings.index', session('hall')->id)

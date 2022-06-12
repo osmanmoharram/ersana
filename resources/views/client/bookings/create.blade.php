@@ -249,30 +249,40 @@
                 </div>
                 <!-- end::Payment Method -->
 
-                <!-- begin::Paid Amount -->
-                <div class="w-full">
-                    <x-label
-                        for="" value="{{ __('page.bookings.form.paid_amount.label') }}"
-                        class="text-sm text-slate-400"
-                    />
+                <div class="grid grid-cols-3 items-end gap-x-2">
+                    <!-- begin::Paid Amount -->
+                    <div class="col-span-2">
+                        <x-label
+                            for="" value="{{ __('page.bookings.form.paid_amount.label') }}"
+                            class="text-sm text-slate-400"
+                        />
 
-                    <x-input
-                        type="text"
-                        class="w-full mt-1"
-                        name="paid_amount"
-                        value="{{ old('name') }}"
-                        placeholder="{{ __('page.customers.form.name.placeholder') }}"
-                        @blur="$store.payment.remainingAmount($el)"
-                    />
+                        <x-input
+                            type="text"
+                            class="w-full"
+                            name="paid_amount"
+                            value="{{ old('name') }}"
+                            placeholder="{{ __('page.customers.form.name.placeholder') }}"
+                            id="paidAmount"
+                        />
 
-                    @error('paid_amount')
-                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                    @enderror
+                        @error('paid_amount')
+                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <!-- end::Paid Amount -->
+
+                    <button
+                        type="button"
+                        class="col-span-1 py-3 w-full text-sm text-white bg-green-400 hover:bg-green-500 shadow-sm rounded-sm mb-px transition duration-150 ease-in-out"
+                        @click.prevent="$store.payment.remainingAmount(document.getElementById('paidAmount'))"
+                    >
+                        {{ __('Calculate Remaining') }}
+                    </button>
                 </div>
-                <!-- end::Paid Amount -->
 
                 <!-- begin::Remaining Amount -->
-                <div class="w-full">
+                <div class="col-span-1">
                     <label for="" class="text-sm text-slate-400">
                         {{ __('page.bookings.form.remaining_amount.label') }}
                     </label>

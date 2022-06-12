@@ -21,6 +21,7 @@ use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HallController;
 use App\Models\Hall;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -70,6 +71,19 @@ Route::group([
 
                 return view('halls.dashboard');
             })->name('dashboard');
+
+            Route::view('/bookings/notification-period', 'client.bookings.notification-period')
+                ->name('bookings.notification-period');
+
+            Route::post('/bookings/notification-period', function (Request $request) {
+                $request->validate([
+                    'notification_period' => ['required', 'string', 'numeric']
+                ]);
+
+                
+
+                return back()->withMessage('تم الحفظ بنجاح');
+            });
 
             Route::resource('bookings', BookingController::class);
 

@@ -138,6 +138,42 @@
 
                     <div class="mt-2" id="availableBookingTimes">
                         <x-table page="bookingTimes" :columns="['#', 'from', 'to', 'price']" class="text-xs">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500">
+                                        <input
+                                            name="bookingTime_id"
+                                            value="{{ $booking->bookingTime->id }}"
+                                            type="radio"
+                                            @click="$store.payment.total($el, 'bookingTime')"
+                                            class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
+                                            checked
+                                        >
+                                    </div>
+                                </td>
+    
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500">
+                                        {{ $booking->bookingTime->from }}
+                                    </div>
+                                </td>
+    
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500">
+                                        {{ $booking->bookingTime->to }}
+                                    </div>
+                                </td>
+    
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="booking-time-price text-sm text-slate-500">
+                                        {{ $booking->bookingTime->price }}
+                                    </div>
+                                </td>
+    
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500"></div>
+                                </td>
+                            </tr>
 
                             <x-slot name="pagination"></x-slot>
                         </x-table>
@@ -259,27 +295,37 @@
                 </div>
                 <!-- end::Payment Method -->
 
-                <!-- begin::Paid Amount -->
-                <div class="w-full">
-                    <x-label
-                        for="" value="{{ __('page.bookings.form.paid_amount.label') }}"
-                        class="text-sm text-slate-400"
-                    />
+                <div class="grid grid-cols-3 items-end gap-x-2">
+                    <!-- begin::Paid Amount -->
+                    <div class="col-span-2">
+                        <x-label
+                            for="" value="{{ __('page.bookings.form.paid_amount.label') }}"
+                            class="text-sm text-slate-400"
+                        />
 
-                    <x-input
-                        type="text"
-                        class="w-full mt-1"
-                        name="paid_amount"
-                        value="{{ $booking->paid_amount }}"
-                        placeholder="{{ __('page.customers.form.name.placeholder') }}"
-                        @blur="$store.payment.remainingAmount($el)"
-                    />
+                        <input
+                            type="text"
+                            class="bg-white w-full placeholder-slate-300 rounded-sm text-sm shadow-sm border-transparent focus:border-transparent outline-none focus:outline-none focus:ring-0 mt-2"
+                            name="paid_amount"
+                            value="{{ $booking->paid_amount }}"
+                            id="paidAmount"
+                            placeholder="{{ __('page.bookings.form.paid_amount.placeholder') }}"
+                        >
 
-                    @error('paid_amount')
-                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                    @enderror
+                        @error('paid_amount')
+                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <!-- end::Paid Amount -->
+
+                    <button
+                        type="button"
+                        class="col-span-1 py-3 w-full text-sm text-white bg-green-400 hover:bg-green-500 shadow-sm rounded-sm mb-px transition duration-150 ease-in-out"
+                        @click.prevent="$store.payment.remainingAmount(document.getElementById('paidAmount'), '{{ $booking->total }}')"
+                    >
+                        {{ __('Calculate Remaining') }}
+                    </button>
                 </div>
-                <!-- end::Paid Amount -->
 
                 <!-- begin::Remaining Amount -->
                 <div class="w-full">
@@ -287,12 +333,11 @@
                         {{ __('page.bookings.form.remaining_amount.label') }}
                     </label>
 
-                    <x-input
+                    <input
                         type="text" name="remaining_amount" value="{{ $booking->remaining_amount }}"
                         id="remainingAmount" dir="ltr" readonly
-                        class="w-full mt-2 bg-slate-200/40 cursor-not-allowed text-slate-500
-                        {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}"
-                    />
+                        class="w-full bg-slate-200/40 cursor-not-allowed text-slate-500 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }} bg-white placeholder-slate-300 rounded-sm text-sm shadow-sm border-transparent focus:border-transparent outline-none focus:outline-none focus:ring-0 mt-2"
+                    >
 
                     @error('remaining_amount')
                         <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
@@ -304,11 +349,11 @@
                 <div class="w-full">
                     <x-label for="total" :value="__('page.bookings.form.total.label')" />
 
-                    <x-input
-                        type="text" name="total" id="total" value="{{ $booking->total }}" dir="ltr" readonly
-                        class="w-full mt-2 bg-slate-200/40 cursor-not-allowed text-slate-500
-                        {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}"
-                    />
+                    <input
+                        type="text" name="total" id="total" dir="ltr" readonly
+                        value="{{ $booking->total }}"
+                        class="w-full bg-slate-200/40 cursor-not-allowed text-slate-500 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }} bg-white placeholder-slate-300 rounded-sm text-sm shadow-sm border-transparent focus:border-transparent outline-none focus:outline-none focus:ring-0 mt-2"
+                    >
 
                     @error('total')
                         <p class="mt-1 text-xs text-red-500">{{ $message }}</p>

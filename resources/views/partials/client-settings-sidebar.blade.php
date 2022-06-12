@@ -9,3 +9,9 @@
     {{ __('sidebar.offers') }}
 </a>
 <!-- end::Offers -->
+
+<!-- begin::Offers -->
+<a href="{{ route('halls.bookings.notification-period', session('hall')->id) }}" class="block text-sm ps-6 hover:underline">
+    المدة الزمنية للحجز
+</a>
+<!-- end::Offers -->
