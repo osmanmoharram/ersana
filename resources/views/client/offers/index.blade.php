@@ -24,7 +24,7 @@
                 <!-- begin::Price -->
                 <td class="px-6 py-3 whitespace-nowrap">
                     <div class="text-sm  text-slate-500">
-                        {{ $offer->price }}
+                        {{ $offer->formatted_price }}
                     </div>
                 </td>
                 <!-- end::Price -->
@@ -61,4 +61,3 @@
     </x-table>
     <!-- begin::Page Content -->
 </x-settings-layout>
-

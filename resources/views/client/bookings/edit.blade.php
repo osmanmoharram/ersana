@@ -151,25 +151,25 @@
                                         >
                                     </div>
                                 </td>
-    
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-slate-500">
                                         {{ $booking->bookingTime->from }}
                                     </div>
                                 </td>
-    
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-slate-500">
                                         {{ $booking->bookingTime->to }}
                                     </div>
                                 </td>
-    
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="booking-time-price text-sm text-slate-500">
                                         {{ $booking->bookingTime->price }}
                                     </div>
                                 </td>
-    
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-slate-500"></div>
                                 </td>
@@ -225,7 +225,7 @@
 
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="offer-price text-sm text-slate-500">
-                                    {{ $offer->price }}
+                                    {{ $offer->formatted_price }}
                                 </div>
                             </td>
 
@@ -351,7 +351,7 @@
 
                     <input
                         type="text" name="total" id="total" dir="ltr" readonly
-                        value="{{ $booking->total }}"
+                        value="{{ $booking->formatted_total }}"
                         class="w-full bg-slate-200/40 cursor-not-allowed text-slate-500 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }} bg-white placeholder-slate-300 rounded-sm text-sm shadow-sm border-transparent focus:border-transparent outline-none focus:outline-none focus:ring-0 mt-2"
                     >
 

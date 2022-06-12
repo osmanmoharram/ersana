@@ -260,16 +260,16 @@ Alpine.store('payment', {
 
     remainingAmount(element, totalAmount) {
         if (totalAmount) {
-            let amount = (element.value - parseFloat(totalAmount)) * (-1);
+            let amount = (parseFloat(totalAmount) - element.value);
 
-            remainingAmount.value = amount;
+            remainingAmount.value = this.round(amount);
         } else {
-            let amount = (element.value - this.totalPrice) * (-1);
+            let amount = (this.totalPrice - parseFloat(element.value));
 
             if (amount < 0) {
-                remainingAmount.value = 0;
+                remainingAmount.value = 0.0;
             } else {
-                remainingAmount.value = amount
+                remainingAmount.value = this.round(amount)
             }
         }
     },
@@ -289,4 +289,9 @@ Alpine.store('payment', {
             total.value = this.bookingTimePrice + this.offerPrice;
         }
     },
+
+    round(num) {
+        let m = Number((Math.abs(num) * 100).toPrecision(15));
+        return Math.round(m) / 100 * Math.sign(num);
+    }
 });

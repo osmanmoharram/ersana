@@ -10,4 +10,14 @@ class Offer extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = $value * 100;
+    }
+
+    public function getFormattedPriceAttribute()
+    {
+        return number_format($this->attributes['price'] / 100, 2);
+    }
 }

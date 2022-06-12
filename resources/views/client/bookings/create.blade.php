@@ -184,7 +184,7 @@
 
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="offer-price text-sm text-slate-500">
-                                    {{ $offer->price }}
+                                    {{ $offer->formatted_price }}
                                 </div>
                             </td>
 

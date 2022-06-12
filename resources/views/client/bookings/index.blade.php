@@ -56,7 +56,7 @@
                 <!-- begin::Total -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-xs {{ app()->getLocale() === 'ar' ? 'text-right' : '' }} text-slate-500">
-                        {{ $booking->total }}
+                        {{ $booking->formatted_total }}
                     </div>
                 </td>
                 <!-- end::Total -->

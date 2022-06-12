@@ -31,7 +31,7 @@
                 <x-label for="price" :value="__('page.offers.form.price.label')" />
 
                 <x-input
-                    type="text" class="w-full" name="price" value="{{ $offer->price }}"
+                    type="text" class="w-full" name="price" value="{{ $offer->formatted_price }}"
                     placeholder="{{ __('page.offers.form.price.placeholder') }}"
                 />
 

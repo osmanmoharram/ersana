@@ -5211,15 +5211,15 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('payment', {
     return remainingAmount;
   }(function (element, totalAmount) {
     if (totalAmount) {
-      var amount = (element.value - parseFloat(totalAmount)) * -1;
-      remainingAmount.value = amount;
+      var amount = parseFloat(totalAmount) - element.value;
+      remainingAmount.value = this.round(amount);
     } else {
-      var _amount = (element.value - this.totalPrice) * -1;
+      var _amount = this.totalPrice - parseFloat(element.value);
 
       if (_amount < 0) {
-        remainingAmount.value = 0;
+        remainingAmount.value = 0.0;
       } else {
-        remainingAmount.value = _amount;
+        remainingAmount.value = this.round(_amount);
       }
     }
   }),
@@ -5247,7 +5247,11 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('payment', {
     } else {
       total.value = this.bookingTimePrice + this.offerPrice;
     }
-  })
+  }),
+  round: function round(num) {
+    var m = Number((Math.abs(num) * 100).toPrecision(15));
+    return Math.round(m) / 100 * Math.sign(num);
+  }
 });
 
 /***/ }),
