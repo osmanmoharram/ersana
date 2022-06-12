@@ -39,9 +39,9 @@ class Booking extends Model
         $this->attributes['paid_amount'] = $value * 100;
     }
 
-    public function getPaidAmountAttribute($value)
+    public function getFormattedPaidAmountAttribute()
     {
-        return number_format($this->attributes['paid_amount'] = $value / 100, 2);
+        return number_format($this->attributes['paid_amount'] / 100, 2);
     }
     
     public function setRemainingAmountAttribute($value)
