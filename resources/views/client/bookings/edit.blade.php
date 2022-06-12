@@ -307,7 +307,7 @@
                             type="text"
                             class="bg-white w-full placeholder-slate-300 rounded-sm text-sm shadow-sm border-transparent focus:border-transparent outline-none focus:outline-none focus:ring-0 mt-2"
                             name="paid_amount"
-                            value="{{ $booking->paid_amount }}"
+                            value="{{ $booking->formatted_paid_amount }}"
                             id="paidAmount"
                             placeholder="{{ __('page.bookings.form.paid_amount.placeholder') }}"
                         >
