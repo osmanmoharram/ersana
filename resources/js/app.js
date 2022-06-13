@@ -38,18 +38,22 @@ timePickers.forEach(item => {
 });
 
 window.onload = () => {
-    const value = document.getElementById('bookingTimePrice').value;
+    const value = $('#bookingTimePrice').val();
     const offers = document.querySelectorAll('.offer');
 
-    Alpine.store('payment').setBookingTime(value, false);
+    if (value) {
+        Alpine.store('payment').setBookingTime(value, false);
+    }
 
-    offers.forEach(offer => {
-        if (offer.hasAttribute('checked')) {
-            console.log( $(offer).parents('tr'));
+    if (offers) {
+        offers.forEach(offer => {
+            if (offer.hasAttribute('checked')) {
+                let price = $(offer).parents('tr').find('input.offer-price').val();
 
-            Alpine.store('payment').setOffer(offer.value, false);
-        }
-    })
+                Alpine.store('payment').setOffer(price, false);
+            }
+        })
+    }
 }
 
 Alpine.store('selection', {
@@ -166,9 +170,7 @@ Alpine.store('bookingTimes', {
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-slate-500">
                                     <input
-                                        name="bookingTime_id"
-                                        value="${time.id}"
-                                        type="radio"
+                                        name="bookingTime_id" value="${time.id}" type="radio"
                                         @click="$store.payment.setBookingTime(${time.price}, true)"
                                         class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
                                     >
@@ -274,24 +276,24 @@ Alpine.store('payment', {
     remaining: 0,
     total: 0,
 
-    remainingAmount(element, totalAmount) {
-        if (totalAmount) {
-            let amount = (parseFloat(totalAmount) - element.value);
+    // remainingAmount(element, totalAmount) {
+    //     if (totalAmount) {
+    //         let amount = (parseFloat(totalAmount) - element.value);
 
-            remainingAmount.value = this.round(amount);
-        } else {
-            let amount = (this.totalPrice - parseFloat(element.value));
+    //         remainingAmount.value = this.round(amount);
+    //     } else {
+    //         let amount = (this.totalPrice - parseFloat(element.value));
 
-            if (amount < 0) {
-                remainingAmount.value = 0.0;
-            } else {
-                remainingAmount.value = this.round(amount)
-            }
-        }
-    },
+    //         if (amount < 0) {
+    //             remainingAmount.value = 0.0;
+    //         } else {
+    //             remainingAmount.value =
+    //         }
+    //     }
+    // },
 
     setBookingTime(value, updateTotalInput = false) {
-        this.bookingTime = value;
+        this.bookingTime = parseFloat(value);
 
         this.setTotal(updateTotalInput)
     },
@@ -301,7 +303,7 @@ Alpine.store('payment', {
     },
 
     setOffer(value, updateTotalInput = false) {
-        this.offer = value;
+        this.offer = parseFloat(value);
 
         this.setTotal(updateTotalInput)
     },
@@ -311,10 +313,8 @@ Alpine.store('payment', {
     },
 
     setRemaining(value) {
-        let result = this.total - value;
+        let result = this.total - parseFloat(value);
 
-        console.log(this.total);
-        
         this.remaining = result > 0 ? result : 0
 
         this.updateRemainingInput(this.remaining);
@@ -325,7 +325,7 @@ Alpine.store('payment', {
     },
 
     setTotal(updateTotalInput) {
-        this.total = this.getBookingTime() + this.getOffer(); 
+        this.total = this.getBookingTime() + this.getOffer();
 
         if (updateTotalInput) {
             this.updateTotalInput(this.total);
@@ -337,11 +337,15 @@ Alpine.store('payment', {
     },
 
     updateRemainingInput(value) {
-        $('#remaining').val(value);
+        $('#remaining').val(this.round(value));
     },
 
     updateTotalInput(value) {
-        $('#total').val(value);
+        const totalInputs = $('.total');
+
+        for(let input of totalInputs) {
+            $(input).val(this.round(value))
+        }
     },
 
     round(num) {

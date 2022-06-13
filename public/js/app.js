@@ -5081,6 +5081,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flatpickr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flatpickr */ "./node_modules/flatpickr/dist/esm/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -5114,15 +5120,21 @@ timePickers.forEach(function (item) {
 });
 
 window.onload = function () {
-  var value = document.getElementById('bookingTimePrice').value;
+  var value = $('#bookingTimePrice').val();
   var offers = document.querySelectorAll('.offer');
-  alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('payment').setBookingTime(value, false);
-  offers.forEach(function (offer) {
-    if (offer.hasAttribute('checked')) {
-      console.log($(offer).parents('tr'));
-      alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('payment').setOffer(offer.value, false);
-    }
-  });
+
+  if (value) {
+    alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('payment').setBookingTime(value, false);
+  }
+
+  if (offers) {
+    offers.forEach(function (offer) {
+      if (offer.hasAttribute('checked')) {
+        var price = $(offer).parents('tr').find('input.offer-price').val();
+        alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('payment').setOffer(price, false);
+      }
+    });
+  }
 };
 
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('selection', {
@@ -5183,7 +5195,7 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('bookingTimes', {
       } else {
         noBookingTimes.textContent = '';
         response.data.times.forEach(function (time) {
-          var row = "\n                        <tr>\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    <input\n                                        name=\"bookingTime_id\"\n                                        value=\"".concat(time.id, "\"\n                                        type=\"radio\"\n                                        @click=\"$store.payment.setBookingTime(").concat(time.price, ", true)\"\n                                        class=\"focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer\"\n                                    >\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    ").concat(time.from, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    ").concat(time.to, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"booking-time-price text-sm text-slate-500\">\n                                    ").concat(time.price, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\"></div>\n                            </td>\n                        </tr>\n                    ");
+          var row = "\n                        <tr>\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    <input\n                                        name=\"bookingTime_id\" value=\"".concat(time.id, "\" type=\"radio\"\n                                        @click=\"$store.payment.setBookingTime(").concat(time.price, ", true)\"\n                                        class=\"focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer\"\n                                    >\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    ").concat(time.from, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    ").concat(time.to, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"booking-time-price text-sm text-slate-500\">\n                                    ").concat(time.price, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\"></div>\n                            </td>\n                        </tr>\n                    ");
           bookingTimes.append(row);
         });
       }
@@ -5213,33 +5225,22 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('payment', {
   offer: 0,
   remaining: 0,
   total: 0,
-  remainingAmount: function (_remainingAmount) {
-    function remainingAmount(_x, _x2) {
-      return _remainingAmount.apply(this, arguments);
-    }
-
-    remainingAmount.toString = function () {
-      return _remainingAmount.toString();
-    };
-
-    return remainingAmount;
-  }(function (element, totalAmount) {
-    if (totalAmount) {
-      var amount = parseFloat(totalAmount) - element.value;
-      remainingAmount.value = this.round(amount);
-    } else {
-      var _amount = this.totalPrice - parseFloat(element.value);
-
-      if (_amount < 0) {
-        remainingAmount.value = 0.0;
-      } else {
-        remainingAmount.value = this.round(_amount);
-      }
-    }
-  }),
+  // remainingAmount(element, totalAmount) {
+  //     if (totalAmount) {
+  //         let amount = (parseFloat(totalAmount) - element.value);
+  //         remainingAmount.value = this.round(amount);
+  //     } else {
+  //         let amount = (this.totalPrice - parseFloat(element.value));
+  //         if (amount < 0) {
+  //             remainingAmount.value = 0.0;
+  //         } else {
+  //             remainingAmount.value =
+  //         }
+  //     }
+  // },
   setBookingTime: function setBookingTime(value) {
     var updateTotalInput = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    this.bookingTime = value;
+    this.bookingTime = parseFloat(value);
     this.setTotal(updateTotalInput);
   },
   getBookingTime: function getBookingTime() {
@@ -5247,15 +5248,14 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('payment', {
   },
   setOffer: function setOffer(value) {
     var updateTotalInput = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    this.offer = value;
+    this.offer = parseFloat(value);
     this.setTotal(updateTotalInput);
   },
   getOffer: function getOffer() {
     return this.offer;
   },
   setRemaining: function setRemaining(value) {
-    var result = this.total - value;
-    console.log(this.total);
+    var result = this.total - parseFloat(value);
     this.remaining = result > 0 ? result : 0;
     this.updateRemainingInput(this.remaining);
   },
@@ -5273,10 +5273,24 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('payment', {
     return this.total;
   },
   updateRemainingInput: function updateRemainingInput(value) {
-    $('#remaining').val(value);
+    $('#remaining').val(this.round(value));
   },
   updateTotalInput: function updateTotalInput(value) {
-    $('#total').val(value);
+    var totalInputs = $('.total');
+
+    var _iterator = _createForOfIteratorHelper(totalInputs),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var input = _step.value;
+        $(input).val(this.round(value));
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
   },
   round: function round(num) {
     var m = Number((Math.abs(num) * 100).toPrecision(15));
