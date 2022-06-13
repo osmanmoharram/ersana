@@ -5112,6 +5112,19 @@ timePickers.forEach(function (item) {
     dateFormat: "H:i"
   });
 });
+
+window.onload = function () {
+  var value = document.getElementById('bookingTimePrice').value;
+  var offers = document.querySelectorAll('.offer');
+  alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('payment').setBookingTime(value, false);
+  offers.forEach(function (offer) {
+    if (offer.hasAttribute('checked')) {
+      console.log($(offer).parents('tr'));
+      alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('payment').setOffer(offer.value, false);
+    }
+  });
+};
+
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('selection', {
   select: function select(target, value) {
     var inputs = target.parentElement.parentElement.querySelectorAll('input');
@@ -5142,7 +5155,7 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('selection', {
     var from = $('#from').val();
     var to = $('#to').val();
     var price = $('#price').val();
-    var time = "\n            <tr>\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ".concat(periodDisplayValue, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][period]\" value=\"").concat(periodsendValue, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(from, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][from]\" value=\"").concat(from, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(to, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][to]\" value=\"").concat(to, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(price, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][price]\" value=\"").concat(price, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <button @click.prevent=\"$el.parentElement.parentElement.remove()\" class=\"text-red-400 hover:text-red-500 py-2 px-4 transition duration-150 ease-in-out\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6\" viewBox=\"0 0 20 20\" fill=\"currentColor\">\n                            <path fill-rule=\"evenodd\" d=\"M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z\" clip-rule=\"evenodd\" />\n                        </svg>\n                    </button>\n                <td>\n            </tr>\n        ");
+    var time = "\n            <tr>\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ".concat(periodDisplayValue, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][period]\" value=\"").concat(periodsendValue, "\" >\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(from, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][from]\" value=\"").concat(from, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(to, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][to]\" value=\"").concat(to, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <div class=\"text-sm text-slate-500\">\n                        ").concat(price, "\n                        <input type=\"hidden\" name=\"bookingTimes[").concat(counter, "][price]\" value=\"").concat(price, "\">\n                    </div>\n                </td>\n\n                <td class=\"px-6 py-4 whitespace-nowrap\">\n                    <button @click.prevent=\"$el.parentElement.parentElement.remove()\" class=\"text-red-400 hover:text-red-500 py-2 px-4 transition duration-150 ease-in-out\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6\" viewBox=\"0 0 20 20\" fill=\"currentColor\">\n                            <path fill-rule=\"evenodd\" d=\"M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z\" clip-rule=\"evenodd\" />\n                        </svg>\n                    </button>\n                <td>\n            </tr>\n        ");
     bookingTimes.append(time);
   }
 });
@@ -5170,7 +5183,7 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('bookingTimes', {
       } else {
         noBookingTimes.textContent = '';
         response.data.times.forEach(function (time) {
-          var row = "\n                        <tr>\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    <input\n                                        name=\"bookingTime_id\"\n                                        value=\"".concat(time.id, "\"\n                                        type=\"radio\"\n                                        @click=\"$store.payment.total($el, 'bookingTime')\"\n                                        class=\"focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer\"\n                                    >\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    ").concat(time.from, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    ").concat(time.to, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"booking-time-price text-sm text-slate-500\">\n                                    ").concat(time.price, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\"></div>\n                            </td>\n                        </tr>\n                    ");
+          var row = "\n                        <tr>\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    <input\n                                        name=\"bookingTime_id\"\n                                        value=\"".concat(time.id, "\"\n                                        type=\"radio\"\n                                        @click=\"$store.payment.setBookingTime(").concat(time.price, ", true)\"\n                                        class=\"focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer\"\n                                    >\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    ").concat(time.from, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\">\n                                    ").concat(time.to, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"booking-time-price text-sm text-slate-500\">\n                                    ").concat(time.price, "\n                                </div>\n                            </td>\n\n                            <td class=\"px-6 py-4 whitespace-nowrap\">\n                                <div class=\"text-sm text-slate-500\"></div>\n                            </td>\n                        </tr>\n                    ");
           bookingTimes.append(row);
         });
       }
@@ -5196,9 +5209,10 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('halls', {
   }
 });
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('payment', {
-  bookingTimePrice: 0,
-  offerPrice: 0,
-  totalPrice: 0,
+  bookingTime: 0,
+  offer: 0,
+  remaining: 0,
+  total: 0,
   remainingAmount: function (_remainingAmount) {
     function remainingAmount(_x, _x2) {
       return _remainingAmount.apply(this, arguments);
@@ -5223,31 +5237,47 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].store('payment', {
       }
     }
   }),
-  total: function (_total) {
-    function total(_x3, _x4) {
-      return _total.apply(this, arguments);
+  setBookingTime: function setBookingTime(value) {
+    var updateTotalInput = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    this.bookingTime = value;
+    this.setTotal(updateTotalInput);
+  },
+  getBookingTime: function getBookingTime() {
+    return this.bookingTime;
+  },
+  setOffer: function setOffer(value) {
+    var updateTotalInput = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    this.offer = value;
+    this.setTotal(updateTotalInput);
+  },
+  getOffer: function getOffer() {
+    return this.offer;
+  },
+  setRemaining: function setRemaining(value) {
+    var result = this.total - value;
+    console.log(this.total);
+    this.remaining = result > 0 ? result : 0;
+    this.updateRemainingInput(this.remaining);
+  },
+  getRemaining: function getRemaining() {
+    return this.remaining;
+  },
+  setTotal: function setTotal(updateTotalInput) {
+    this.total = this.getBookingTime() + this.getOffer();
+
+    if (updateTotalInput) {
+      this.updateTotalInput(this.total);
     }
-
-    total.toString = function () {
-      return _total.toString();
-    };
-
-    return total;
-  }(function (element, type) {
-    if (element.checked = true) {
-      if (type === 'bookingTime') {
-        this.bookingTimePrice = parseFloat($(element).parents('tr').find('.booking-time-price').text().trim());
-      }
-
-      if (type === 'offer') {
-        this.offerPrice = parseFloat($(element).parents('tr').find('.offer-price').text().trim());
-      }
-
-      total.value = this.totalPrice = this.bookingTimePrice + this.offerPrice;
-    } else {
-      total.value = this.bookingTimePrice + this.offerPrice;
-    }
-  }),
+  },
+  getTotal: function getTotal() {
+    return this.total;
+  },
+  updateRemainingInput: function updateRemainingInput(value) {
+    $('#remaining').val(value);
+  },
+  updateTotalInput: function updateTotalInput(value) {
+    $('#total').val(value);
+  },
   round: function round(num) {
     var m = Number((Math.abs(num) * 100).toPrecision(15));
     return Math.round(m) / 100 * Math.sign(num);

@@ -3,7 +3,7 @@
         {{ __('page.settings.header') }}
     </x-slot>
 
-    <div class="grid grid-cols-12 gap-x-12">
+    <div class="grid grid-cols-12">
 
         <!-- begin::Sidebar -->
         <div class="col-span-2 hidden lg:block">
@@ -28,7 +28,7 @@
         <!-- end::Sidebar -->
 
         <!-- begin::Content -->
-        <div class="col-span-12 sm:col-span-11 lg:col-span-10">
+        <div class="col-span-12 sm:col-span-11 lg:col-span-10 mr-6">
             <div class="max-w-6xl mx-auto px-4">
                 <div>
                     {{ $slot }}

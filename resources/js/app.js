@@ -37,6 +37,21 @@ timePickers.forEach(item => {
     });
 });
 
+window.onload = () => {
+    const value = document.getElementById('bookingTimePrice').value;
+    const offers = document.querySelectorAll('.offer');
+
+    Alpine.store('payment').setBookingTime(value, false);
+
+    offers.forEach(offer => {
+        if (offer.hasAttribute('checked')) {
+            console.log( $(offer).parents('tr'));
+
+            Alpine.store('payment').setOffer(offer.value, false);
+        }
+    })
+}
+
 Alpine.store('selection', {
     select(target, value) {
         let inputs = target.parentElement.parentElement.querySelectorAll('input')
@@ -79,7 +94,7 @@ Alpine.store('selection', {
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm text-slate-500">
                         ${periodDisplayValue}
-                        <input type="hidden" name="bookingTimes[${counter}][period]" value="${periodsendValue}">
+                        <input type="hidden" name="bookingTimes[${counter}][period]" value="${periodsendValue}" >
                     </div>
                 </td>
 
@@ -154,7 +169,7 @@ Alpine.store('bookingTimes', {
                                         name="bookingTime_id"
                                         value="${time.id}"
                                         type="radio"
-                                        @click="$store.payment.total($el, 'bookingTime')"
+                                        @click="$store.payment.setBookingTime(${time.price}, true)"
                                         class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
                                     >
                                 </div>
@@ -254,9 +269,10 @@ Alpine.store('halls', {
 })
 
 Alpine.store('payment', {
-    bookingTimePrice: 0,
-    offerPrice: 0,
-    totalPrice: 0,
+    bookingTime: 0,
+    offer: 0,
+    remaining: 0,
+    total: 0,
 
     remainingAmount(element, totalAmount) {
         if (totalAmount) {
@@ -274,24 +290,62 @@ Alpine.store('payment', {
         }
     },
 
-    total(element, type) {
-        if (element.checked = true) {
-            if (type === 'bookingTime') {
-                this.bookingTimePrice = parseFloat($(element).parents('tr').find('.booking-time-price').text().trim());
-            }
+    setBookingTime(value, updateTotalInput = false) {
+        this.bookingTime = value;
 
-            if (type === 'offer') {
-                this.offerPrice = parseFloat($(element).parents('tr').find('.offer-price').text().trim());
-            }
+        this.setTotal(updateTotalInput)
+    },
 
-            total.value = this.totalPrice = this.bookingTimePrice + this.offerPrice;
-        } else {
-            total.value = this.bookingTimePrice + this.offerPrice;
+    getBookingTime() {
+        return this.bookingTime;
+    },
+
+    setOffer(value, updateTotalInput = false) {
+        this.offer = value;
+
+        this.setTotal(updateTotalInput)
+    },
+
+    getOffer() {
+        return this.offer;
+    },
+
+    setRemaining(value) {
+        let result = this.total - value;
+
+        console.log(this.total);
+        
+        this.remaining = result > 0 ? result : 0
+
+        this.updateRemainingInput(this.remaining);
+    },
+
+    getRemaining() {
+        return this.remaining;
+    },
+
+    setTotal(updateTotalInput) {
+        this.total = this.getBookingTime() + this.getOffer(); 
+
+        if (updateTotalInput) {
+            this.updateTotalInput(this.total);
         }
+    },
+
+    getTotal() {
+        return this.total;
+    },
+
+    updateRemainingInput(value) {
+        $('#remaining').val(value);
+    },
+
+    updateTotalInput(value) {
+        $('#total').val(value);
     },
 
     round(num) {
         let m = Number((Math.abs(num) * 100).toPrecision(15));
         return Math.round(m) / 100 * Math.sign(num);
-    }
+    },
 });

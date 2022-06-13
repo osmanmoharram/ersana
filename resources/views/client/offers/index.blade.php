@@ -24,7 +24,7 @@
                 <!-- begin::Price -->
                 <td class="px-6 py-3 whitespace-nowrap">
                     <div class="text-sm  text-slate-500">
-                        {{ $offer->formatted_price }}
+                        {{ number_format($offer->price, 2) }}
                     </div>
                 </td>
                 <!-- end::Price -->

@@ -29,9 +29,9 @@ class Booking extends Model
         $this->attributes['total'] = $value * 100;
     }
 
-    public function getFormattedTotalAttribute()
+    public function getTotalAttribute()
     {
-        return number_format($this->attributes['total'] / 100, 2);
+        return $this->attributes['total'] / 100;
     }
 
     public function setPaidAmountAttribute($value)
@@ -39,9 +39,9 @@ class Booking extends Model
         $this->attributes['paid_amount'] = $value * 100;
     }
 
-    public function getFormattedPaidAmountAttribute()
+    public function getPaidAmountAttribute()
     {
-        return number_format($this->attributes['paid_amount'] / 100, 2);
+        return $this->attributes['paid_amount'] / 100;
     }
 
     public function setRemainingAmountAttribute($value)
@@ -49,8 +49,8 @@ class Booking extends Model
         $this->attributes['remaining_amount'] = $value * 100;
     }
 
-    public function getRemainingAmountAttribute($value)
+    public function getRemainingAmountAttribute()
     {
-        return number_format($this->attributes['remaining_amount'] = $value / 100, 2);
+        return $this->attributes['remaining_amount'] / 100;
     }
 }

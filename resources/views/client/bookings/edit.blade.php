@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header" class="py-6">
-        {{ __('page.bookings.create.header') }}
+        {{ __('page.bookings.edit.header', ['booking' => $booking->id]) }}
     </x-slot>
 
     <form x-data action="{{ route('halls.bookings.update', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}" method="POST" class="pb-8">
@@ -89,6 +89,7 @@
                             type="text" id="date" name="date"
                             placeholder="{{ $errors->has('date') ? $errors->get('date')[0] : __('page.bookings.form.date.placeholder') }}"
                             class="date-picker w-full text-sm rounded-sm {{ $errors->has('date') ? 'text-xs placeholder-red-500 border border-red-500' : 'placeholder-slate-300 border-none' }} cursor-pointer shadow-sm mt-2 outline-none focus:ring-0" readonly
+                            x-init="$el.value = ''"
                         />
                     </div>
                     <!-- end::Date -->
@@ -97,11 +98,7 @@
                     <div class="col-span-1">
                         <x-label for="period" :value="__('page.bookingTimes.form.period.label')" />
 
-                        <x-select
-                            placeholder="{{ __('actions.select.placeholder') }}"
-                            value="{{ $booking->bookingTime->period }}"
-                            display="{{ __('page.bookingTimes.form.period.items.' . $booking->bookingTime->period) }}"
-                        >
+                        <x-select placeholder="{{ __('actions.select.placeholder') }}" x-init="$el.querySelector('input').value = ''">
                             @foreach (['day', 'evening'] as $period)
                                 <option
                                     class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
@@ -146,12 +143,9 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-slate-500">
                                         <input
-                                            name="bookingTime_id"
-                                            value="{{ $booking->bookingTime->id }}"
-                                            type="radio"
-                                            @click="$store.payment.total($el, 'bookingTime')"
+                                            name="bookingTime_id" value="{{ $booking->bookingTime->id }}" type="radio" checked
                                             class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
-                                            checked
+                                            @click="$store.payment.setBookingTime({{ $booking->bookingTime->price }}, true)"
                                         >
                                     </div>
                                 </td>
@@ -169,8 +163,9 @@
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="booking-time-price text-sm text-slate-500">
-                                        {{ $booking->bookingTime->price }}
+                                    <div class="text-sm text-slate-500">
+                                        <input type="hidden" value="{{ $booking->bookingTime->price }}" id="bookingTimePrice">
+                                        {{ number_format($booking->bookingTime->price, 2) }}
                                     </div>
                                 </td>
 
@@ -210,13 +205,10 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div>
                                     <input
-                                        id="offer_id"
-                                        name="offer_id"
-                                        value="{{ $offer->id }}"
-                                        type="radio"
-                                        class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
+                                        name="offer_id" value="{{ $offer->id }}" type="radio"
+                                        class="offer focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
                                         {{ $offer->id === $booking->offer_id ? 'checked' : '' }}
-                                        @click="$store.payment.total($el, 'offer')"
+                                        @click="$store.payment.setOffer({{ $offer->price }}, true)"
                                     >
                                 </div>
                             </td>
@@ -229,7 +221,8 @@
 
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="offer-price text-sm text-slate-500">
-                                    {{ $offer->formatted_price }}
+                                    {{ number_format($offer->price, 2) }}
+                                    <input type="hidden" class="offer-price" value="{{ $offer->price }}">
                                 </div>
                             </td>
 
@@ -308,12 +301,10 @@
                         />
 
                         <input
-                            type="text"
-                            class="bg-white w-full placeholder-slate-300 rounded-sm text-sm shadow-sm border-transparent focus:border-transparent outline-none focus:outline-none focus:ring-0 mt-2"
-                            name="paid_amount"
-                            value="{{ $booking->formatted_paid_amount }}"
-                            id="paidAmount"
+                            type="text" name="paid_amount" id="paid" value="{{ number_format($booking->paid_amount, 2) }}"
                             placeholder="{{ __('page.bookings.form.paid_amount.placeholder') }}"
+                            class="bg-white w-full placeholder-slate-300 rounded-sm text-sm shadow-sm border-transparent focus:border-transparent outline-none focus:outline-none focus:ring-0 mt-2"
+                            @change="$store.payment.setRemaining($el.value)"
                         >
 
                         @error('paid_amount')
@@ -322,13 +313,13 @@
                     </div>
                     <!-- end::Paid Amount -->
 
-                    <button
+                    {{-- <button
                         type="button"
                         class="col-span-1 py-3 w-full text-sm text-white bg-green-400 hover:bg-green-500 shadow-sm rounded-sm mb-px transition duration-150 ease-in-out"
                         @click.prevent="$store.payment.remainingAmount(document.getElementById('paidAmount'), '{{ $booking->total }}')"
                     >
                         {{ __('Calculate Remaining') }}
-                    </button>
+                    </button> --}}
                 </div>
 
                 <!-- begin::Remaining Amount -->
@@ -338,9 +329,8 @@
                     </label>
 
                     <input
-                        type="text" name="remaining_amount" value="{{ $booking->remaining_amount }}"
-                        id="remainingAmount" dir="ltr" readonly
-                        class="w-full bg-slate-200/40 cursor-not-allowed text-slate-500 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }} bg-white placeholder-slate-300 rounded-sm text-sm shadow-sm border-transparent focus:border-transparent outline-none focus:outline-none focus:ring-0 mt-2"
+                        type="text" name="remaining_amount" id="remaining" value="{{ number_format($booking->formatted_remaining_amount, 2) }}" dir="ltr" readonly
+                        class="remaining-amount w-full bg-slate-200/40 cursor-not-allowed text-slate-500 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }} bg-white placeholder-slate-300 rounded-sm text-sm shadow-sm border-transparent focus:border-transparent outline-none focus:outline-none focus:ring-0 mt-2"
                     >
 
                     @error('remaining_amount')
@@ -355,7 +345,7 @@
 
                     <input
                         type="text" name="total" id="total" dir="ltr" readonly
-                        value="{{ $booking->formatted_total }}"
+                        value="{{ number_format($booking->total) }}"
                         class="w-full bg-slate-200/40 cursor-not-allowed text-slate-500 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }} bg-white placeholder-slate-300 rounded-sm text-sm shadow-sm border-transparent focus:border-transparent outline-none focus:outline-none focus:ring-0 mt-2"
                     >
 

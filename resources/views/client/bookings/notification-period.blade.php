@@ -1,9 +1,9 @@
 <x-settings-layout>
-    <p class="text-sm text-slate-400">
-        هنا سيتم تحديد عدد الأيام اللازمة و التي ستكون قبل موعد مناسبة الحجز لإرسال تنبيه لصاحب الحجز لدفع المبلغ المالي الذي عليه كاملاً في حال كان متبقي عليه جزء من المبلغ.
+    <p class="max-w-2xl leading-relaxed text-sm text-slate-400">
+        هنا سيتم تحديد عدد الأيام اللازمة و التي ستكون قبل موعد مناسبة الحجز لإرسال تنبيه لصاحب الحجز لدفع المبلغ المالي الذي عليه كاملاً في حال كان متبقي عليه جزء من المبلغ المالي.
     </p>
 
-    <form action="{{ route('halls.bookings.notification-period', ['hall' => session('hall')->id]) }}" method="POST" class="mt-6">
+    <form action="{{ route('halls.bookings.notification-period', ['hall' => session('hall')->id]) }}" method="POST" class="mt-4">
         @csrf
         
         <div class="grid grid-cols-3">

@@ -16,8 +16,13 @@ class Offer extends Model
         $this->attributes['price'] = $value * 100;
     }
 
-    public function getFormattedPriceAttribute()
+    public function getPriceAttribute()
     {
-        return number_format($this->attributes['price'] / 100, 2);
+        return $this->attributes['price'] / 100;
     }
+
+    // public function getFormattedPriceAttribute()
+    // {
+    //     return number_format($this->attributes['price'] / 100, 2);
+    // }
 }

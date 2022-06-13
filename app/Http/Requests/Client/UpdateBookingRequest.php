@@ -32,9 +32,9 @@ class UpdateBookingRequest extends FormRequest
             'bookingTime_id' => ['nullable', 'exists:booking_times,id'],
             'offer_id' => ['required', 'exists:offers,id'],
             'payment_method' => ['required', 'in:bank,cash'],
-            'paid_amount' => ['required', 'numeric'],
-            'remaining_amount' => ['required', 'numeric'],
-            'total' => ['required', 'numeric'],
+            'paid_amount' => ['nullable', 'numeric'],
+            'remaining_amount' => ['nullable', 'regex:/^[0-9\.,]+$/', 'not_in:0'],
+            'total' => ['nullable', 'regex:/^[0-9\.,]+$/', 'not_in:0'],
             'status' => ['required', 'in:confirmed,temporary,paid,canceled'],
             'notes' => ['nullable', 'string']
         ];
