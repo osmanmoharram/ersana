@@ -86,9 +86,9 @@
                         </div>
 
                         <input
-                            type="text" id="date" name="date" placeholder="{{ $errors->has('date') ? $errors->get('date')[0] : __('page.bookings.form.date.placeholder') }}"
+                            type="text" id="date" name="date"
+                            placeholder="{{ $errors->has('date') ? $errors->get('date')[0] : __('page.bookings.form.date.placeholder') }}"
                             class="date-picker w-full text-sm rounded-sm {{ $errors->has('date') ? 'text-xs placeholder-red-500 border border-red-500' : 'placeholder-slate-300 border-none' }} cursor-pointer shadow-sm mt-2 outline-none focus:ring-0" readonly
-                            x-init="$el.value = ''"
                         />
                     </div>
                     <!-- end::Date -->
@@ -97,7 +97,11 @@
                     <div class="col-span-1">
                         <x-label for="period" :value="__('page.bookingTimes.form.period.label')" />
 
-                        <x-select placeholder="{{ __('actions.select.placeholder') }}">
+                        <x-select
+                            placeholder="{{ __('actions.select.placeholder') }}"
+                            value="{{ $booking->bookingTime->period }}"
+                            display="{{ __('page.bookingTimes.form.period.items.' . $booking->bookingTime->period) }}"
+                        >
                             @foreach (['day', 'evening'] as $period)
                                 <option
                                     class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
