@@ -265,8 +265,8 @@ return [
                 'placeholder' => 'Please select the desired payment method',
                 'items' => ['bank' => 'Bank Transfer', 'cash' => 'Cash']
             ],
-            'paid_amount' => ['label' => 'Paid Amount', 'placeholder' => 'Please insert the paid amount'],
-            'remaining_amount' => ['label' => 'Remaining Amount', 'placeholder' => ''],
+            'paid' => ['label' => 'Paid Amount', 'placeholder' => 'Please insert the paid amount'],
+            'remaining' => ['label' => 'Remaining Amount', 'placeholder' => ''],
             'total' => ['label' => 'Total'],
             'status' => [
                 'label' => 'Status',

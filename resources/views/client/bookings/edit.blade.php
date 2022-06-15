@@ -295,18 +295,18 @@
                 <!-- begin::Paid Amount -->
                 <div class="w-full">
                     <x-label
-                        for="" value="{{ __('page.bookings.form.paid_amount.label') }}"
+                        for="" value="{{ __('page.bookings.form.paid.label') }}"
                         class="text-sm text-slate-400"
                     />
 
                     <input
-                        type="text" name="paid_amount" id="paid" value="{{ number_format($booking->paid_amount, 2) }}"
+                        type="text" value="{{ number_format($booking->paid, 2) }}"
                         placeholder="{{ __('page.bookings.form.paid_amount.placeholder') }}"
                         class="bg-white w-full placeholder-slate-300 rounded-sm text-sm shadow-sm border-transparent focus:border-transparent outline-none focus:outline-none focus:ring-0 mt-2"
                         @change="$store.payment.setRemaining($el.value)"
                     >
 
-                    @error('paid_amount')
+                    @error('paid')
                         <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
@@ -315,16 +315,17 @@
                 <!-- begin::Remaining Amount -->
                 <div class="w-full">
                     <label for="" class="text-sm text-slate-400">
-                        {{ __('page.bookings.form.remaining_amount.label') }}
+                        {{ __('page.bookings.form.remaining.label') }}
                     </label>
 
                     <input
-                        type="text" name="remaining_amount" id="remaining" dir="ltr" readonly
-                        value="{{ number_format($booking->remaining_amount, 2) }}"
-                        class="remaining-amount w-full bg-slate-200/40 cursor-not-allowed text-slate-500 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }} bg-white placeholder-slate-300 rounded-sm text-sm shadow-sm border-transparent focus:border-transparent outline-none focus:outline-none focus:ring-0 mt-2"
+                        type="text" dir="ltr" readonly
+                        value="{{ number_format($booking->remaining, 2) }}"
+                        class="remaining w-full bg-slate-200/40 cursor-not-allowed text-slate-500 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }} bg-white placeholder-slate-300 rounded-sm text-sm shadow-sm border-transparent focus:border-transparent outline-none focus:outline-none focus:ring-0 mt-2"
                     >
+                    <input type="hidden" name="remaining" class="remaining" value="{{ $booking->remaining }}">
 
-                    @error('remaining_amount')
+                    @error('remaining')
                         <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                     @enderror
                 </div>

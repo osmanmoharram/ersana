@@ -22,7 +22,8 @@
                     <x-label for="customer[name]" :value="__('page.bookings.form.customer.name.label')" />
 
                     <x-input
-                        type="text" class="w-full mt-1 {{ $errors->has('customer.name') ? 'text-xs placeholder-red-500 border border-red-500' : '' }}" name="customer[name]" value="{{ old('customer.name') }}"
+                        type="text" name="customer[name]" value="{{ old('customer.name') }}"
+                        class="w-full mt-1 {{ $errors->has('customer.name') ? 'text-xs placeholder-red-500 border border-red-500' : '' }}"
                         placeholder="{{ $errors->has('customer.name') ? $errors->get('customer.name')[0] : __('page.bookings.form.customer.name.placeholder') }}"
                     />
                 </div>
@@ -33,7 +34,8 @@
                     <x-label for="customer[email]" :value="__('page.bookings.form.customer.email.label')" />
 
                     <x-input
-                        type="text" class="w-full mt-1 {{ $errors->has('customer.email') ? 'text-xs placeholder-red-500 border border-red-500' : '' }}" name="customer[email]" value="{{ old('customer.email') }}"
+                        type="text" name="customer[email]" value="{{ old('customer.email') }}"
+                        class="w-full mt-1 {{ $errors->has('customer.email') ? 'text-xs placeholder-red-500 border border-red-500' : '' }}"
                         placeholder="{{ $errors->has('customer.email') ? $errors->get('customer.email')[0] : __('page.bookings.form.customer.email.placeholder') }}"
                     />
                 </div>
@@ -81,10 +83,9 @@
                         </div>
 
                         <input
-                            type="text" id="date" name="date"
+                            type="text" id="date" name="date" readonly x-init="$el.value = ''"
                             placeholder="{{ $errors->has('date') ? $errors->get('date')[0] : __('page.bookings.form.date.placeholder') }}"
-                            class="date-picker w-full text-sm rounded-sm {{ $errors->has('date') ? 'text-xs placeholder-red-500 border border-red-500' : 'placeholder-slate-300 border-none' }} cursor-pointer shadow-sm mt-2 outline-none focus:ring-0" readonly
-                            x-init="$el.value = ''"
+                            class="date-picker w-full text-sm rounded-sm {{ $errors->has('date') ? 'text-xs placeholder-red-500 border border-red-500' : 'placeholder-slate-300 border-none' }} cursor-pointer shadow-sm mt-2 outline-none focus:ring-0"
                         />
                     </div>
                     <!-- end::Date -->
@@ -241,7 +242,7 @@
                         @endforeach
                     </x-select>
 
-                    @error('paid_amount')
+                    @error('payment_method')
                         <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
@@ -250,36 +251,36 @@
                 <!-- begin::Paid Amount -->
                 <div class="w-full">
                     <x-label
-                        for="" value="{{ __('page.bookings.form.paid_amount.label') }}"
+                        for="" value="{{ __('page.bookings.form.paid.label') }}"
                         class="text-sm text-slate-400"
                     />
 
                     <x-input
-                        type="text" class="w-full" name="paid_amount" value="{{ old('name') }}"
-                        placeholder="{{ __('page.customers.form.name.placeholder') }}"
+                        type="text" class="w-full" name="paid" value="{{ old('name') }}"
+                        placeholder="{{ __('page.bookings.form.paid.placeholder') }}"
                         @change="$store.payment.setRemaining($el.value)"
                     />
 
-                    @error('paid_amount')
+                    @error('paid')
                         <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
                 <!-- end::Paid Amount -->
 
 
-                <!-- begin::Remaining Amount -->
+                <!-- begin::Remaining -->
                 <div class="col-span-1">
                     <label for="" class="text-sm text-slate-400">
-                        {{ __('page.bookings.form.remaining_amount.label') }}
+                        {{ __('page.bookings.form.remaining.label') }}
                     </label>
 
                     <x-input
-                        type="text" name="remaining_amount" id="remaining" dir="ltr" readonly
-                        class="w-full mt-2 bg-slate-200/40 cursor-not-allowed text-slate-500
+                        type="text" name="remaining" dir="ltr" readonly
+                        class="remaining w-full mt-2 bg-slate-200/40 cursor-not-allowed text-slate-500
                         {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}"
                     />
 
-                    @error('remaining_amount')
+                    @error('remaining')
                         <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
@@ -330,7 +331,7 @@
                         display="{{ old('status') ? __('page.bookings.form.status.items.' . old('status')) : null }}"
                         placeholder="{{ __('actions.select.placeholder') }}"
                     >
-                        @foreach (['confirmed', 'temporary', 'paid', 'canceled'] as $status)
+                        @foreach (['confirmed', 'temporary'] as $status)
                             <li
                                 class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
                                 @click="$store.selection.select($el, '{{ $status }}'); visible = false"

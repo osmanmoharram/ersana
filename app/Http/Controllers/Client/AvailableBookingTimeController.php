@@ -27,6 +27,7 @@ class AvailableBookingTimeController extends Controller
         $formatted_date = substr(Carbon::create($request->date), 0, 10);
 
         $bookings = Booking::where('date', $formatted_date)
+                        ->whereIn('status', ['confirmed', 'temporary'])
                         ->whereHas('bookingTime', function ($query) use ($request, $hall) {
                             $query
                                 ->where('hall_id', $hall->id)
@@ -43,10 +44,10 @@ class AvailableBookingTimeController extends Controller
             return ! in_array($value->id, $bookings_bookingTimes);
         });
 
-        return $available->count() > 0
-            ? response()->json(['times' => $available->toArray()], 200)
-            : response()->json(['no_times' => __('page.bookingTimes.flash.unavailable')], 200);
-
-        // return response()->json(['hall' => $hall], 200);
+        if ($available->count() > 0) {
+            return response()->json(['times' => $available->toArray()], 200);
+        } else {
+            return response()->json(['no_times' => __('page.bookingTimes.flash.unavailable')], 200);
+        }
     }
 }

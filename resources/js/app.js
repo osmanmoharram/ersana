@@ -150,6 +150,9 @@ Alpine.store('bookingTimes', {
     },
 
     fetch(hall) {
+        const bookingTimes = $('#availableBookingTimes tbody');
+        const noBookingTimes = $('#noBookingTimes');
+
         axios.get(`/halls/${hall}/available-booking-times`, {
             params: {
                 date: new Date(this.date[0]).toDateString(),
@@ -157,52 +160,92 @@ Alpine.store('bookingTimes', {
             }
         })
         .then(response => {
-            const bookingTimes = $('#availableBookingTimes tbody');
-            const noBookingTimes = $('#noBookingTimes');
-
             if (response.data.no_times) {
                 noBookingTimes.append(response.data.no_times);
             } else {
                 noBookingTimes.textContent = '';
-                response.data.times.forEach(time => {
+                
+                if (! Array.isArray(response.data.times)) {
+                    const time = response.data.times[1];
+
                     let row = `
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-slate-500">
-                                    <input
-                                        name="bookingTime_id" value="${time.id}" type="radio"
-                                        @click="$store.payment.setBookingTime(${time.price}, true)"
-                                        class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
-                                    >
-                                </div>
-                            </td>
-
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-slate-500">
-                                    ${time.from}
-                                </div>
-                            </td>
-
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-slate-500">
-                                    ${time.to}
-                                </div>
-                            </td>
-
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="booking-time-price text-sm text-slate-500">
-                                    ${time.price}
-                                </div>
-                            </td>
-
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-slate-500"></div>
-                            </td>
-                        </tr>
-                    `;
-
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500">
+                                        <input
+                                            name="bookingTime_id" value="${time.id}" type="radio"
+                                            @click="$store.payment.setBookingTime(${time.price}, true)"
+                                            class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
+                                        >
+                                    </div>
+                                </td>
+    
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500">
+                                        ${time.from}
+                                    </div>
+                                </td>
+    
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500">
+                                        ${time.to}
+                                    </div>
+                                </td>
+    
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="booking-time-price text-sm text-slate-500">
+                                        ${time.price}
+                                    </div>
+                                </td>
+    
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500"></div>
+                                </td>
+                            </tr>
+                        `;
+    
                     bookingTimes.append(row);
-                });
+                } else {
+                    response.data.times.forEach(time => {
+                        let row = `
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500">
+                                        <input
+                                            name="bookingTime_id" value="${time.id}" type="radio"
+                                            @click="$store.payment.setBookingTime(${time.price}, true)"
+                                            class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
+                                        >
+                                    </div>
+                                </td>
+    
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500">
+                                        ${time.from}
+                                    </div>
+                                </td>
+    
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500">
+                                        ${time.to}
+                                    </div>
+                                </td>
+    
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="booking-time-price text-sm text-slate-500">
+                                        ${time.price}
+                                    </div>
+                                </td>
+    
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-slate-500"></div>
+                                </td>
+                            </tr>
+                        `;
+    
+                        bookingTimes.append(row);
+                    });
+                }
             }
         })
         .catch(errors => {
@@ -276,22 +319,6 @@ Alpine.store('payment', {
     remaining: 0,
     total: 0,
 
-    // remainingAmount(element, totalAmount) {
-    //     if (totalAmount) {
-    //         let amount = (parseFloat(totalAmount) - element.value);
-
-    //         remainingAmount.value = this.round(amount);
-    //     } else {
-    //         let amount = (this.totalPrice - parseFloat(element.value));
-
-    //         if (amount < 0) {
-    //             remainingAmount.value = 0.0;
-    //         } else {
-    //             remainingAmount.value =
-    //         }
-    //     }
-    // },
-
     setBookingTime(value, updateTotalInput = false) {
         this.bookingTime = parseFloat(value);
 
@@ -337,7 +364,11 @@ Alpine.store('payment', {
     },
 
     updateRemainingInput(value) {
-        $('#remaining').val(this.round(value));
+        const remainingInputs = $('.remaining');
+
+        for(let input of remainingInputs) {
+            $(input).val(this.round(value))
+        }
     },
 
     updateTotalInput(value) {

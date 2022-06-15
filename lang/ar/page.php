@@ -250,8 +250,8 @@ return [
                 'placeholder' => 'الرجاء اختيار طريقة',
                 'items' => ['bank' => 'حوالة بنكية', 'cash' => 'نقداً']
             ],
-            'paid_amount' => ['label' => 'المبلغ المدفوع', 'placeholder' => 'الرجاء إدخال المبلغ الذي يراد دفعه'],
-            'remaining_amount' => ['label' => 'المبلغ المتبقي', 'placeholder' => ''],
+            'paid' => ['label' => 'المبلغ المدفوع', 'placeholder' => 'الرجاء إدخال المبلغ الذي يراد دفعه'],
+            'remaining' => ['label' => 'المبلغ المتبقي', 'placeholder' => ''],
             'total' => ['label' => 'الإجمالي'],
             'status' => [
                 'label' => ' الحالة',

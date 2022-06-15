@@ -108,7 +108,7 @@ class BookingController extends Controller
         }
 
         if ($request->has('bookingTime_id')) {
-            $attributes['date'] = $request->bookingTime_id;
+            $attributes['bookingTime_id'] = $request->bookingTime_id;
         }
 
         $booking->update($attributes);
@@ -133,16 +133,5 @@ class BookingController extends Controller
         return redirect()
             ->route('halls.bookings.index', session('hall')->id)
             ->withMessage(__('page.bookings.flash.deleted', ['booking' => $booking_id]));
-    }
-
-    protected function getUnavailableDates()
-    {
-        $dates = Booking::pluck('date')->unique();
-
-        $booking_times = BookingTime::pluck('id')->unique();
-
-        return $dates->filter(function ($value) use ($booking_times) {
-
-        });
     }
 }

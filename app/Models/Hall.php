@@ -27,4 +27,8 @@ class Hall extends Model
         return $this->hasMany(BookingTime::class);
     }
 
+    public function hasSettings()
+    {
+        return Setting::where('hall_id', $this->id)->exists();
+    }
 }

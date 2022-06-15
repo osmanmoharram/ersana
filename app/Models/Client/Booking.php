@@ -36,21 +36,21 @@ class Booking extends Model
 
     public function setPaidAmountAttribute($value)
     {
-        $this->attributes['paid_amount'] = $value * 100;
+        $this->attributes['paid'] = $value * 100;
     }
 
     public function getPaidAmountAttribute()
     {
-        return $this->attributes['paid_amount'] / 100;
+        return $this->attributes['paid'] / 100;
     }
 
     public function setRemainingAmountAttribute($value)
     {
-        $this->attributes['remaining_amount'] = $value * 100;
+        $this->attributes['remaining'] = $value * 100;
     }
 
     public function getRemainingAmountAttribute()
     {
-        return $this->attributes['remaining_amount'] / 100;
+        return $this->attributes['remaining'] / 100;
     }
 }

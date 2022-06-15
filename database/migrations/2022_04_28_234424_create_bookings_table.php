@@ -16,17 +16,17 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->string('customer_name');
-            $table->string('customer_email');
-            $table->string('customer_phone');
+            $table->string('customer_email')->nullable();
+            $table->string('customer_phone')->nullable();
             $table->date('date');
-            $table->unsignedBigInteger('bookingTime_id');
+            $table->unsignedBigInteger('bookingTime_id')->nullable();
             $table->unsignedBigInteger('offer_id');
             $table->string('payment_method');
-            $table->string('paid_amount');
-            $table->string('remaining_amount');
+            $table->string('paid')->nullable();
+            $table->string('remaining');
             $table->integer('total');
             $table->string('status');
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

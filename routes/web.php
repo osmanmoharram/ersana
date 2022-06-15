@@ -20,7 +20,9 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HallController;
+use App\Http\Controllers\SettingController;
 use App\Models\Hall;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -69,6 +71,15 @@ Route::group([
             Route::get('dashboard', function (Hall $hall) {
                 Session::put('hall', $hall);
 
+                if (! $hall->hasSettings()) {
+                    $settings = [
+                        ['name' => 'days_before_booking_due_date', 'value' => '14', 'hall_id' => $hall->id],
+                    ];
+                    foreach ($settings as $setting) {
+                        Setting::create($setting);
+                    }
+                }
+
                 return view('halls.dashboard');
             })->name('dashboard');
 
@@ -79,8 +90,6 @@ Route::group([
                 $request->validate([
                     'notification_period' => ['required', 'string', 'numeric']
                 ]);
-
-                
 
                 return back()->withMessage('تم الحفظ بنجاح');
             });
@@ -96,6 +105,12 @@ Route::group([
             Route::get('available-booking-times', AvailableBookingTimeController::class)->name('available-booking-times');
 
             Route::resource('offers', OfferController::class);
+
+            Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
+
+            Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+
+            Route::patch('/settings', [SettingController::class, 'update'])->name('settings.update');
         });
 
         // Admin And Client Routes
@@ -109,7 +124,9 @@ Route::group([
 
         Route::resource('reports', ReportController::class);
 
-        Route::view('/settings', 'settings')->name('settings');
+        Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+
+        Route::patch('/settings/{setting}', [SettingController::class, 'update'])->name('settings.update');
 
         Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
     });
