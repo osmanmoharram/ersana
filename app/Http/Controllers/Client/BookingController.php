@@ -12,6 +12,7 @@ use App\Models\Client\Customer;
 use App\Models\Hall;
 use App\Models\Client\Offer;
 use App\Models\Revenue;
+use App\Notifications\BookingBeforeDueDateNotification;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -58,7 +59,7 @@ class BookingController extends Controller
 
         $booking = Booking::create($attributes);
 
-        // event(new RevenueCreated($booking));
+        event(new RevenueCreated($booking));
 
         return redirect()
             ->route('halls.bookings.index', session('hall')->id)

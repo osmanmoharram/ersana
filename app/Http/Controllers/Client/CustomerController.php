@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\{NewCustomerRequest, UpdateCustomerRequest};
 use App\Models\Client\Customer;
-use App\Models\Client\Hall;
+use App\Models\Hall;
 
 class CustomerController extends Controller
 {

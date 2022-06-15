@@ -14,7 +14,7 @@ class RevenueCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    protected $booking;
+    public $booking;
 
     /**
      * Create a new event instance.

@@ -11,14 +11,18 @@ class BookingBeforeDueDateNotification extends Notification
 {
     use Queueable;
 
+    protected $booking;
+    protected $days;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($booking, $days)
     {
-        //
+        $this->booking = $booking;
+        $this->days = $days;
     }
 
     /**
@@ -29,7 +33,7 @@ class BookingBeforeDueDateNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', 'mail'];
+        return ['database'];
     }
 
     /**
@@ -38,13 +42,13 @@ class BookingBeforeDueDateNotification extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
-    }
+    // public function toMail($notifiable)
+    // {
+    //     return (new MailMessage)
+    //                 ->line('The introduction to the notification.')
+    //                 ->action('Notification Action', url('/'))
+    //                 ->line('Thank you for using our application!');
+    // }
 
     /**
      * Get the array representation of the notification.
@@ -55,7 +59,8 @@ class BookingBeforeDueDateNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'booking' => $this->booking,
+            'booking_before_due_date_days' => $this->days
         ];
     }
 }

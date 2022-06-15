@@ -9,11 +9,17 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
-    public function index(Hall $hall)
+    public function index()
     {
-        $settings = Setting::where('hall_id', $hall->id)->get();
+        if (session()->has('hall')) {
+            $settings = Setting::where('hall_id', session('hall')->id)->get();
 
-        return view('settings', compact('settings'));
+            return view('settings', compact('settings'));
+        } else {
+            Setting::where('hall_id', null)->get();
+        }
+
+
     }
 
     public function update(UpdateSettingRequest $request, Hall $hall)
@@ -21,7 +27,7 @@ class SettingController extends Controller
         foreach ($request->validated() as $value) {
             if ($value !== null) {
                 break;
-            } 
+            }
 
             return back()->withErrors(['no-setting' => 'لم يتم إدخال أي قيمة']);
         }

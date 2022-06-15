@@ -2,6 +2,11 @@
 
 namespace App\Console;
 
+use App\Models\Client\Booking;
+use App\Models\Client\BookingTime;
+use App\Models\Hall;
+use App\Models\Setting;
+use App\Notifications\BookingBeforeDueDateNotification;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,6 +21,28 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+
+        $schedule->call(function () {
+            if (session()->has('hall')) {
+                $booking_times = BookingTime::where('hall_id', session('hall')->id)->get();
+                $days = Setting::where('name', 'booking_before_due_date_days')
+                                    ->where('hall_id', session('hall')->id)
+                                    ->first()->value;
+
+                foreach ($booking_times as $time) {
+                    Booking::where('bookingTime_id', $time->id)
+                        ->whereIn('status', ['confirmed', 'temporary'])
+                        ->chunk(100, function ($bookings) use ($days) {
+                            foreach ($bookings as $booking) {
+                                if ($booking->created_at->addDays($days)->greaterThanOrEqual($booking->date)) {
+                                    Hall::find(session('hall')->id)
+                                        ->client->user->notify(new BookingBeforeDueDateNotification($booking, $days));
+                                }
+                            }
+                        });
+                }
+            }
+        })->hourly();
     }
 
     /**

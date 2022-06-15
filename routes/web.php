@@ -83,17 +83,6 @@ Route::group([
                 return view('halls.dashboard');
             })->name('dashboard');
 
-            Route::view('/bookings/notification-period', 'client.bookings.notification-period')
-                ->name('bookings.notification-period');
-
-            Route::post('/bookings/notification-period', function (Request $request) {
-                $request->validate([
-                    'notification_period' => ['required', 'string', 'numeric']
-                ]);
-
-                return back()->withMessage('تم الحفظ بنجاح');
-            });
-
             Route::resource('bookings', BookingController::class);
 
             Route::resource('booking-times', BookingTimeController::class);
@@ -105,8 +94,6 @@ Route::group([
             Route::get('available-booking-times', AvailableBookingTimeController::class)->name('available-booking-times');
 
             Route::resource('offers', OfferController::class);
-
-            Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
 
             Route::get('/settings', [SettingController::class, 'index'])->name('settings');
 

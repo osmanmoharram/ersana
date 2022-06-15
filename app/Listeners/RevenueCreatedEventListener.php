@@ -27,10 +27,11 @@ class RevenueCreatedEventListener
     public function handle($event)
     {
         Revenue::create([
-            'date' => $event->booking->date,
+            'date' => $event->booking->created_at,
             'payment_method' => $event->booking->payment_method,
-            'amount' => $event->booking->amount,
-            'description' => $event->booking->description
+            'amount' => $event->booking->total,
+            'description' => app()->getLocale() === 'ar' ? 'حجز جديد' : 'New Booking',
+            'hall_id' => $event->booking->bookingTime->hall_id
         ]);
     }
 }
