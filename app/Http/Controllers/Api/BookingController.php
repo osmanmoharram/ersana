@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\NewBookingRequest;
 use App\Http\Requests\Api\UpdateBookingRequest;
 use App\Models\Client\Booking;
+use App\Models\Hall;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller

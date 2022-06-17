@@ -235,6 +235,7 @@ return [
                 '#' => '#',
                 'customer' => 'Customer Name',
                 'date' => 'Booking Date',
+                'period' => 'Period',
                 'from' => 'From',
                 'to' => 'To',
                 'total' => 'Price',
@@ -249,6 +250,7 @@ return [
             'payment' => 'Payment',
             'additional_information' => 'Additional Information'
         ],
+        'show' => ['header' => 'Booking Number :booking'],
         'edit' => ['header' => 'Update Booking :booking Data'],
         'form' => [
             'customer' => [

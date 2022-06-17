@@ -53,4 +53,9 @@ class Booking extends Model
     {
         return $this->attributes['remaining'] / 100;
     }
+
+    public function offer()
+    {
+        return $this->belongsTo(Offer::class);
+    }
 }

@@ -72,9 +72,11 @@ class BookingController extends Controller
      * @param  \App\Models\Client\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function show(Booking $booking)
+    public function show(Hall $hall, Booking $booking)
     {
-        return view('client.customers.show', compact('booking'));
+        $hall->client->user->notifications->markAsRead();
+        
+        return view('client.bookings.show', compact('booking'));
     }
 
     /**

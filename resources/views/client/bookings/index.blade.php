@@ -10,16 +10,16 @@
     <!-- end::Page Heading -->
 
     <!-- begin::Page Content -->
-    <x-table page="bookings" :columns="['#', 'customer', 'date', 'from', 'to', 'total', 'status']">
+    <x-table page="bookings" :columns="['#', 'customer', 'date', 'period', 'from', 'to', 'total', 'status']">
         @foreach ($bookings as $booking)
             <tr>
-                <!-- begin::Slug -->
+                <!-- begin::Id -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-xs  text-slate-500">
                         {{ $booking->id}}
                     </div>
                 </td>
-                <!-- end::Slug -->
+                <!-- end::Id -->
 
                 <!-- begin::Customer -->
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -36,6 +36,14 @@
                     </div>
                 </td>
                 <!-- end::Date -->
+
+                <!-- begin::Period -->
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-xs  text-slate-500">
+                        {{ __('page.bookingTimes.form.period.items.' . $booking->bookingTime->period) }}
+                    </div>
+                </td>
+                <!-- end::Period -->
 
                 <!-- begin::From -->
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -71,6 +79,10 @@
 
                 <!-- begin::Actions -->
                 <td class="px-6 py-4 whitespace-nowrap text-right text-xs space-s-1 flex items-center justify-end">
+                    <!-- begin::Show -->
+                    <x-actions.show href="{{ route('halls.bookings.show', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"/>
+                    <!-- end::Show -->
+
                     <!-- begin::Edit -->
                     <x-actions.edit href="{{ route('halls.bookings.edit', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"/>
                     <!-- end::Edit -->

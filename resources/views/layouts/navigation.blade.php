@@ -1,26 +1,50 @@
 <nav x-data="{ open: false }" class="bg-slate-50 border-b border-gray-200">
     <!-- begin::Primary Navigation Menu -->
     <div class="px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between sm:justify-end h-16">
+        <div class="flex items-center {{ session()->has('hall') ? 'justify-between' : 'sm:justify-end' }} h-16">
             <x-application-logo class="h-8 sm:hidden" />
 
-            <div class="hidden justify-between space-s-16 sm:flex md:items-center ">
+            @if (session()->has('hall'))
+                <div class="flex items-center space-s-4">
+                    <span class="text-lg">
+                        {{ app()->getLocale() === 'ar' ? 'قاعة: ' . session('hall')->name : 'Hall: ' . session('hall')->name }}
+                    </span>
+
+                    <a href="{{ route('halls.index') }}" class="hidden sm:block text-slate-400 hover:text-slate-500 transition duration-150 ease-in-out" title="{{ app()->getLocale() === 'ar' ? 'العودة إلى القاعات' : 'Go back to halls' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                    </a>
+                </div>
+            @endif
+
+            <div class="hidden justify-between space-s-6 sm:flex sm:items-center">
                 <!-- begin::Notifications -->
-                <x-dropdown align="{{ app()->getLocale() === 'ar' ? 'left' : 'right' }}" width="48">
+                <x-dropdown align="{{ app()->getLocale() === 'ar' ? 'left' : 'right' }}">
                     <x-slot name="trigger">
-                        <button class="flex items-center text-sm font-medium text-slate-300 hover:text-slate-400 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                            </svg>
-                        </button>
+                        <div class="relative">
+                            @if (auth()->user()->unreadNotifications()->count())
+                                <div class="w-2 h-2 bg-red-500 rounded-full absolute"></div>
+                            @endif
+
+                            <button class="flex items-center text-sm font-medium text-slate-400 hover:text-slate-500 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                </svg>
+                            </button>
+                        </div>
                     </x-slot>
 
                     <x-slot name="content">
-                        @foreach (auth()->user()->notifications as $notification)
-                            <x-dropdown-link :href="route('profile')">
+                        @forelse (auth()->user()->unreadNotifications as $notification)
+                            <x-dropdown-link :href="route('halls.bookings.show', $notification->data['booking']['id'])">
                                 Booking number {{ $notification->data['booking']['id'] }} is due in less than {{ $notification->data['days'] }}
                             </x-dropdown-link>
-                        @endforeach
+                        @empty
+                            <p class="text-center p-2 text-sm text-slate-400">
+                                {{ app()->getLocale() === 'ar' ? 'لا توجد إشعارات' : 'There are no notifications' }}
+                            </p>
+                        @endforelse
                     </x-slot>
                 </x-dropdown>
                 <!-- end::Notifications -->
@@ -28,7 +52,7 @@
                 <!-- begin::Languages Links -->
                 <div class="flex items-center divide-s divide-gray-400 pb-1">
                     <!-- begin::English -->
-                    <a href="{{ LaravelLocalization::getLocalizedURL('en') }}" class="pe-3 block font-normal text-sm ms-3 text-gray-700 text-opacity-50 hover:text-opacity-70 hover:underline tranisition duration-150 ease-in-out">English</a>
+                    <a href="{{ LaravelLocalization::getLocalizedURL('en') }}" class="pe-3 block font-normal text-sm text-gray-700 text-opacity-50 hover:text-opacity-70 hover:underline tranisition duration-150 ease-in-out">English</a>
                     <!-- end::English -->
 
                     <!-- begin::Arabic -->
@@ -169,7 +193,21 @@
                 <div class="font-medium text-xs text-gray-500">{{ Auth::user()->email }}</div>
             </div>
 
-            <div class="mt-3 space-y-1">
+            <!-- begin::Settings -->
+            <x-responsive-nav-link :href="route('halls.index')" :active="request()->route()->named('halls.index')" class="mt-2 ">
+                <div class="flex items-center space-s-4">
+                    <span class="block text-sm">
+                        {{ app()->getLocale() === 'ar' ? 'العودة إلى القاعات' : 'Go back to halls' }}
+                    </span>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                </div>
+            </x-responsive-nav-link>
+            <!-- end::Settings -->
+
+            <div class="space-y-1">
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

@@ -414,7 +414,9 @@
 
         <!-- begin::Form Button -->
         <div class="grid grid-cols-5 py-8">
-            <div class="col-span-3 flex items-center justify-between">
+            <div class="col-span-1"></div>
+
+            <div class="col-span-2 flex items-center justify-between">
                 <x-button>
                     {{ __('actions.edit.form')}}
                 </x-button>

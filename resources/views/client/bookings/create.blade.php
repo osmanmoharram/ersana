@@ -26,6 +26,10 @@
                         class="w-full mt-1 {{ $errors->has('customer.name') ? 'text-xs placeholder-red-500 border border-red-500' : '' }}"
                         placeholder="{{ $errors->has('customer.name') ? $errors->get('customer.name')[0] : __('page.bookings.form.customer.name.placeholder') }}"
                     />
+
+                    @error('customer_name')
+                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
                 <!-- end::Full Name -->
 
@@ -38,6 +42,10 @@
                         class="w-full mt-1 {{ $errors->has('customer.email') ? 'text-xs placeholder-red-500 border border-red-500' : '' }}"
                         placeholder="{{ $errors->has('customer.email') ? $errors->get('customer.email')[0] : __('page.bookings.form.customer.email.placeholder') }}"
                     />
+
+                    @error('customer_email')
+                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
                 <!-- end::Email -->
 
@@ -50,6 +58,10 @@
                         class="w-full mt-1 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }} {{ $errors->has('customer.phone') ? 'text-xs placeholder-red-500 border border-red-500' : '' }}"
                         placeholder="{{ $errors->has('customer.phone') ? $errors->get('customer.phone')[0] : __('page.bookings.form.customer.phone.placeholder') }}"
                     />
+
+                    @error('customer_phone')
+                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
                 <!-- end::Phone -->
             </div>
@@ -87,6 +99,10 @@
                             placeholder="{{ $errors->has('date') ? $errors->get('date')[0] : __('page.bookings.form.date.placeholder') }}"
                             class="date-picker w-full text-sm rounded-sm {{ $errors->has('date') ? 'text-xs placeholder-red-500 border border-red-500' : 'placeholder-slate-300 border-none' }} cursor-pointer shadow-sm mt-2 outline-none focus:ring-0"
                         />
+
+                        @error('date')
+                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
                     <!-- end::Date -->
 
@@ -364,7 +380,9 @@
 
         <!-- begin::Form Button -->
         <div class="grid grid-cols-5 py-8">
-            <div class="col-span-3 flex items-center justify-between">
+            <div class="col-span-1"></div>
+
+            <div class="col-span-2 flex items-center justify-between">
                 <x-button>
                     {{ __('actions.add.form')}}
                 </x-button>

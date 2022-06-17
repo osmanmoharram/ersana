@@ -220,6 +220,7 @@ return [
                 '#' => '#',
                 'customer' => 'الإسم',
                 'date' => 'تاريخ الحجز',
+                'period' => 'الفترة',
                 'from' => 'من',
                 'to' => 'إلى',
                 'total' => 'سعر الحجز',
@@ -234,6 +235,7 @@ return [
             'payment' => 'الدفع',
             'additional_information' => 'معلومات إضافية'
         ],
+        'show' => ['header' => 'الحجز رقم :booking'],
         'edit' => ['header' => 'تحديث بيانات الحجز رقم :booking'],
         'form' => [
             'customer' => [

@@ -23,6 +23,10 @@ class HallController extends Controller
 
             $halls = $client->halls;
 
+            if (session()->has('hall')) {
+                session()->forget('hall');
+            }
+
             return view('halls.select', compact('halls'));
         } else {
             $halls = Hall::latest()->paginate(30);

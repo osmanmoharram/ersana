@@ -16,10 +16,8 @@ class SettingController extends Controller
 
             return view('settings', compact('settings'));
         } else {
-            Setting::where('hall_id', null)->get();
+            return view('settings');
         }
-
-
     }
 
     public function update(UpdateSettingRequest $request, Hall $hall)
