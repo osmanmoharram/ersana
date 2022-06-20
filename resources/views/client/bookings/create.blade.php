@@ -14,7 +14,6 @@
                 </label>
             </div>
 
-
             <!-- begin::Full Name / Email / Phone -->
             <div class="col-span-2 space-y-4">
                 <!-- begin::Full Name -->
@@ -69,10 +68,8 @@
         </div>
         <!-- begin::Customer Information -->
 
-        <div class="grid grid-cols-5 py-6">
-            <div class="col-span-3">
-                <hr>
-            </div>
+        <div class="grid grid-cols-5 py-4">
+            <div class="col-span-3 border-t"></div>
         </div>
 
         <!-- begin::Booking Times -->
@@ -162,10 +159,8 @@
         </div>
         <!-- end::Booking Times -->
 
-        <div class="grid grid-cols-5 pb-6">
-            <div class="col-span-3">
-                <hr>
-            </div>
+        <div class="grid grid-cols-5 py-4">
+            <div class="col-span-3 border-t"></div>
         </div>
 
         <!-- begin::Offers -->
@@ -226,10 +221,8 @@
         </div>
         <!-- end::Offers -->
 
-        <div class="grid grid-cols-5 pb-4">
-            <div class="col-span-3">
-                <hr>
-            </div>
+        <div class="grid grid-cols-5 py-4">
+            <div class="col-span-3 border-t"></div>
         </div>
 
         <!-- begin::Payment -->
@@ -323,9 +316,7 @@
         <!-- end::Payment -->
 
         <div class="grid grid-cols-5 py-4">
-            <div class="col-span-3">
-                <hr>
-            </div>
+            <div class="col-span-3 border-t"></div>
         </div>
 
         <!-- begin::Additional Information -->

@@ -26,8 +26,12 @@ class SettingController extends Controller
             if ($value !== null) {
                 break;
             }
-
             return back()->withErrors(['no-setting' => 'لم يتم إدخال أي قيمة']);
+        }
+
+        if ($request->has('hall_name')) {
+            $hall->update(['name' => $request->hall_name]);
+            session()->put('hall', $hall);
         }
 
         if ($request->has('days_before_booking_due_date')) {

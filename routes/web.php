@@ -15,12 +15,14 @@ use App\Http\Controllers\Client\{
     CustomerController,
     OfferController,
 };
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\SettingController;
+use App\Models\Client\Booking;
 use App\Models\Hall;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -68,20 +70,7 @@ Route::group([
 
         // Client Routes
         Route::prefix('/halls/{hall}/')->name('halls.')->group(function () {
-            Route::get('dashboard', function (Hall $hall) {
-                Session::put('hall', $hall);
-
-                if (! $hall->hasSettings()) {
-                    $settings = [
-                        ['name' => 'days_before_booking_due_date', 'value' => '14', 'hall_id' => $hall->id],
-                    ];
-                    foreach ($settings as $setting) {
-                        Setting::create($setting);
-                    }
-                }
-
-                return view('halls.dashboard');
-            })->name('dashboard');
+            Route::get('dashboard', DashboardController::class)->name('dashboard');
 
             Route::resource('bookings', BookingController::class);
 

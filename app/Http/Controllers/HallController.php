@@ -7,7 +7,10 @@ use App\Http\Requests\NewHallRequest;
 use App\Http\Requests\UpdateHallRequest;
 use App\Models\Admin\Client;
 use App\Models\Client\BookingTime;
+use App\Models\Client\Offer;
+use App\Models\Expense;
 use App\Models\Hall;
+use App\Models\Revenue;
 
 class HallController extends Controller
 {
@@ -105,6 +108,11 @@ class HallController extends Controller
      */
     public function destroy(Hall $hall)
     {
+        // $bookingTimes = BookingTime::where('hall_id', $hall->id)->get();
+        // $offers = Offer::where('hall_id', $hall->id)->get();
+        // $expenses = Expense::where('hall_id', $hall->id)->get();
+        // $revenues = Revenue::where('hall_id', $hall->id)->get();
+        // $reports =
         return redirect()->route('halls.index');
     }
 }

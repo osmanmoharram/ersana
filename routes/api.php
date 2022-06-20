@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\HallController;
 use App\Http\Controllers\Client\AvailableBookingTimeController;
+use App\Models\Client\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{client}/halls', [HallController::class, 'index']);
 
 Route::get('halls/{hall}/available-booking-times', AvailableBookingTimeController::class);
+
+// Get all bookings
+Route::get('/halls/bookings', function () {
+    // $bookings = Booking::whereHas('bookingTime', function ($query) {
+    //     $query->where('hall_id', session('hall')->id);
+    // })->get();
+
+    // return response()->json(compact('bookings'), 200);
+
+    return response()->json(['message' => 'this is a message'], 200);
+});
 
 // Make a new booking
 Route::post('/bookings', [BookingController::class, 'store']);

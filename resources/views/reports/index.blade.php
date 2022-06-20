@@ -57,10 +57,6 @@
                     <x-actions.show href="{{ route('reports.show', $report->id) }}" />
                     <!-- end::Show -->
 
-                    <!-- begin::Edit -->
-                    <x-actions.edit href="{{ route('reports.edit', $report->id) }}" />
-                    <!-- end::Edit -->
-
                     <!-- begin::Delete -->
                     <x-actions.delete :action="route('reports.destroy', $report->id)" />
                     <!-- end::Delete -->

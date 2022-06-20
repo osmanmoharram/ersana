@@ -143,7 +143,10 @@ class ReportController extends Controller
         foreach ($data as $item) {
             $total += $item->amount;
         }
-        $average = $total / count($data);
+
+        $average = count($data)
+            ? $total / count($data)
+            : 0;
 
         $attributes['from'] = $request->from;
         $attributes['to'] = $request->to;

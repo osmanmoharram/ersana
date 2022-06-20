@@ -14,9 +14,11 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/themes/airbnb.min.css">
+        @yield('styles')
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
         <!-- Scripts -->
+        @yield('scripts')
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-cairo antialiased">

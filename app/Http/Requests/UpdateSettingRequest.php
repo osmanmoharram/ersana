@@ -24,6 +24,7 @@ class UpdateSettingRequest extends FormRequest
     public function rules()
     {
         return [
+            'hall_name' => ['nullable', 'string'],
             'days_before_booking_due_date' => ['nullable', 'numeric']
         ];
     }

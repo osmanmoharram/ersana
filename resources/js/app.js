@@ -1,41 +1,13 @@
 require('./bootstrap');
+require('./flatpicker');
 
 import Alpine from 'alpinejs';
 import jQuery from 'jquery-slim';
-import flatpickr from "flatpickr";
 import axios from 'axios';
 
 window.Alpine = Alpine;
 window.$ = window.jQuery = jQuery;
-
 Alpine.start();
-
-const datePickers = document.querySelectorAll('.date-picker');
-
-datePickers.forEach(item => {
-    flatpickr(item, {
-        dateFormat: 'M j, Y',
-        altInput: true,
-        altFormat: 'Y-m-d',
-        enableTime: false,
-        onChange: function(selectedDate, config, instance) {
-            // Close picker on date select
-            instance.close();
-
-            Alpine.store('bookingTimes').setDate(selectedDate);
-        }
-    });
-});
-
-const timePickers = document.querySelectorAll('.time-pickers');
-
-timePickers.forEach(item => {
-    flatpickr(item, {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-    });
-});
 
 window.onload = () => {
     const value = $('#bookingTimePrice').val();
@@ -164,7 +136,7 @@ Alpine.store('bookingTimes', {
                 noBookingTimes.append(response.data.no_times);
             } else {
                 noBookingTimes.textContent = '';
-                
+
                 if (! Array.isArray(response.data.times)) {
                     const time = response.data.times[1];
 
@@ -179,31 +151,31 @@ Alpine.store('bookingTimes', {
                                         >
                                     </div>
                                 </td>
-    
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-slate-500">
                                         ${time.from}
                                     </div>
                                 </td>
-    
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-slate-500">
                                         ${time.to}
                                     </div>
                                 </td>
-    
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="booking-time-price text-sm text-slate-500">
                                         ${time.price}
                                     </div>
                                 </td>
-    
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-slate-500"></div>
                                 </td>
                             </tr>
                         `;
-    
+
                     bookingTimes.append(row);
                 } else {
                     response.data.times.forEach(time => {
@@ -218,31 +190,31 @@ Alpine.store('bookingTimes', {
                                         >
                                     </div>
                                 </td>
-    
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-slate-500">
                                         ${time.from}
                                     </div>
                                 </td>
-    
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-slate-500">
                                         ${time.to}
                                     </div>
                                 </td>
-    
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="booking-time-price text-sm text-slate-500">
                                         ${time.price}
                                     </div>
                                 </td>
-    
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-slate-500"></div>
                                 </td>
                             </tr>
                         `;
-    
+
                         bookingTimes.append(row);
                     });
                 }
