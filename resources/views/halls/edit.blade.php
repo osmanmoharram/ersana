@@ -1,4 +1,4 @@
-<x-hall-layout>
+<x-app-layout>
     <x-slot name="header">
         <div class="flex items-center space-s-8">
             <span class="block">
@@ -100,4 +100,4 @@
         <!-- end::Form Button -->
     </form>
 
-</x-hall-layout>
+</x-app-layout>

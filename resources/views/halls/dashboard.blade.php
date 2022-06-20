@@ -9,11 +9,7 @@
         {{ __('page.dashboard.header') }}
     </x-slot>
 
-    <div>
-        <x-label for="calendar" value="Calendar" />
-
-        <div id="calendar" class="pb-12"></div>
-    </div>
+    <div id="calendar" class="p-6 bg-white border-t-8 border-yellow-400 rounded-sm"></div>
 
     @section('scripts')
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
@@ -22,7 +18,13 @@
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
-                    themeSystem: 'bootstrap5'
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    },
+                    timezone: 'local',
+                    events: {!! $events !!}
                 });
                 calendar.render();
             });

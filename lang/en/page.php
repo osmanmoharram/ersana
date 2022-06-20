@@ -314,7 +314,7 @@ return [
             'deleted' => 'The expense :expense is deleted'
         ],
     ],
-    'Revenues' => [
+    'revenues' => [
         'index' => [
             'header' => 'Revenues',
             'table' => [

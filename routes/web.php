@@ -48,13 +48,13 @@ Route::group([
 ], function() {
     Route::get('/', function () {
         return Auth::check()
-            ? redirect()->route('halls.index')
-            : redirect()->route('login');
+            ? (request()->user()->isClient() ? redirect()->route('halls.index') : redirect()->route('admin.dashboard'))
+            : (redirect()->route('login'));
     });
 
     Route::middleware(['auth'])->group(function () {
         // Admin Routes
-        Route::view('/dashboard', 'admin.dashboard')->name('admin.dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'showAdminDashboard'])->name('admin.dashboard');
 
         Route::resource('features', FeatureController::class)->except(['show']);
 
@@ -70,7 +70,7 @@ Route::group([
 
         // Client Routes
         Route::prefix('/halls/{hall}/')->name('halls.')->group(function () {
-            Route::get('dashboard', DashboardController::class)->name('dashboard');
+            Route::get('dashboard', [DashboardController::class, 'showHallDashboard'])->name('dashboard');
 
             Route::resource('bookings', BookingController::class);
 
