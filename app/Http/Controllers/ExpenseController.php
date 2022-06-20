@@ -18,10 +18,10 @@ class ExpenseController extends Controller
     public function index()
     {
         if (request()->user()->isClient()) {
-            $expenses = Expense::where('client_id', request()->user()->client_id)
+            $expenses = Expense::where('hall_id', session('hall')->id)
                 ->latest()->paginate(30);
         } else {
-            $expenses = Expense::where('client_id', null)
+            $expenses = Expense::where('hall_id', null)
                 ->latest()->paginate(30);
         }
 

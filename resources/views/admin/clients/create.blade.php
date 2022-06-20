@@ -1,4 +1,8 @@
 <x-app-layout>
+    @section('styles')
+        <link rel="stylesheet" href="{{ base_path('node_modules/intl-tel-input/build/css/intlTelInput.css') }}">
+    @endsection
+
     <x-slot name="header" class="py-6 px-4">
         {{ __('page.clients.create.header') }}
     </x-slot>
@@ -44,6 +48,8 @@
         <div class="grid grid-cols-2 mt-8">
             <div class="col-span-2 max-w-[560px]">
                 <x-label for="phone" :value="__('page.clients.form.phone.label')" />
+
+                <input type="tel" id="phone">
 
                 <x-input
                     type="text" name="phone" value="{{ old('phone') }}" dir="ltr"

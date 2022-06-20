@@ -17,10 +17,10 @@ class RevenueController extends Controller
     public function index()
     {
         if (request()->user()->isClient()) {
-            $revenues = Revenue::where('client_id', request()->user()->client_id)
+            $revenues = Revenue::where('hall_id', session('hall')->id)
                 ->latest()->paginate(30);
         } else {
-            $revenues = Revenue::where('client_id', null)
+            $revenues = Revenue::where('hall_id', null)
                 ->latest()->paginate(30);
         }
 
