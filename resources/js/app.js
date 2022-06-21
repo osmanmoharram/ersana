@@ -1,6 +1,5 @@
 require('./bootstrap');
 require('./flatpicker');
-require('./intl-tel-input');
 
 import Alpine from 'alpinejs';
 import jQuery from 'jquery-slim';
