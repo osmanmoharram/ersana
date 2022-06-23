@@ -6,11 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\NewHallRequest;
 use App\Http\Requests\UpdateHallRequest;
 use App\Models\Admin\Client;
+use App\Models\Client\Booking;
 use App\Models\Client\BookingTime;
+use App\Models\Client\Customer;
 use App\Models\Client\Offer;
 use App\Models\Expense;
 use App\Models\Hall;
+use App\Models\Report;
 use App\Models\Revenue;
+use App\Models\Setting;
+use App\Models\User;
 
 class HallController extends Controller
 {
@@ -108,11 +113,104 @@ class HallController extends Controller
      */
     public function destroy(Hall $hall)
     {
-        // $bookingTimes = BookingTime::where('hall_id', $hall->id)->get();
-        // $offers = Offer::where('hall_id', $hall->id)->get();
-        // $expenses = Expense::where('hall_id', $hall->id)->get();
-        // $revenues = Revenue::where('hall_id', $hall->id)->get();
-        // $reports =
-        return redirect()->route('halls.index');
+        // Delete bookings notifications
+        $this->deleteBookings($hall);
+
+        $this->deleteBookingTimes($hall);
+
+        $this->deleteOffers($hall);
+
+        $this->deleteCustomers($hall);
+
+        $this->deleteExpenses($hall);
+
+        $this->deleteRevenues($hall);
+
+        $this->deleteReports($hall);
+
+        $this->deleteUsers($hall);
+
+        $this->deleteSettings($hall);
+
+        return redirect()->route('halls.index')
+            ->withMessage(__('page.halls.flash.deleted'));
+    }
+
+    protected function deleteBookings($hall)
+    {
+        Booking::whereHas('bookingTime', fn($query) => $query->where('hall_id', $hall->id))
+            ->chunck(100, function ($bookings) {
+                foreach ($bookings as $booking) {
+                    $booking->delete();
+                }
+            });
+    }
+
+    protected function deleteBookingTimes($hall)
+    {
+        $bookingTimes = BookingTime::where('hall_id', $hall->id)->get();
+    }
+
+    protected function deleteOffers($hall)
+    {
+        $offers = Offer::where('hall_id', $hall->id)->get();
+
+        foreach ($offers as $offer) {
+            $offer->delete();
+        }
+    }
+
+    protected function deleteCustomers($hall)
+    {
+        Customer::where('hall_id', $hall->id)->chunck(100, function ($customers) {
+            foreach ($customers as $customer) {
+                $customer->delete();
+            }
+        });
+    }
+
+    protected function deleteExpenses($hall)
+    {
+        Expense::where('hall_id', $hall->id)->chunck(100, function ($expenses) {
+            foreach ($expenses as $expense) {
+                $expense->delete();
+            }
+        });
+    }
+
+    protected function deleteRevenues($hall)
+    {
+        Revenue::where('hall_id', $hall->id)->chunck(100, function ($revenues) {
+            foreach ($revenues as $revenue) {
+                $revenue->delete();
+            }
+        });
+    }
+
+    protected function deleteReports($hall)
+    {
+        Report::where('hall_id', $hall->id)->chunck(100, function ($reports) {
+            foreach ($reports as $report) {
+                $report->delete();
+            }
+        });
+    }
+
+    protected function deleteUsers($hall)
+    {
+        $users = User::where('hall_id', $hall->id)->get();
+
+        foreach ($users as $user) {
+            $user->delete();
+        }
+    }
+
+    protected function deleteSettings($hall)
+    {
+        $settings = Setting::where('hall_id', $hall->id)->get();
+
+        foreach ($settings as $setting) {
+            $setting->delete();
+        }
     }
 }
