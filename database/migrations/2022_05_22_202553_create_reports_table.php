@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('type');
             $table->integer('average');
             $table->integer('total');
-            $table->unsignedBigInteger('client_id')->nullable();
+            $table->unsignedBigInteger('hall_id')->nullable();
             $table->timestamps();
         });
     }

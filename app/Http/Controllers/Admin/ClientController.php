@@ -43,7 +43,6 @@ class ClientController extends Controller
      */
     public function store(NewClientRequest $request)
     {
-        dd($request->all());
         $client = Client::create($request->only(['address', 'business_field_id']));
 
         $this->createClientUser($request, $client);

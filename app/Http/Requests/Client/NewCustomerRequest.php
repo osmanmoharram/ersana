@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules;
 
 class NewCustomerRequest extends FormRequest
 {
@@ -27,6 +28,7 @@ class NewCustomerRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'unique:customers,email'],
             'phone' => ['required', 'string', 'unique:customers,phone'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ];
     }
 }

@@ -19,7 +19,11 @@ return [
             'name' => ['label' => 'الإسم الكامل', 'placeholder' => 'الرجاء إدخال اسم المستخدم الكامل'],
             'email' => ['label' => 'الإيميل', 'placeholder' => 'user@example.com'],
             'phone' => ['label' => 'الهاتف', 'placeholder' => 'الرجاء كتابة رقم الجوال متضمناً مفتاح البلد'],
-            'role' => ['label' => 'الدور', 'placeholder' => 'الرجاء اختيار واحد من الأدوار التالية',],
+            'role' => [
+                'label' => 'الدور',
+                'placeholder' => 'الرجاء اختيار واحد من الأدوار التالية',
+                'items' => ['admin' => 'مدير', 'accountant' => 'محاسب', 'data_entry' => 'مدخل بيانات']
+            ],
         ],
         'flash' => [
             'created' => 'تم إنشاء مستخدم جديد',

@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('status');
             $table->string('owner_name');
             $table->string('owner_phone');
+            $table->string('img')->nullable();
+            $table->boolean('published')->nullable();
             $table->unsignedBigInteger('business_field_id');
             $table->timestamps();
         });

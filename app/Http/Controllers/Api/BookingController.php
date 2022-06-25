@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\RevenueCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\NewBookingRequest;
 use App\Http\Requests\Api\UpdateBookingRequest;
 use App\Models\Client\Booking;
-use App\Models\Hall;
-use Illuminate\Http\Request;
+use App\Models\Client\BookingTime;
 
 class BookingController extends Controller
 {
@@ -20,11 +18,9 @@ class BookingController extends Controller
      */
     public function store(NewBookingRequest $request)
     {
-        $booking = Booking::create($request->validated());
+        Booking::create($request->validated() + ['user_id' => auth()->id()]);
 
-        // event(new RevenueCreated($booking));
-
-        return response()->json(200);
+        return response(200);
     }
 
     /**

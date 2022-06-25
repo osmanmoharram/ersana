@@ -18,11 +18,13 @@ class UserController extends Controller
     public function index()
     {
         if (request()->user()->isClient()) {
-            $users = User::where('client_id', request()->user()->client_id)
-                ->latest()->paginate(30);
+            $users = User::where('hall_id', session('hall')->id)
+                ->latest()
+                ->paginate(30);
         } else {
-            $users = User::where('client_id', null)
-                ->latest()->paginate(30);
+            $users = User::where('hall_id', null)
+                ->latest()
+                ->paginate(30);
         }
 
         return view('users.index', compact('users'));
@@ -52,13 +54,18 @@ class UserController extends Controller
     {
         $data = $request->except('permissions');
 
-        if($request->user()->isClient()) {
+        if ($request->user()->isClient()) {
+            $data['hall_id'] = session('hall')->id;
             $data['client_id'] = $request->user()->client_id;
         }
 
         $user = User::create($data);
 
-        $user->givePermissionTo($request->permissions);
+        $user->assginRole($request->role);
+
+        if ($request->has('permissions')) {
+            $user->givePermissionTo($request->permissions);
+        }
 
         return redirect()
             ->route('users.index')

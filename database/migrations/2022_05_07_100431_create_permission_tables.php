@@ -118,11 +118,11 @@ class CreatePermissionTables extends Migration
         });
 
         Artisan::call('db:seed', [
-            '--class' => 'RoleSeeder',
+            '--class' => 'PermissionSeeder',
         ]);
 
         Artisan::call('db:seed', [
-            '--class' => 'PermissionSeeder',
+            '--class' => 'RoleSeeder',
         ]);
 
         app('cache')

@@ -3,19 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\NewHallRequest;
-use App\Http\Requests\UpdateHallRequest;
+use App\Http\Requests\{NewHallRequest, UpdateHallRequest};
 use App\Models\Admin\Client;
-use App\Models\Client\Booking;
-use App\Models\Client\BookingTime;
-use App\Models\Client\Customer;
-use App\Models\Client\Offer;
-use App\Models\Expense;
-use App\Models\Hall;
-use App\Models\Report;
-use App\Models\Revenue;
-use App\Models\Setting;
-use App\Models\User;
+use App\Models\Client\{Booking, BookingTime, Customer, Offer};
+use App\Models\{Expense, Hall, Report, Revenue, Setting, User};
 
 class HallController extends Controller
 {
@@ -57,7 +48,7 @@ class HallController extends Controller
 
     public function store(NewHallRequest $request)
     {
-        Hall::create($request->validated());
+        $hall = Hall::create($request->validated());
 
         return redirect()
             ->route('halls.index')
@@ -67,7 +58,7 @@ class HallController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Hall  $hall
+     * @param  Hall $hall
      * @return \Illuminate\Http\Response
      */
     public function edit(Hall $hall)
@@ -78,8 +69,8 @@ class HallController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Hall  $hall
+     * @param  \Illuminate\Http\Request $request
+     * @param  Hall $hall
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateHallRequest $request, Hall $hall)
@@ -114,6 +105,7 @@ class HallController extends Controller
     public function destroy(Hall $hall)
     {
         // Delete bookings notifications
+
         $this->deleteBookings($hall);
 
         $this->deleteBookingTimes($hall);
@@ -138,17 +130,18 @@ class HallController extends Controller
 
     protected function deleteBookings($hall)
     {
-        Booking::whereHas('bookingTime', fn($query) => $query->where('hall_id', $hall->id))
-            ->chunck(100, function ($bookings) {
-                foreach ($bookings as $booking) {
-                    $booking->delete();
-                }
-            });
+        $bookings = Booking::whereHas('bookingTime', function ($query) use ($hall) {
+            $query->where('hall_id', $hall->id);
+        })->get();
+
+        foreach ($bookings as $booking) {
+            $booking->delete();
+        }
     }
 
     protected function deleteBookingTimes($hall)
     {
-        $bookingTimes = BookingTime::where('hall_id', $hall->id)->get();
+        BookingTime::where('hall_id', $hall->id)->get();
     }
 
     protected function deleteOffers($hall)
@@ -162,38 +155,38 @@ class HallController extends Controller
 
     protected function deleteCustomers($hall)
     {
-        Customer::where('hall_id', $hall->id)->chunck(100, function ($customers) {
-            foreach ($customers as $customer) {
-                $customer->delete();
-            }
-        });
+        $customers = Customer::where('hall_id', $hall->id)->get();
+
+        foreach ($customers as $customer) {
+            $customer->delete();
+        }
     }
 
     protected function deleteExpenses($hall)
     {
-        Expense::where('hall_id', $hall->id)->chunck(100, function ($expenses) {
-            foreach ($expenses as $expense) {
-                $expense->delete();
-            }
-        });
+        $expenses = Expense::where('hall_id', $hall->id)->get();
+
+        foreach ($expenses as $expense) {
+            $expense->delete();
+        }
     }
 
     protected function deleteRevenues($hall)
     {
-        Revenue::where('hall_id', $hall->id)->chunck(100, function ($revenues) {
-            foreach ($revenues as $revenue) {
-                $revenue->delete();
-            }
-        });
+        $revenues = Revenue::where('hall_id', $hall->id)->get();
+
+        foreach ($revenues as $revenue) {
+            $revenue->delete();
+        }
     }
 
     protected function deleteReports($hall)
     {
-        Report::where('hall_id', $hall->id)->chunck(100, function ($reports) {
-            foreach ($reports as $report) {
-                $report->delete();
-            }
-        });
+        $reports = Report::where('hall_id', $hall->id)->get();
+
+        foreach ($reports as $report) {
+            $report->delete();
+        }
     }
 
     protected function deleteUsers($hall)
