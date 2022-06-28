@@ -19,7 +19,11 @@ return [
             'name' => ['label' => 'Full Name', 'placeholder' => 'Please insert the user\'s full name',],
             'email' => ['label' => 'Email', 'placeholder' => 'user@example.com',],
             'phone' => ['label' => 'Phone', 'placeholder' => 'Please write the phone number with the country key'],
-            'role' => ['label' => 'Role', 'placeholder' => 'Please select a role'],
+            'role' => [
+                'label' => 'Role',
+                'placeholder' => 'Please select a role',
+                'items' => ['admin' => 'Admin', 'accountant' => 'Accountant', 'data_entry' => 'Data Entry']
+            ],
         ],
         'flash' => [
             'created' => 'A new user with the name :user has been created',

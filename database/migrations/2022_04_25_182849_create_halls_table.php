@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('city');
             $table->string('address');
             $table->string('capacity');
+            $table->string('img')->nullable();
             $table->unsignedBigInteger('client_id');
             $table->timestamps();
         });

@@ -16,7 +16,7 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            // Owner Permissions
+            // Admin Permissions
             ['name' => 'view subscriptions', 'type' => 'owner'],
             ['name' => 'add subscriptions', 'type' => 'owner'],
             ['name' => 'edit subscriptions', 'type' => 'owner'],
@@ -70,6 +70,8 @@ class PermissionSeeder extends Seeder
             ['name' => 'add users', 'type' => 'both'],
             ['name' => 'edit users', 'type' => 'both'],
             ['name' => 'delete users', 'type' => 'both'],
+            ['name' => 'view settings', 'type' => 'both'],
+            ['name' => 'edit settings', 'type' => 'both'],
         ];
 
         foreach ($permissions as $permission) {

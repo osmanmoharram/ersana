@@ -115,7 +115,7 @@ class SubscriptionController extends Controller
     protected function createClientHalls($request)
     {
         foreach ($request->halls as $hall) {
-            Hall::create([
+            $hall = Hall::create([
                 'name' => $hall['name'],
                 'city' => $hall['city'],
                 'address' => $hall['address'],

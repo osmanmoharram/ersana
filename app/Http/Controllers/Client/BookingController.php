@@ -16,6 +16,7 @@ use App\Notifications\BookingBeforeDueDateNotification;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class BookingController extends Controller
 {
@@ -57,6 +58,9 @@ class BookingController extends Controller
         $attributes['customer_email'] = $request->customer['email'];
         $attributes['customer_phone'] = $request->customer['phone'];
 
+        // create new user
+        $attributes['password'] = Hash::make('password');
+
         $booking = Booking::create($attributes);
 
         event(new RevenueCreated($booking));
@@ -75,7 +79,7 @@ class BookingController extends Controller
     public function show(Hall $hall, Booking $booking)
     {
         $hall->client->user->notifications->markAsRead();
-        
+
         return view('client.bookings.show', compact('booking'));
     }
 

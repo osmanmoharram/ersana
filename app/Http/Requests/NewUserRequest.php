@@ -27,7 +27,8 @@ class NewUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'unique:users,phone'],
-            'permissions' => ['required', 'array'],
+            'role' => ['required', 'in:admin,accountant,data_entry'],
+            'permissions' => ['nullable', 'array'],
             'permissions.*' => ['exists:permissions,id']
         ];
     }

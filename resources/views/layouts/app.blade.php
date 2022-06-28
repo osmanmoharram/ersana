@@ -17,9 +17,6 @@
         @yield('styles')
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-        <!-- Scripts -->
-        @yield('scripts')
-        <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-cairo antialiased">
         <div class="min-h-screen bg-gray-100 grid grid-cols-12">
@@ -70,5 +67,9 @@
                 <!-- end::Page -->
             </div>
         </div>
+
+        <!-- Scripts -->
+        @yield('scripts')
+        <script src="{{ asset('js/app.js') }}" defer></script>
     </body>
 </html>

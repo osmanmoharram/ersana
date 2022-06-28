@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\NewHallRequest;
-use App\Http\Requests\UpdateHallRequest;
+use App\Http\Requests\{NewHallRequest, UpdateHallRequest};
 use App\Models\Admin\Client;
-use App\Models\Client\BookingTime;
-use App\Models\Client\Offer;
-use App\Models\Expense;
-use App\Models\Hall;
-use App\Models\Revenue;
+use App\Models\Client\{Booking, BookingTime, Customer, Offer};
+use App\Models\{Expense, Hall, Report, Revenue, Setting, User};
 
 class HallController extends Controller
 {
@@ -52,7 +48,7 @@ class HallController extends Controller
 
     public function store(NewHallRequest $request)
     {
-        Hall::create($request->validated());
+        $hall = Hall::create($request->validated());
 
         return redirect()
             ->route('halls.index')
@@ -62,7 +58,7 @@ class HallController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Hall  $hall
+     * @param  Hall $hall
      * @return \Illuminate\Http\Response
      */
     public function edit(Hall $hall)
@@ -73,8 +69,8 @@ class HallController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Hall  $hall
+     * @param  \Illuminate\Http\Request $request
+     * @param  Hall $hall
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateHallRequest $request, Hall $hall)
@@ -108,11 +104,106 @@ class HallController extends Controller
      */
     public function destroy(Hall $hall)
     {
-        // $bookingTimes = BookingTime::where('hall_id', $hall->id)->get();
-        // $offers = Offer::where('hall_id', $hall->id)->get();
-        // $expenses = Expense::where('hall_id', $hall->id)->get();
-        // $revenues = Revenue::where('hall_id', $hall->id)->get();
-        // $reports =
-        return redirect()->route('halls.index');
+        // Delete bookings notifications
+
+        $this->deleteBookings($hall);
+
+        $this->deleteBookingTimes($hall);
+
+        $this->deleteOffers($hall);
+
+        $this->deleteCustomers($hall);
+
+        $this->deleteExpenses($hall);
+
+        $this->deleteRevenues($hall);
+
+        $this->deleteReports($hall);
+
+        $this->deleteUsers($hall);
+
+        $this->deleteSettings($hall);
+
+        return redirect()->route('halls.index')
+            ->withMessage(__('page.halls.flash.deleted'));
+    }
+
+    protected function deleteBookings($hall)
+    {
+        $bookings = Booking::whereHas('bookingTime', function ($query) use ($hall) {
+            $query->where('hall_id', $hall->id);
+        })->get();
+
+        foreach ($bookings as $booking) {
+            $booking->delete();
+        }
+    }
+
+    protected function deleteBookingTimes($hall)
+    {
+        BookingTime::where('hall_id', $hall->id)->get();
+    }
+
+    protected function deleteOffers($hall)
+    {
+        $offers = Offer::where('hall_id', $hall->id)->get();
+
+        foreach ($offers as $offer) {
+            $offer->delete();
+        }
+    }
+
+    protected function deleteCustomers($hall)
+    {
+        $customers = Customer::where('hall_id', $hall->id)->get();
+
+        foreach ($customers as $customer) {
+            $customer->delete();
+        }
+    }
+
+    protected function deleteExpenses($hall)
+    {
+        $expenses = Expense::where('hall_id', $hall->id)->get();
+
+        foreach ($expenses as $expense) {
+            $expense->delete();
+        }
+    }
+
+    protected function deleteRevenues($hall)
+    {
+        $revenues = Revenue::where('hall_id', $hall->id)->get();
+
+        foreach ($revenues as $revenue) {
+            $revenue->delete();
+        }
+    }
+
+    protected function deleteReports($hall)
+    {
+        $reports = Report::where('hall_id', $hall->id)->get();
+
+        foreach ($reports as $report) {
+            $report->delete();
+        }
+    }
+
+    protected function deleteUsers($hall)
+    {
+        $users = User::where('hall_id', $hall->id)->get();
+
+        foreach ($users as $user) {
+            $user->delete();
+        }
+    }
+
+    protected function deleteSettings($hall)
+    {
+        $settings = Setting::where('hall_id', $hall->id)->get();
+
+        foreach ($settings as $setting) {
+            $setting->delete();
+        }
     }
 }

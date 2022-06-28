@@ -1,6 +1,6 @@
 <x-app-layout>
     @section('styles')
-        <link rel="stylesheet" href="{{ base_path('node_modules/intl-tel-input/build/css/intlTelInput.css') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intel-tel-input-rtl@1.0.0/build/css/intlTelInput.min.css">
     @endsection
 
     <x-slot name="header" class="py-6 px-4">
@@ -47,15 +47,14 @@
         <!-- begin::Phone -->
         <div class="grid grid-cols-2 mt-8">
             <div class="col-span-2 max-w-[560px]">
-                <x-label for="phone" :value="__('page.clients.form.phone.label')" />
+                <x-label for="phone" :value="__('page.clients.form.phone.label')" class="mb-2"/>
 
-                <input type="tel" id="phone">
-
+                <input type="hidden" name="phone">
                 <x-input
-                    type="text" name="phone" value="{{ old('phone') }}" dir="ltr"
-                    class="w-full mt-2 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}"
-                    placeholder="{{ __('page.clients.form.phone.placeholder') }}"
+                    type="tel" id="phone" value="{{ old('phone') }}" dir="ltr"
+                    class="min-w-full {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}"
                 />
+                <p id="phoneError" class="mt-1 text-xs text-red-500"></p>
 
                 @error('phone')
                     <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
@@ -102,6 +101,10 @@
                         </li>
                     @endforeach
                 </x-select>
+
+                @error('business_field_id')
+                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                @enderror
             </div>
         </div>
         <!-- end::Business Field -->
@@ -120,17 +123,40 @@
     </form>
 
     @section('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/intel-tel-input-rtl@1.0.0/build/js/intlTelInput.min.js"></script>
         <script>
-            console.log(document.getElementById('phone'));
-
             const input = document.querySelector("#phone");
-            
-            intlTelInput(input, {
-                utilsScript: 'utils.js',
-                allowDropdown: true,
-                
-                // any initialisation options go here
+            const requestData = document.querySelector("input[name=phone]");
+            const error = document.querySelector("#phoneError");
+
+            const iti = intlTelInput(input, {
+                customContainer: 'w-full',
+                initialCountry: 'SD',
+                utilsScript: 'https://cdn.jsdelivr.net/npm/intel-tel-input-rtl@1.0.0/build/js/utils.js',
             });
+
+            input.onblur = () => {
+                if (iti.isValidNumber()) {
+                    requestData.value = iti.getNumber(intlTelInputUtils.numberFormat.E164);
+                    iti.setNumber(iti.getNumber(intlTelInputUtils.numberFormat.E164));
+                } else {
+                    if (iti.getValidationError() === intlTelInputUtils.validationError.INVALID_COUNTRY_CODE) {
+                        error.textContent = 'The country code is invalid';
+                    }
+
+                    if (iti.getValidationError() === intlTelInputUtils.validationError.TOO_SHORT) {
+                        error.textContent = 'The phone number is too short';
+                    }
+
+                    if (iti.getValidationError() === intlTelInputUtils.validationError.TOO_LONG) {
+                        error.textContent = 'The phone number is too long';
+                    }
+
+                    if (iti.getValidationError() === intlTelInputUtils.validationError.INVALID_LENGTH) {
+                        error.textContent = 'The phone number length is invalid';
+                    }
+                }
+            }
         </script>
     @endsection
 </x-app-layout>
