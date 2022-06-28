@@ -118,4 +118,19 @@
         </div>
         <!-- end::Form Button -->
     </form>
+
+    @section('scripts')
+        <script>
+            console.log(document.getElementById('phone'));
+
+            const input = document.querySelector("#phone");
+            
+            intlTelInput(input, {
+                utilsScript: 'utils.js',
+                allowDropdown: true,
+                
+                // any initialisation options go here
+            });
+        </script>
+    @endsection
 </x-app-layout>
