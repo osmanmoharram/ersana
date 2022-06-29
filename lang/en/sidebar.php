@@ -7,7 +7,7 @@ return [
     'packages' => 'Packages',
     'features' => 'Features',
     'offers' => 'Offers',
-    'ads' => 'Ads',
+    'ads' => 'Advertisements',
     'expenses' => 'Expenses',
     'revenues' => 'Revenues',
     'reports' => 'Reports',

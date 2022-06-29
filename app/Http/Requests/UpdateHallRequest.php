@@ -28,11 +28,7 @@ class UpdateHallRequest extends FormRequest
             'city' => ['required', 'in:bahri,khartoum,madani,omdurman,port sudan'],
             'address' => ['required', 'string'],
             'capacity' => ['required', 'string', 'numeric'],
-            // 'bookingTimes' => ['required', 'array'],
-            // 'bookingTimes.*.period' => ['required', 'in:day,evening'],
-            // 'bookingTimes.*.from' => ['required', 'date_format:H:i'],
-            // 'bookingTimes.*.to' => ['required', 'date_format:H:i', 'after:bookingTimes.*.from'],
-            // 'bookingTimes.*.price' => ['required', 'numeric'],
+            'images.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ];
     }
 }

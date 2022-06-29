@@ -50,7 +50,7 @@ class ClientController extends Controller
         event(new CreatedClient($client));
 
         return redirect()
-            ->route('subscriptions.create')
+            ->route('clients.index')
             ->withMessage(__('page.clients.flash.created'));
     }
 

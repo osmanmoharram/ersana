@@ -3,8 +3,16 @@
         {{ __('page.advertisements.create.header') }}
     </x-slot>
 
-    <form action="{{ route('advertisements.store') }}" method="POST" class="space-y-4 pb-8">
+    @if ($errors->any())
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    @endif
+    <form action="{{ route('advertisements.update', $advertisement->id) }}" method="POST" class="space-y-4 pb-8" enctype="multipart/form-data">
         @csrf
+        @method('PATCH')
 
         <!-- begin::Name -->
         <div class="grid grid-cols-2">
@@ -42,7 +50,6 @@
                         <input
                             type="text" name="start_date" value="{{ $advertisement->start_date }}" placeholder="{{ __('page.advertisements.form.start_date.placeholder') }}"
                             class="date-picker w-full text-sm rounded-sm placeholder-slate-300 border-none cursor-pointer shadow-sm mt-2 outline-none focus:ring-0" readonly
-                            x-init="$el.value = ''"
                         />
 
                         @error('start_date')
@@ -64,7 +71,6 @@
                         <input
                             type="text" name="end_date" value="{{ $advertisement->end_date }}" placeholder="{{ __('page.advertisements.form.end_date.placeholder') }}"
                             class="date-picker w-full text-sm rounded-sm placeholder-slate-300 border-none cursor-pointer shadow-sm mt-2 outline-none focus:ring-0" readonly
-                            x-init="$el.value = ''"
                         />
 
                         @error('end_date')
@@ -77,60 +83,71 @@
         </div>
         <!-- end::Start / End Dates -->
 
-        <!-- begin::Price / Status -->
+        <!-- begin::Price -->
         <div class="grid grid-cols-2">
-            <div class="col-span-1">
-                <div class="grid grid-cols-2 gap-x-6">
-                    <!-- begin::Price -->
-                    <div class="col-span-2 max-w-[560px]">
-                        <x-label for="price" :value="__('page.advertisements.form.price.label')" />
+            <div class="col-span-2 max-w-[560px]">
+                <x-label for="price" :value="__('page.advertisements.form.price.label')" />
 
-                        <div>
-                            <x-input
-                                type="text" class="w-full" name="price" value="{{ $advertisement->price }}"
-                                placeholder="{{ __('page.advertisements.form.price.placeholder') }}"
-                            />
+                <x-input
+                    type="text" class="w-full" name="price" value="{{ $advertisement->price }}"
+                    placeholder="{{ __('page.advertisements.form.price.placeholder') }}"
+                />
 
-                                @error('price')
-                                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end::Price -->
-
-                    <!-- begin::Status -->
-                    <div class="grid grid-cols-2">
-                        <div class="col-span-1 grid grid-cols-2 gap-x-6">
-                            <div class="col-span-1">
-                                <x-label for="status" :value="__('page.bookings.form.status.label')" />
-
-                                <x-select
-                                    name="status" value="{{ $advertisement->status }}"
-                                    display="{{ $advertisement->status }}"
-                                    placeholder="{{ __('actions.select.placeholder') }}"
-                                >
-                                    @foreach (['active', 'suspended'] as $status)
-                                        <li
-                                            class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
-                                            @click="$store.selection.select($el, '{{ $status }}'); visible = false"
-                                        >
-                                            {{ __('status.' . $status) }}
-                                        </li>
-                                    @endforeach
-                                </x-select>
-
-                                @error('status')
-                                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end::Status -->
-                </div>
+                @error('price')
+                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                @enderror
             </div>
         </div>
-        <!-- end::Price / Status -->
+        <!-- end::Price -->
+
+        <!-- begin::Status -->
+        <div class="grid grid-cols-2">
+            <div class="col-span-2 max-w-[560px]">
+                <x-label for="status" :value="__('page.bookings.form.status.label')" />
+
+                <x-select
+                    name="status" value="{{ $advertisement->status }}" display="{{ __('status.' . $advertisement->status) }}"
+                    placeholder="{{ __('actions.select.placeholder') }}"
+                >
+                    @foreach (['active', 'suspended'] as $status)
+                        <li
+                            class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
+                            @click="$store.selection.select($el, '{{ $status }}'); visible = false"
+                        >
+                            {{ __('status.' . $status) }}
+                        </li>
+                    @endforeach
+                </x-select>
+
+                @error('status')
+                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+        <!-- end::Status -->
+
+        <!-- begin::Images -->
+        <div x-data="{ show: false }" class="grid grid-cols-2">
+            <div class="col-span-2 max-w-[560px]">
+                <div class="flex space-s-2">
+                    <label for="images" class="relative cursor-pointer bg-green-400 hover:bg-green-500 py-2 px-4 rounded-md font-medium text-sm text-white focus-within:outline-none transition duration-150 ease-in-out">
+                        <span>{{ app()->getLocale() === 'ar' ? 'تحميل الصور' : 'Upload images' }}</span>
+
+                        <input
+                            id="images" name="images[]" type="file" multiple class="sr-only"
+                            @change="$el.files.length > 0 ? show=true : show=false"
+                        >
+                    </label>
+
+                    <p class="text-sm text-green-500 mt-2"x-show="show">{{ app()->getLocale() === 'ar' ? 'تم إختيار صور للتحميل' : 'Files have been selected for upload' }}</p>
+                </div>
+
+                <p class="text-xs text-slate-400 mt-2">
+                    {{ app()->getLocale() === 'ar' ? 'الصور يجب أن تكون من نوع PNG, JPG, JPEG وحجمها لا يزيد عن 10MB' : 'Images must be of type PNG, JPG, JPEG and its max size is 10MB' }}
+                </p>
+            </div>
+        </div>
+        <!-- end::Images -->
 
         <div class="grid grid-cols-2 py-4">
             <div class="col-span-1"><hr></div>

@@ -29,6 +29,7 @@ class NewHallRequest extends FormRequest
             'city' => ['required', 'in:bahri,khartoum,madani,omdurman,port sudan', 'max:255'],
             'address' => ['required', 'string'],
             'capacity' => ['required', 'string', 'numeric'],
+            'images.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ];
     }
 }

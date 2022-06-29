@@ -32,7 +32,7 @@
                 <!-- begin::Start Date -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-xs  text-slate-500">
-                        {{ $advertisement->start_date }}
+                        {{ substr($advertisement->start_date, 0, 10) }}
                     </div>
                 </td>
                 <!-- end::Start Date -->
@@ -40,7 +40,7 @@
                 <!-- begin::End Date -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-xs  text-slate-500">
-                        {{ $advertisement->end_date }}
+                        {{ substr($advertisement->end_date, 0, 10) }}
                     </div>
                 </td>
                 <!-- end::End Date -->
@@ -48,7 +48,7 @@
                 <!-- begin::Price -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-xs  text-slate-500">
-                        {{ $advertisement->price }}
+                        {{ number_format($advertisement->price, 2) }}
                     </div>
                 </td>
                 <!-- end::Price -->
@@ -56,7 +56,7 @@
                 <!-- begin::Status -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-xs  text-slate-500">
-                        {{ $advertisement->status }}
+                        {{ __('status.' . $advertisement->status) }}
                     </div>
                 </td>
                 <!-- end::Status -->

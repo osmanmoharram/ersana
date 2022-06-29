@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\UpdateAdvertisementRequest;
 use App\Models\Admin\BusinessField;
 use App\Models\Advertisement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class AdvertisementController extends Controller
 {
@@ -43,7 +44,19 @@ class AdvertisementController extends Controller
      */
     public function store(NewAdvertisementRequest $request)
     {
-        Advertisement::create($request->validated());
+        $data = $request->except('images');
+
+        if ($request->has('images')) {
+            $images = [];
+
+            foreach ($request->images as $image) {
+                $images[] = $image->store('images/advertisements');
+            }
+
+            $data['images'] = json_encode($images);
+        }
+
+        Advertisement::create($data);
 
         return redirect()->route('advertisements.index')
             ->withMessage(__('page.advertisements.flash.created'));
@@ -68,7 +81,9 @@ class AdvertisementController extends Controller
      */
     public function edit(Advertisement $advertisement)
     {
-        return view('admin.advertisements.edit', compact('advertisement'));
+        $business_fields = BusinessField::all();
+
+        return view('admin.advertisements.edit', compact('business_fields', 'advertisement'));
     }
 
     /**
@@ -80,7 +95,23 @@ class AdvertisementController extends Controller
      */
     public function update(UpdateAdvertisementRequest $request, Advertisement $advertisement)
     {
-        $advertisement->update($request->validated());
+        $advertisement->update($request->except('images'));
+
+        if ($request->has('images')) {
+            $images = [];
+
+            foreach (json_decode($advertisement->images) as $image) {
+                if (File::exists($image)) {
+                    File::delete($image);
+                }
+            }
+
+            foreach ($request->images as $image) {
+                $images[] = $image->store('images/advertisements');
+            }
+
+            $advertisement->images = json_encode($images);
+        }
 
         return redirect()->route('advertisements.index')
             ->withMessage(__('page.advertisements.flash.updated', ['advertisement' => $advertisement->name]));
