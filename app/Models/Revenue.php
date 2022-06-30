@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Revenue extends Model
 {
     use HasFactory;
-    
+
     protected $guarded = [];
 
     protected $casts = [
         'date' => 'date'
     ];
 
-    public function getAmountAttribute($value)
+    public function getAmountAttribute()
     {
-        return $this->attributes['amount'] = $value / 100;
+        return $this->attributes['amount'] / 100;
     }
 
     public function setAmountAttribute($value)

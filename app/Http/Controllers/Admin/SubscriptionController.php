@@ -8,6 +8,7 @@ use App\Models\Admin\Client;
 use App\Models\Admin\Package;
 use App\Models\Admin\Subscription;
 use App\Models\Hall;
+use App\Notifications\ClientSubscribedNotification;
 use Illuminate\Http\Request;
 
 class SubscriptionController extends Controller
@@ -45,12 +46,14 @@ class SubscriptionController extends Controller
      */
     public function store(NewSubscriptionRequest $request)
     {
-        Subscription::create([
+        $subscription = Subscription::create([
             'client_id' => $request->client_id,
             'package_id' => $request->package_id
         ]);
 
         $this->createClientHalls($request);
+
+        $subscription->client->user->notify(new ClientSubscribedNotification($subscription));
 
         return redirect()
             ->route('subscriptions.index')

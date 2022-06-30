@@ -26,9 +26,4 @@ class BookingTime extends Model
     {
         return $this->attributes['price'] / 100;
     }
-
-    // public function getFormattedPriceAttribute()
-    // {
-    //     return number_format($this->attributes['price'] / 100, 2);
-    // }
 }

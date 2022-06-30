@@ -104,7 +104,11 @@ Route::group([
 
         Route::patch('/settings/{setting}', [SettingController::class, 'update'])->name('settings.update');
 
-        Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
+        Route::prefix('/profile')->group(function () {
+            Route::get('/', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
+            Route::get('/edit', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+            Route::patch('/', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+        });
     });
 
     require __DIR__.'/auth.php';
