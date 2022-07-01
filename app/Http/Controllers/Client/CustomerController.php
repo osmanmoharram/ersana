@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\{NewCustomerRequest, UpdateCustomerRequest};
 use App\Models\Client\Customer;
 use App\Models\Hall;
+use App\Models\User;
 
 class CustomerController extends Controller
 {
@@ -39,10 +40,14 @@ class CustomerController extends Controller
      */
     public function store(NewCustomerRequest $request)
     {
-        Customer::create($request->validated() + ['hall_id' => session('hall')->id]);
+        $user = $this->createCustomerUser($request);
+
+        $customer = Customer::create(['user_id' => $user->id]);
+
+        $user->update(['customer_id' => $customer->id]);
 
         return redirect()
-            ->route('halls.bookings.create', session('hall')->id)
+            ->route('halls.customers.create', session('hall')->id)
             ->withMessage(__('page.customers.flash.created'));
     }
 
@@ -83,8 +88,17 @@ class CustomerController extends Controller
     {
         $name = $customer->name;
 
+        if (in_array($customer->booking->status, ['confirmed', 'temporary'])) {
+            $customer->booking->delete();
+        }
+
         $customer->delete();
 
         return back()->withMessage(__('page.customers.flash.deleted', ['customer' => $name]));
+    }
+
+    protected function createCustomerUser($request)
+    {
+        return User::create($request->validated() + ['hall_id' => session('hall')->id]);
     }
 }

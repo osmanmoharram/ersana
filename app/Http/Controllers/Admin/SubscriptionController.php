@@ -53,7 +53,7 @@ class SubscriptionController extends Controller
 
         $this->createClientHalls($request);
 
-        $subscription->client->user->notify(new ClientSubscribedNotification($subscription));
+        // $subscription->client->user->notify(new ClientSubscribedNotification($subscription));
 
         return redirect()
             ->route('subscriptions.index')

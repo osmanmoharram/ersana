@@ -2,6 +2,7 @@
 
 return [
     'add' => ['page' => 'إضافة', 'form' => 'إنشاء'],
+    'add/subscriptions' => 'إنشاء والذهاب إلى الإشتراكات',
     'show' => ['page' => 'مشاهدة'],
     'edit' => ['page' => 'تعديل', 'form' => 'تحديث'],
     'delete' => [

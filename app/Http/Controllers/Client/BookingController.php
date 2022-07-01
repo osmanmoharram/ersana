@@ -40,8 +40,9 @@ class BookingController extends Controller
     public function create()
     {
         $offers = Offer::all();
+        $customers = Customer::where('hall_id', session('hall')->id)->get();
 
-        return view('client.bookings.create', compact('offers'));
+        return view('client.bookings.create', compact('offers', 'customers'));
     }
 
     /**
@@ -52,16 +53,7 @@ class BookingController extends Controller
      */
     public function store(NewBookingRequest $request)
     {
-        $attributes = $request->except(['customer']);
-
-        $attributes['customer_name'] = $request->customer['name'];
-        $attributes['customer_email'] = $request->customer['email'];
-        $attributes['customer_phone'] = $request->customer['phone'];
-
-        // create new user
-        $attributes['password'] = Hash::make('password');
-
-        $booking = Booking::create($attributes);
+        $booking = Booking::create($request->validated());
 
         event(new RevenueCreated($booking));
 

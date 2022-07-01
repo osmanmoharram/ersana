@@ -6,67 +6,36 @@
     <form x-data action="{{ route('halls.bookings.store', session('hall')->id) }}" method="POST" class="pb-8">
         @csrf
 
-        <!-- begin::Customer Information -->
+        <!-- begin::Customer -->
         <div class="grid grid-cols-5">
             <div class="col-span-1">
-                <label for="" class="text-slate-400">
-                    {{ __('page.bookings.create.customer_information') }}
-                </label>
+                <x-label value="{{ __('page.bookings.create.customer_information') }}" />
             </div>
 
-            <!-- begin::Full Name / Email / Phone -->
             <div class="col-span-2 space-y-4">
-                <!-- begin::Full Name -->
-                <div class="w-full">
-                    <x-label for="customer[name]" :value="__('page.bookings.form.customer.name.label')" />
+                <div class="flex items-center justify-between">
+                    <x-label for="date" :value="__('page.customers.index.header')" />
 
-                    <x-input
-                        type="text" name="customer[name]" value="{{ old('customer.name') }}"
-                        class="w-full mt-1 {{ $errors->has('customer.name') ? 'text-xs placeholder-red-500 border border-red-500' : '' }}"
-                        placeholder="{{ $errors->has('customer.name') ? $errors->get('customer.name')[0] : __('page.bookings.form.customer.name.placeholder') }}"
-                    />
-
-                    @error('customer_name')
-                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                    @enderror
+                    <x-actions.add href="{{ route('halls.customers.create', ['hall' => session('hall')->id]) }}" size="p-1" />
                 </div>
-                <!-- end::Full Name -->
 
-                <!-- begin::Email -->
-                <div class="w-full">
-                    <x-label for="customer[email]" :value="__('page.bookings.form.customer.email.label')" />
+                <x-select name="customer_id" value="{{ old('customer_id') }}" placeholder="{{ __('page.customers.">
+                    @foreach ($customers as $customer)
+                        <li
+                            class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
+                            @click="$store.selection.select($el, '{{ $customer->id }}'); visible = false"
+                        >
+                            {{ $customer->user->name }}
+                        </li>
+                    @endforeach
+                </x-select>
 
-                    <x-input
-                        type="text" name="customer[email]" value="{{ old('customer.email') }}"
-                        class="w-full mt-1 {{ $errors->has('customer.email') ? 'text-xs placeholder-red-500 border border-red-500' : '' }}"
-                        placeholder="{{ $errors->has('customer.email') ? $errors->get('customer.email')[0] : __('page.bookings.form.customer.email.placeholder') }}"
-                    />
-
-                    @error('customer_email')
-                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                <!-- end::Email -->
-
-                <!-- begin::Phone -->
-                <div class="w-full">
-                    <x-label for="customer[phone]" :value="__('page.bookings.form.customer.phone.label')" />
-
-                    <x-input
-                        type="text" name="customer[phone]" value="{{ old('customer.phone') }}" dir="ltr"
-                        class="w-full mt-1 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }} {{ $errors->has('customer.phone') ? 'text-xs placeholder-red-500 border border-red-500' : '' }}"
-                        placeholder="{{ $errors->has('customer.phone') ? $errors->get('customer.phone')[0] : __('page.bookings.form.customer.phone.placeholder') }}"
-                    />
-
-                    @error('customer_phone')
-                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-                <!-- end::Phone -->
+                @error('customer_id')
+                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                @enderror
             </div>
-            <!-- end::Full Name / Email / Phone -->
         </div>
-        <!-- begin::Customer Information -->
+        <!-- begin::Customer -->
 
         <div class="grid grid-cols-5 py-4">
             <div class="col-span-3 border-t"></div>

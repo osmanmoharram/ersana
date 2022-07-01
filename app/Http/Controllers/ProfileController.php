@@ -62,7 +62,7 @@ class ProfileController extends Controller
         }
 
         if ($request->photo) {
-            $data['photo'] = $request->photo->store('images/profiles');
+            $data['photo'] = $request->photo->store('public/images/profiles');
         }
 
         User::find(auth()->id())->update($data);

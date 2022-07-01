@@ -258,11 +258,12 @@ return [
         'edit' => ['header' => 'Update Booking :booking Data'],
         'form' => [
             'customer' => [
-                'name' => ['label' => 'Name', 'placeholder' => 'Please write the customer\'s full name'],
-                'company' => ['label' => 'Company', 'placeholder' => 'Please write the customer\'s company name'],
-                'email' => ['label' => 'Email', 'placeholder' => 'customer@example.com'],
-                'phone' => ['label' => 'Phone', 'placeholder' => 'Please write the customer\'s phone number'],
-                'address' => ['label' => 'Address', 'placeholder' => 'Please write the customer\'s address',],
+                // 'name' => ['label' => 'Name', 'placeholder' => 'Please write the customer\'s full name'],
+                // 'company' => ['label' => 'Company', 'placeholder' => 'Please write the customer\'s company name'],
+                // 'email' => ['label' => 'Email', 'placeholder' => 'customer@example.com'],
+                // 'phone' => ['label' => 'Phone', 'placeholder' => 'Please write the customer\'s phone number'],
+                // 'address' => ['label' => 'Address', 'placeholder' => 'Please write the customer\'s address',],
+                'placeholder' => 'Please select one of the customers in the list below'
             ],
             'date' => ['label' => 'Booking Date', 'placeholder' => 'Please select a date'],
             'bookingTimes' => ['label' => 'Available Booking Times', 'button' => 'Available Times'],
@@ -408,4 +409,15 @@ return [
             'deleted' => 'The advertisement :advertisement is deleted'
         ],
     ],
+    'profile' => [
+        'back' => 'Back',
+        'edit' => 'Edit Profile',
+        'name' => 'Name',
+        'email' => 'Email',
+        'phone' => 'Phone',
+        'password' => 'Password',
+        'confirm_password' => 'Confirm Password',
+        'photo' => 'Change Photo',
+        'update' => 'Update'
+    ]
 ];
