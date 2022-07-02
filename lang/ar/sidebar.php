@@ -11,6 +11,8 @@ return [
     'expenses' => 'المصروفات',
     'revenues' => 'الإيرادات',
     'reports' => 'التقارير',
+    'services' => 'الخدمات',
+    'suppliers' => 'الموردون',
     'clients' => 'العملاء',
     'customers' => 'أصحاب الحجوزات',
     'bookings' => 'الحجوزات',

@@ -107,7 +107,7 @@
     <!-- begin::Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         @if (Auth::user()->isClient())
-            <div class="pt-2 pb-3 space-y-1">
+            {{-- <div class="pt-2 pb-3 space-y-1">
                 <!-- begin::Dashboard -->
                 @can('view dashboard')
                     <x-responsive-nav-link :href="route('halls.dashboard', session('hall')->id)" :active="request()->route()->named('halls.dashboard')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
@@ -171,9 +171,9 @@
                     </x-responsive-nav-link>
                 @endcan
                 <!-- end::Settings -->
-            </div>
+            </div> --}}
         @else
-            <div class="pt-2 pb-3 space-y-1">
+            {{-- <div class="pt-2 pb-3 space-y-1">
                 <!-- begin::Dashboard -->
                 @can('view dashboard')
                     <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->route()->named('admin.dashboard')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
@@ -253,7 +253,7 @@
                     </x-responsive-nav-link>
                 @endcan
                 <!-- end::Settings -->
-            </div>
+            </div> --}}
         @endif
 
         <!-- begin::Languages Links -->

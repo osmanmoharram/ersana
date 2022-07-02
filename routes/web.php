@@ -14,6 +14,8 @@ use App\Http\Controllers\Client\{
     BookingTimeController,
     CustomerController,
     OfferController,
+    ServiceController,
+    SupplierController,
 };
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
@@ -77,6 +79,10 @@ Route::group([
             Route::resource('booking-times', BookingTimeController::class);
 
             Route::resource('customers', CustomerController::class);
+
+            Route::resource('suppliers', SupplierController::class);
+
+            Route::resource('services', ServiceController::class);
 
             Route::resource('booking-times', BookingTimeController::class);
 

@@ -409,6 +409,52 @@ return [
             'deleted' => 'The advertisement :advertisement is deleted'
         ],
     ],
+    'suppliers' => [
+        'index' => [
+            'header' => 'Suppliers',
+            'table' => [
+                'name' => 'Name',
+                'email' => 'Email',
+                'phone' => 'Phone',
+                'address' => 'Address',
+                'businessField' => 'Business Field',
+            ]
+        ],
+        'create' => ['header' => 'Create New Supplier'],
+        'edit' => ['header' => 'Update The supplier :supplier'],
+        'form' => [
+            'name' => ['label' => 'Name', 'placeholder' => 'Please enter the supplier\'s name'],
+            'email' => ['label' => 'Email', 'placeholder' => 'Please enter the supplier\'s email'],
+            'phone' => ['label' => 'Phone', 'placeholder' => 'Please enter the supplier\'s phone'],
+            'address' => ['label' => 'Address', 'placeholder' => 'Please enter the supplier\'s address'],
+            'businessField' => ['label' => 'Business Field', 'placeholder' => 'Please selet the supplier\'s business field'],
+        ],
+        'flash' => [
+            'created' => 'A new supplier has been created',
+            'updated' => 'The supplier :supplier has been updated',
+            'deleted' => 'The supplier :supplier has been deleted'
+        ],
+    ],
+    'services' => [
+        'index' => [
+            'header' => 'Services',
+            'table' => [
+                'description' => 'Description',
+                'price' => 'Price',
+            ]
+        ],
+        'create' => ['header' => 'Create New service'],
+        'edit' => ['header' => 'Update The service :service'],
+        'form' => [
+            'description' => ['label' => 'Description', 'placeholder' => 'Please enter the service description'],
+            'price' => ['label' => 'Price', 'placeholder' => 'Please enter the service price'],
+        ],
+        'flash' => [
+            'created' => 'A new service has been created',
+            'updated' => 'The service :service has been updated',
+            'deleted' => 'The service :service has been deleted'
+        ],
+    ],
     'profile' => [
         'back' => 'Back',
         'edit' => 'Edit Profile',

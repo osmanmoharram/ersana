@@ -394,6 +394,52 @@ return [
             'deleted' => 'تم حذف الإعلان :advertisement'
         ],
     ],
+    'suppliers' => [
+        'index' => [
+            'header' => 'الموردون',
+            'table' => [
+                'name' => 'الإسم',
+                'email' => 'البريد الإلكتروني',
+                'phone' => 'الهاتف',
+                'address' => 'العنوان',
+                'businessField' => 'مجال العمل',
+            ]
+        ],
+        'create' => ['header' => 'إنشاء مورد جديد'],
+        'edit' => ['header' => 'تحديث بيانات المورد :supplier'],
+        'form' => [
+            'name' => ['label' => 'الإسم', 'placeholder' => 'الرجاء كتابة إسم المورد'],
+            'email' => ['label' => 'البريد الإلكتروني', 'placeholder' => 'الرجاء إدخال البريد الإلكتروني'],
+            'phone' => ['label' => 'الهاتف', 'placeholder' => 'الرجاء إدخال الهاتف'],
+            'address' => ['label' => 'العنوان', 'placeholder' => 'الرجاء إدخال العنوان'],
+            'businessField' => ['label' => 'مجال العمل', 'placeholder' => 'الرجاء اختيار مجال عمل'],
+        ],
+        'flash' => [
+            'created' => 'تم إنشاء مورد جديد',
+            'updated' => 'تم تحديث بيانات المورد :supplier',
+            'deleted' => 'تم حذف المورد :supplier'
+        ],
+    ],
+    'services' => [
+        'index' => [
+            'header' => 'الخدمات',
+            'table' => [
+                'description' => 'الوصف',
+                'price' => 'السعر',
+            ]
+        ],
+        'create' => ['header' => 'إنشاء خدمة جديد'],
+        'edit' => ['header' => 'تحديث بيانات الخدمة :service'],
+        'form' => [
+            'description' => ['label' => 'الوصف', 'placeholder' => 'الرجاء إدخال وصف واضح للخدمة'],
+            'price' => ['label' => 'السعر', 'placeholder' => 'الرجاء إدخال سعر الخدمة'],
+        ],
+        'flash' => [
+            'created' => 'تم إنشاء خدمة جديد',
+            'updated' => 'تم تحديث بيانات الخدمة :service',
+            'deleted' => 'تم حذف الخدمة :service'
+        ],
+    ],
     'profile' => [
         'back' => 'العودة',
         'edit' => 'تعديل البيانات',

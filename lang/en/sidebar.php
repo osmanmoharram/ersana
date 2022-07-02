@@ -11,6 +11,7 @@ return [
     'expenses' => 'Expenses',
     'revenues' => 'Revenues',
     'reports' => 'Reports',
+    'suppliers' => 'Suppliers',
     'clients' => 'Clients',
     'bookings' => 'Bookings',
     'booking_times' => 'Booking Times',
