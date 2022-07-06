@@ -56,11 +56,13 @@
         <!-- end::Package -->
 
         <div class="grid grid-cols-2 py-2">
-            <hr>
+            <div class="col-span-2 max-w-[560px]">
+                <hr>
+            </div>
         </div>
 
         <div class="grid grid-cols-2">
-            <div class="col-span-1">
+            <div class="col-span-2 max-w-[560px]">
                 <x-label for="date" :value="__('page.halls.index.header')" class="mb-2" />
 
                 <x-table id="halls" page="halls" :columns="['name', 'city', 'address', 'capacity']">
@@ -80,7 +82,7 @@
         <div x-data class="space-y-4 mt-4">
             <!-- begin::Hall Name -->
             <div class="grid grid-cols-2">
-                <div class="col-span-1">
+                <div class="col-span-2 max-w-[560px]">
                     <x-label for="hall_name" :value="__('page.subscriptions.form.hall.name.label')" />
 
                     <x-input
@@ -93,8 +95,8 @@
 
             <!-- begin::Hall Location -->
             <div class="grid grid-cols-2">
-                <div class="col-span-1">
-                    <div class="grid grid-cols-2 gap-x-6">
+                <div class="col-span-2 max-w-[560px]">
+                    <div class="grid grid-cols-2 gap-x-2">
                         <!-- begin::Hall City -->
                         <div class="col-span-1">
                             <x-label for="city" :value="__('page.subscriptions.form.hall.city.label')" />
@@ -133,7 +135,7 @@
 
             <!-- begin::Hall Capacity -->
             <div class="grid grid-cols-2">
-                <div class="col-span-1">
+                <div class="col-span-2 max-w-[560px]">
                     <x-label for="capacity" :value="__('page.halls.form.capacity.label')" />
 
                     <x-input
@@ -145,7 +147,7 @@
             <!-- end::Hall Capacity -->
 
             <div class="grid grid-cols-2">
-                <div class="col-span-1">
+                <div class="col-span-2 max-w-[560px]">
                     <button
                         type="button"
                         class="py-2.5 px-4 text-xs text-white bg-green-400 hover:bg-green-500 shadow-sm rounded-sm mb-px transition duration-150 ease-in-out"

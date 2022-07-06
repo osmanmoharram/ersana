@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client\Booking;
+use App\Models\Expense;
 use App\Models\Hall;
+use App\Models\Revenue;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -13,10 +15,33 @@ class DashboardController extends Controller
     public function showHallDashboard(Hall $hall)
     {
         Session::put('hall', $hall);
-
         $this->initializeHallSettings($hall);
 
-        return view('halls.dashboard', ['events' => json_encode($this->getEvents())]);
+        $bookings = Booking::whereHas('bookingTime', function ($query) use ($hall) {
+                        $query->where('hall_id', $hall->id);
+                    })->get();
+
+        $revenues = Revenue::where('hall_id', $hall->id)->get();
+        $revenues_amount = $this->calculateSum($revenues);
+        $collected_revenues_amount = $this->calculateSum($revenues->where('status', 'collected')->all());
+        $uncollected_revenues_amount = $this->calculateSum($revenues->where('status', 'uncollected')->all());
+
+        $expenses_amount = $this->calculateSum(Expense::where('hall_id', $hall->id)->get());
+
+        // Number of bookings in the last five months
+
+        return view('halls.dashboard', [
+            'events' => json_encode($this->getEvents()),
+            'bookings' => $bookings->count(),
+            'temporary_bookings' => $bookings->where('status', 'temporary')->count(),
+            'confirmed_bookings' => $bookings->where('status', 'confirmed')->count(),
+            'paid_bookings' => $bookings->where('status', 'paid')->count(),
+            'canceled_bookings' => $bookings->where('status', 'canceled')->count(),
+            'revenues' => $revenues_amount,
+            'collected_revenues' => $collected_revenues_amount,
+            'uncollected_revenues' => $uncollected_revenues_amount,
+            'expenses' => $expenses_amount
+        ]);
     }
 
     public function showAdminDashboard()
@@ -51,5 +76,16 @@ class DashboardController extends Controller
                 Setting::create($setting);
             }
         }
+    }
+
+    protected function calculateSum($data)
+    {
+        $sum = 0;
+
+        foreach ($data as $item) {
+            $sum += $item->amount;
+        }
+
+        return $sum;
     }
 }

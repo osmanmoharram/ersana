@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('payment_method');
             $table->date('date');
             $table->integer('amount');
+            $table->string('status');
             $table->unsignedBigInteger('hall_id')->nullable();
             $table->timestamps();
         });

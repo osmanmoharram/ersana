@@ -3,6 +3,19 @@
 return [
     'dashboard' =>[
         'header' => 'Dashboard',
+        'cards' => [
+            'revenues' => [
+                'all' => 'All Revenues', 'collected' => 'Collected Revenues', 'uncollected' => 'Uncollected Revenues',
+            ],
+            'expenses' => 'Expenses',
+            'bookings' => [
+                'all' => 'All Bookings',
+                'confirmed' => 'Confirmed Bookings',
+                'temporary' => 'Temporary Bookings',
+                'canceled' => 'Canceled Bookings',
+                'paid' => 'Paid Bookings'
+            ]
+        ]
     ],
     'settings' => [
         'header' => 'Settings',

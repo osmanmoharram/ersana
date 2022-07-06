@@ -1,7 +1,7 @@
 <nav x-data="{ open: false }" class="bg-slate-50 border-b border-gray-200">
     <!-- begin::Primary Navigation Menu -->
     <div class="px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center {{ session()->has('hall') ? 'justify-between' : 'sm:justify-end' }} h-16">
+        <div class="flex items-center justify-between {{ ! session()->has('hall') ? 'sm:justify-end' : '' }} h-16">
             <x-application-logo class="h-8 sm:hidden" />
 
             @if (session()->has('hall'))
@@ -106,8 +106,8 @@
 
     <!-- begin::Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        @if (Auth::user()->isClient())
-            {{-- <div class="pt-2 pb-3 space-y-1">
+        @if (Auth::user()->isClient() && session()->has('hall'))
+            <div class="pt-2 pb-3 space-y-1">
                 <!-- begin::Dashboard -->
                 @can('view dashboard')
                     <x-responsive-nav-link :href="route('halls.dashboard', session('hall')->id)" :active="request()->route()->named('halls.dashboard')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
@@ -171,9 +171,9 @@
                     </x-responsive-nav-link>
                 @endcan
                 <!-- end::Settings -->
-            </div> --}}
+            </div>
         @else
-            {{-- <div class="pt-2 pb-3 space-y-1">
+            <div class="pt-2 pb-3 space-y-1">
                 <!-- begin::Dashboard -->
                 @can('view dashboard')
                     <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->route()->named('admin.dashboard')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
@@ -253,7 +253,7 @@
                     </x-responsive-nav-link>
                 @endcan
                 <!-- end::Settings -->
-            </div> --}}
+            </div>
         @endif
 
         <!-- begin::Languages Links -->

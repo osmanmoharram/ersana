@@ -9,6 +9,7 @@ return [
     'offers' => 'Offers',
     'ads' => 'Advertisements',
     'expenses' => 'Expenses',
+    'services' => 'Services',
     'revenues' => 'Revenues',
     'reports' => 'Reports',
     'suppliers' => 'Suppliers',
