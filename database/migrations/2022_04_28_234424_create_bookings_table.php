@@ -15,12 +15,11 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->string('customer_name');
-            $table->string('customer_email')->nullable();
-            $table->string('customer_phone')->nullable();
             $table->date('date');
+            $table->unsignedBigInteger('customer_id')->nullable();
             $table->unsignedBigInteger('bookingTime_id')->nullable();
             $table->unsignedBigInteger('offer_id');
+            $table->unsignedBigInteger('service_id');
             $table->string('payment_method');
             $table->string('paid')->nullable();
             $table->string('remaining');

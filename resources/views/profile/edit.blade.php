@@ -1,24 +1,43 @@
 <x-app-layout>
     <x-slot name="header"></x-slot>
 
-    <form action="{{ route('profile.update') }}" method="POST" class="flex items-start" enctype="multipart/form-data">
+    <form  x-data action="{{ route('profile.update') }}" method="POST" class="flex items-start" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
 
         <div>
-            <img src="{{ asset('storage/' . substr(auth()->user()->photo, 6)) }}" alt="Me" class="rounded-sm max-w-xs">
+            <div class="h-64 w-64 overflow-hidden">
+                <div id="avatar" class="h-full w-full">
+                    @if (auth()->user()->photo)
+                        <div
+                            style="background-image: url({{ asset('storage/' . substr(auth()->user()->photo, 6)) }})"
+                            class="h-full w-full bg-cover bg-center"
+                        ></div>
+                    @else
+                        <div class="bg-slate-200 p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-64 w-64 text-slate-50" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    @endif
+                </div>
+                <div id="preview" class="h-full w-full bg-cover bg-center"></div>
+            </div>
 
-            <label for="photo" class="block cursor-pointer mt-4 w-full py-2 text-center text-slate-500 rounded-sm border bg-white hover:bg-slate-50 transition duration-150 ease-in-out">
+
+            <label for="photo" class="block py-2 rounded-sm bg-green-400 mt-2 text-sm text-white text-center hover:bg-green-500 transition duration-150 ease-in-out">
                 {{ __('page.profile.photo')}}
 
-                <input id="photo" type="file" name="photo" class="sr-only" accept=".png,.jpg,.jpeg">
+                <input id="photo" type="file" name="photo" class="sr-only" accept=".png,.jpg,.jpeg" @change="$store.profile.preview()">
             </label>
+
+            <a href="{{ route('profile.show') }}" class="block py-2 rounded-sm bg-white mt-2 text-sm text-slate-500 text-center hover:bg-slate-50 transition duration-150 ease-in-out">
+                {{ __('actions.back') }}
+            </a>
+
         </div>
 
         <div class="space-y-4 ms-16">
-            <a href="{{ route('profile.show') }}" class="inline-block text-slate-500 text-sm hover:underline">
-                {{ __('page.profile.back') }}
-            </a>
 
             <div>
                 <x-label for="name" value="{{ __('page.profile.name') }}" />
@@ -45,9 +64,13 @@
             </div>
 
             <div>
-                <button type="submit" class="px-4 py-2 rounded-sm bg-green-400 text-white hover:bg-green-500 transition duration-150 ease-in-out">
+                <button
+                    type="submit"
+                    class="block w-full py-3 bg-slate-700 hover:bg-gray-800 text-center border border-transparent rounded-sm font-semibold text-xs text-slate-300 uppercase cursor-pointer focus:outline-none disabled:opacity-25 transition ease-in-out duration-150'">
                     {{ __('page.profile.update') }}
                 </button>
+
+
             </div>
         </div>
     </form>

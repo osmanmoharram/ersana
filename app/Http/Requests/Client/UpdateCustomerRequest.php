@@ -25,8 +25,8 @@ class UpdateCustomerRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'unique:customers,email,' . $this->customer->email . ',email'],
-            'phone' => ['required', 'string', 'unique:customers,phone,' . $this->customer->phone . ',phone'],
+            'email' => ['required', 'string', 'email', 'unique:users,email,' . $this->customer->email . ',email'],
+            'phone' => ['required', 'string', 'unique:users,phone,' . $this->customer->phone . ',phone'],
         ];
     }
 }

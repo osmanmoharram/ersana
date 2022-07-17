@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('photo')->nullable();
             $table->unsignedBigInteger('hall_id')->nullable();
             $table->unsignedBigInteger('client_id')->nullable();
+            $table->unsignedBigInteger('customer_id')->nullable();
             $table->string('remember_token')->nullable();
             $table->timestamps();
         });

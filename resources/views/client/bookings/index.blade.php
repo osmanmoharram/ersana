@@ -24,7 +24,7 @@
                 <!-- begin::Customer -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-xs  text-slate-500">
-                        {{ $booking->customer_name }}
+                        {{ $booking->customer->user->name }}
                     </div>
                 </td>
                 <!-- end::Customer -->
@@ -86,6 +86,10 @@
                     <!-- begin::Edit -->
                     <x-actions.edit href="{{ route('halls.bookings.edit', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"/>
                     <!-- end::Edit -->
+
+                    <!-- begin::PDF -->
+                    <x-actions.pdf href="{{ route('halls.bookings.pdf', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"/>
+                    <!-- end::PDF -->
 
                     <!-- begin::Delete -->
                     <x-actions.delete action="{{ route('halls.bookings.destroy', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"/>

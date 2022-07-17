@@ -15,6 +15,21 @@ return [
                 'canceled' => 'Canceled Bookings',
                 'paid' => 'Paid Bookings'
             ]
+        ],
+        'charts' => [
+            'bar' => [
+                'label' => 'Number of bookings in the last 5 months'
+            ]
+        ],
+        'boxes' => [
+            'revenues' => [
+                'all' => 'All Revenues',
+                'collected' => 'Collected Revenues',
+                'uncollected' => 'Uncollected Revenues'
+            ],
+            'expenses' => [
+                'all' => 'All Expenses'
+            ]
         ]
     ],
     'settings' => [
@@ -243,7 +258,17 @@ return [
         'create' => ['header' => 'Create New Customer'],
         'edit' => [ 'header' => 'Update :customer Data', ],
         'form' => [
-        ]
+            'name' => ['label' => 'Name', 'placeholder' => 'Please enter the full name'],
+            'company' => ['label' => 'Company', 'placeholder' => 'Please enter the company name'],
+            'email' => ['label' => 'Email', 'placeholder' => 'customer@example.com'],
+            'phone' => ['label' => 'Phone', 'placeholder' => 'Please enter the phone number'],
+            'address' => ['label' => 'Address', 'placeholder' => 'Please write the address',],
+        ],
+        'flash' => [
+            'created' => 'A new customer has been created',
+            'updated' => 'The customer number :customer has been updated',
+            'deleted' => 'The customer :customer is deleted'
+        ],
     ],
     'bookings' => [
         'index' => [
@@ -263,7 +288,7 @@ return [
             'header' => 'Create New Booking',
             'customer_information' => 'Customer Information',
             'booking_times' => 'Booking Times',
-            'offers' => 'Offers',
+            'offers' => 'Offers and Services',
             'payment' => 'Payment',
             'additional_information' => 'Additional Information'
         ],
@@ -271,11 +296,6 @@ return [
         'edit' => ['header' => 'Update Booking :booking Data'],
         'form' => [
             'customer' => [
-                // 'name' => ['label' => 'Name', 'placeholder' => 'Please write the customer\'s full name'],
-                // 'company' => ['label' => 'Company', 'placeholder' => 'Please write the customer\'s company name'],
-                // 'email' => ['label' => 'Email', 'placeholder' => 'customer@example.com'],
-                // 'phone' => ['label' => 'Phone', 'placeholder' => 'Please write the customer\'s phone number'],
-                // 'address' => ['label' => 'Address', 'placeholder' => 'Please write the customer\'s address',],
                 'placeholder' => 'Please select one of the customers in the list below'
             ],
             'date' => ['label' => 'Booking Date', 'placeholder' => 'Please select a date'],
@@ -356,7 +376,14 @@ return [
                 ],
             ],
             'amount' => ['label' => 'Amount', 'placeholder' => 'Please insert amount'],
-            'description' => ['label' => 'Description', 'placeholder' => 'Please write a detailed description']
+            'description' => ['label' => 'Description', 'placeholder' => 'Please write a detailed description'],
+            'status' => [
+                'label' => ' Status',
+                'items' => [
+                    'collected' => 'Collected',
+                    'uncollected' => 'Uncollected',
+                ],
+            ],
         ],
         'flash' => [
             'created' => 'A new revenue has been created',
@@ -452,6 +479,7 @@ return [
         'index' => [
             'header' => 'Services',
             'table' => [
+                '#' => '#',
                 'description' => 'Description',
                 'price' => 'Price',
             ]

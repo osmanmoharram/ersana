@@ -57,6 +57,10 @@
                     <x-actions.show href="{{ route('reports.show', $report->id) }}" />
                     <!-- end::Show -->
 
+                    <!-- begin::PDF -->
+                    <x-actions.pdf href="{{ route('reports.pdf', $report->id) }}" />
+                    <!-- end::PDF -->
+
                     <!-- begin::Delete -->
                     <x-actions.delete :action="route('reports.destroy', $report->id)" />
                     <!-- end::Delete -->

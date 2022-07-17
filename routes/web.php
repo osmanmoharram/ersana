@@ -24,14 +24,14 @@ use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\SettingController;
+use App\Models\Admin\Client;
 use App\Models\Client\Booking;
 use App\Models\Hall;
-use App\Models\Setting;
-use Illuminate\Http\Request;
+use App\Models\Report;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +64,10 @@ Route::group([
 
         Route::resource('clients', ClientController::class)->except(['show']);
 
+        Route::get('clients/{client}', function (Client $client) {
+            return response()->json(['client' => $client]);
+        });
+
         Route::resource('business-fields', BusinessFieldController::class)->except(['show']);
 
         Route::resource('subscriptions', SubscriptionController::class)->except(['show']);
@@ -75,6 +79,10 @@ Route::group([
             Route::get('dashboard', [DashboardController::class, 'showHallDashboard'])->name('dashboard');
 
             Route::resource('bookings', BookingController::class);
+
+            Route::get('/bookings/{booking}/pdf', function (Hall $hall, Booking $booking) {
+                return Pdf::loadView('client.bookings.pdf', ['booking' => $booking])->download('client.bookings.pdf');
+            })->name('bookings.pdf');
 
             Route::resource('booking-times', BookingTimeController::class);
 
@@ -105,6 +113,10 @@ Route::group([
         Route::resource('revenues', RevenueController::class)->except(['show']);
 
         Route::resource('reports', ReportController::class);
+
+        Route::get('/reporst/{report}/pdf', function (Report $report) {
+            return Pdf::loadView('reports.pdf', ['report' => $report])->download('reports.pdf');
+        })->name('reports.pdf');
 
         Route::get('/settings', [SettingController::class, 'index'])->name('settings');
 

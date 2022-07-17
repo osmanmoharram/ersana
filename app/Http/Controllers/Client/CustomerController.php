@@ -17,7 +17,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::where('hall_id', session('hall')->id)->latest()->paginate(30);
+        $customers = Customer::whereHas('user', function ($query) {
+            $query->where('hall_id', session('hall')->id);
+        })->latest()->paginate(30);
 
         return view('client.customers.index', compact('customers'));
     }
@@ -47,7 +49,7 @@ class CustomerController extends Controller
         $user->update(['customer_id' => $customer->id]);
 
         return redirect()
-            ->route('halls.customers.create', session('hall')->id)
+            ->route('halls.customers.index', session('hall')->id)
             ->withMessage(__('page.customers.flash.created'));
     }
 

@@ -7,28 +7,46 @@ use App\Models\Expense;
 use App\Models\Hall;
 use App\Models\Revenue;
 use App\Models\Setting;
-use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
     public function showHallDashboard(Hall $hall)
     {
+        // Set the current hall and initialize its settings
         Session::put('hall', $hall);
         $this->initializeHallSettings($hall);
 
+        // Get all the bookings of the current hall
         $bookings = Booking::whereHas('bookingTime', function ($query) use ($hall) {
                         $query->where('hall_id', $hall->id);
                     })->get();
 
+        // Get all the revenues of the current hall
         $revenues = Revenue::where('hall_id', $hall->id)->get();
+        // Get the sum of all the revenues
         $revenues_amount = $this->calculateSum($revenues);
+        // Get the sum of the revenues that have been collected of the current hall
         $collected_revenues_amount = $this->calculateSum($revenues->where('status', 'collected')->all());
+        // Get the sum of the revenues that have not yet been collected of the current hall
         $uncollected_revenues_amount = $this->calculateSum($revenues->where('status', 'uncollected')->all());
 
+        // Get the sum of the expenses of the current hall
         $expenses_amount = $this->calculateSum(Expense::where('hall_id', $hall->id)->get());
 
         // Number of bookings in the last five months
+        $months = [];
+        foreach (range(4, 0, -1) as $i) {
+            // Get target month
+            $month = Carbon::now()->subMonth($i);
+            // Get target month name
+            $months['labels'][] = $month->format('M');
+            // Get bookings count of target month
+            $months['data'][] = $bookings->where('date', '>', $month->subMonth())
+                                        ->where('date', '<', $month->addMonth())
+                                        ->count();
+        }
 
         return view('halls.dashboard', [
             'events' => json_encode($this->getEvents()),
@@ -40,7 +58,8 @@ class DashboardController extends Controller
             'revenues' => $revenues_amount,
             'collected_revenues' => $collected_revenues_amount,
             'uncollected_revenues' => $uncollected_revenues_amount,
-            'expenses' => $expenses_amount
+            'expenses' => $expenses_amount,
+            'months' => $months
         ]);
     }
 

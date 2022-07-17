@@ -22,7 +22,11 @@
                         <!-- end::Add -->
                     </div>
 
-                    <x-select name="client_id" value="{{ old('client_id') }}" placeholder="{{ __('page.subscriptions.form.client.placeholder') }}">
+                    <x-select
+                        name="client_id"
+                        value="{{ isset($target_client) ? $target_client->id : old('client_id') }}"
+                        display="{{ isset($target_client) ? $target_client->name : '' }}"
+                        placeholder="{{ __('page.subscriptions.form.client.placeholder') }}">
                         @foreach ($clients as $client)
                             <li
                                 class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"

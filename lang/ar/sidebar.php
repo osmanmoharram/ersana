@@ -6,7 +6,7 @@ return [
     'halls' => 'القاعات',
     'packages' => 'الباقات',
     'features' => 'الميزات',
-    'offers' => 'العروض',
+    'offers' => 'الباقات',
     'ads' => 'الإعلانات',
     'expenses' => 'المصروفات',
     'revenues' => 'الإيرادات',

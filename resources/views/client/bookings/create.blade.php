@@ -19,7 +19,7 @@
                     <x-actions.add href="{{ route('halls.customers.create', ['hall' => session('hall')->id]) }}" size="p-1" />
                 </div>
 
-                <x-select name="customer_id" value="{{ old('customer_id') }}" placeholder="{{ __('page.customers.">
+                <x-select name="customer_id" value="{{ old('customer_id') }}" placeholder="{{ __('page.bookings.form.customer.placeholder') }}">
                     @foreach ($customers as $customer)
                         <li
                             class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
@@ -142,49 +142,100 @@
 
             <!-- begin::Display Offers -->
             <div class="col-span-2">
-                <x-table page="offers" :columns="['#', 'description', 'price']" class="text-xs">
-                    @foreach ($offers as $offer)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div>
-                                    <input
-                                        name="offer_id" value="{{ $offer->id }}" type="radio"
-                                        class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
-                                        @click="$store.payment.setOffer({{ $offer->price }}, true)"
-                                    >
-                                </div>
-                            </td>
+                <div>
+                    <x-label for="" value="{{ app()->getLocale() === 'ar' ? 'الباقات' : 'Offers' }}" class="text-slate-400 mb-2" />
 
-                            <td class="px-6 py-4">
-                                <div class="text-sm text-slate-500 line-clamp-2 max-w-xs">
-                                    {{ $offer->description }}
-                                </div>
-                            </td>
+                    <x-table page="offers" :columns="['#', 'description', 'price']" class="text-xs">
+                        @foreach ($offers as $offer)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div>
+                                        <input
+                                            name="offer_id" value="{{ $offer->id }}" type="radio"
+                                            class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
+                                            @click="$store.payment.setOffer({{ $offer->price }}, true)"
+                                        >
+                                    </div>
+                                </td>
 
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="offer-price text-sm text-slate-500">
-                                    {{ number_format($offer->price, 2) }}
-                                </div>
-                            </td>
-
-                            <td class="px-6 py-4">
-                                <!-- begin::Show -->
-                                <x-modal>
-                                    <x-slot name="trigger">
-                                        <x-actions.show @click.prevent="isOpen = ! isOpen" class="cursor-pointer text-center"/>
-                                    </x-slot>
-
-                                    <div class="px-6 py-4 text-sm flex items-center justify-center">
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-slate-500 line-clamp-2 max-w-xs">
                                         {{ $offer->description }}
                                     </div>
-                                </x-modal>
-                                <!-- end::Show -->
-                            </td>
-                        </tr>
-                    @endforeach
+                                </td>
 
-                    <x-slot name="pagination"></x-slot>
-                </x-table>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="offer-price text-sm text-slate-500">
+                                        {{ number_format($offer->price, 2) }}
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4">
+                                    <!-- begin::Show -->
+                                    <x-modal>
+                                        <x-slot name="trigger">
+                                            <x-actions.show @click.prevent="isOpen = ! isOpen" class="cursor-pointer text-center"/>
+                                        </x-slot>
+
+                                        <div class="px-6 py-4 text-sm flex items-center justify-center">
+                                            {{ $offer->description }}
+                                        </div>
+                                    </x-modal>
+                                    <!-- end::Show -->
+                                </td>
+                            </tr>
+                        @endforeach
+
+                        <x-slot name="pagination"></x-slot>
+                    </x-table>
+                </div>
+                <div>
+                    <x-label for="" value="{{ app()->getLocale() === 'ar' ? 'الخدمات' : 'Services' }}" class="text-slate-400 mb-2" />
+
+                    <x-table page="services" :columns="['#', 'description', 'price']" class="text-xs">
+                        @foreach ($services as $service)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div>
+                                        <input
+                                            name="service_id" value="{{ $service->id }}" type="radio"
+                                            class="focus:ring-slate-600 h-4 w-4 text-slate-800 border-gray-300 cursor-pointer"
+                                            @click="$store.payment.setService({{ $service->price }}, true)"
+                                        >
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-slate-500 line-clamp-2 max-w-xs">
+                                        {{ $service->description }}
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="offer-price text-sm text-slate-500">
+                                        {{ number_format($service->price, 2) }}
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4">
+                                    <!-- begin::Show -->
+                                    <x-modal>
+                                        <x-slot name="trigger">
+                                            <x-actions.show @click.prevent="isOpen = ! isOpen" class="cursor-pointer text-center"/>
+                                        </x-slot>
+
+                                        <div class="px-6 py-4 text-sm flex items-center justify-center">
+                                            {{ $service->description }}
+                                        </div>
+                                    </x-modal>
+                                    <!-- end::Show -->
+                                </td>
+                            </tr>
+                        @endforeach
+
+                        <x-slot name="pagination"></x-slot>
+                    </x-table>
+                </div>
             </div>
             <!-- end::Display Offers -->
         </div>

@@ -26,9 +26,8 @@ class NewCustomerRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'unique:customers,email'],
-            'phone' => ['required', 'string', 'unique:customers,phone'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => ['required', 'string', 'email', 'unique:users,email'],
+            'phone' => ['required', 'string', 'unique:users,phone'],
         ];
     }
 }

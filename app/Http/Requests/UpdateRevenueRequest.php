@@ -27,7 +27,8 @@ class UpdateRevenueRequest extends FormRequest
             'date' => ['required', 'date'],
             'payment_method' => ['required', 'in:cash,bank'],
             'amount' => ['required', 'numeric'],
-            'description' => ['required', 'string']
+            'description' => ['required', 'string'],
+            'status' => ['required', 'in:collected,uncollected']
         ];
     }
 }

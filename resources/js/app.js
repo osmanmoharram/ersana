@@ -288,6 +288,7 @@ Alpine.store('halls', {
 Alpine.store('payment', {
     bookingTime: 0,
     offer: 0,
+    service:0,
     remaining: 0,
     total: 0,
 
@@ -308,6 +309,16 @@ Alpine.store('payment', {
     },
 
     getOffer() {
+        return this.offer;
+    },
+
+    setService(value, updateTotalInput = false) {
+        this.service = parseFloat(value);
+
+        this.setTotal(updateTotalInput)
+    },
+
+    getService() {
         return this.offer;
     },
 
@@ -356,3 +367,13 @@ Alpine.store('payment', {
         return Math.round(m) / 100 * Math.sign(num);
     },
 });
+
+Alpine.store('profile', {
+    preview() {
+        avatar.style.display = "none";
+
+        const url = URL.createObjectURL(photo.files[0]);
+
+        preview.style.backgroundImage = `url(${url})`;
+    }
+})

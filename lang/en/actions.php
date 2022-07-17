@@ -5,6 +5,7 @@ return [
     'add/subsscriptions' => 'Add and redirect to subscriptions',
     'show' => ['page' => 'Show'],
     'edit' => ['page' => 'Edit', 'form' => 'Update'],
+    'pdf' => 'PDF',
     'delete' => [
         'page' => 'Delete',
         'form' => 'Confirm',

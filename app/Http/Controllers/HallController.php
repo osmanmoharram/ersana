@@ -7,6 +7,7 @@ use App\Http\Requests\{NewHallRequest, UpdateHallRequest};
 use App\Models\Admin\Client;
 use App\Models\Client\{Booking, BookingTime, Customer, Offer};
 use App\Models\{Expense, Hall, Report, Revenue, Setting, User};
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class HallController extends Controller
@@ -40,11 +41,15 @@ class HallController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $target_client = $request->target_client_id ? Client::find($request->target_client_id) : null;
+
+        dd($request->target_client_id);
+
         $clients = Client::all();
 
-        return view('halls.create', compact('clients'));
+        return view('halls.create', compact('target_client', 'clients'));
     }
 
     public function store(NewHallRequest $request)

@@ -26,25 +26,6 @@
         </div>
         <!-- end::Name -->
 
-        <!-- begin::Email -->
-        <div class="grid grid-cols-2">
-            <div class="col-span-2 max-w-[560px]">
-                <x-label for="email" :value="__('page.users.form.email.label')" />
-
-                <div>
-                    <x-input
-                        type="text" class="w-full mt-1" name="email" value="{{ $user->email }}"
-                        placeholder="{{ __('page.users.form.email.placeholder') }}"
-                    />
-
-                    @error('email')
-                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-            </div>
-        </div>
-        <!-- end::Email -->
-
         <!-- begin::Phone -->
         <div class="grid grid-cols-2">
             <div class="col-span-2 max-w-[560px]">

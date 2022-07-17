@@ -153,8 +153,8 @@ class ReportController extends Controller
         $attributes['type'] = $request->type;
         $attributes['average'] = $average;
         $attributes['total'] = $total;
-        if ($request->user()->isClient()) {
-            $attributes['client_id'] = $request->user()->client_id;
+        if ($request->user()->isClient() && session()->has('hall')) {
+            $attributes['hall_id'] = session('hall')->id;
         }
 
         return $attributes;

@@ -15,6 +15,21 @@ return [
                 'canceled' => 'الحجوزات الملغية',
                 'paid' => 'الحجوزات المدفوعة'
             ]
+        ],
+        'charts' => [
+            'bar' => [
+                'label' => 'عدد الحجوزات في آخر 5 أشهر'
+            ]
+        ],
+        'boxes' => [
+            'revenues' => [
+                'all' => 'جميع الإيرادات',
+                'collected' => 'الإيرادات المستلمة',
+                'uncollected' => 'الإيرادات المستحقة'
+            ],
+            'expenses' => [
+                'all' => 'جميع المصروفات'
+            ]
         ]
     ],
     'settings' => [
@@ -56,17 +71,17 @@ return [
         ]
     ],
     'offers' => [
-        'index' => ['header' => 'العروض', 'table' => ['#' => '#', 'description' => 'الوصف', 'price' => 'السعر']],
-        'create' => ['header' => 'إنشاء عرض جديد'],
-        'edit' => ['header' => 'تحديث العرض :offer'],
+        'index' => ['header' => 'الباقات', 'table' => ['#' => '#', 'description' => 'الوصف', 'price' => 'السعر']],
+        'create' => ['header' => 'إنشاء باقة جديد'],
+        'edit' => ['header' => 'تحديث الباقة :offer'],
         'form' => [
-            'description' => ['label' => 'الوصف', 'placeholder' => 'اكتب شرحا مبسطا لهذا العرض'],
-            'price' => ['label' => 'السعر', 'placeholder' => 'الرجاء إدخال سعر العرض']
+            'description' => ['label' => 'الوصف', 'placeholder' => 'اكتب شرحا مبسطا لهذه الباقة'],
+            'price' => ['label' => 'السعر', 'placeholder' => 'الرجاء إدخال سعر الباقة']
         ],
         'flash' => [
-            'created' => 'تم إنشاء عرض جديد',
-            'updated' => 'تم تحديث بيانات العرض :offer',
-            'deleted' => 'تم حذف العرض :offer'
+            'created' => 'تم إنشاء باقة جديدة',
+            'updated' => 'تم تحديث بيانات الباقة :offer',
+            'deleted' => 'تم حذف الباقة :offer'
         ]
     ],
     'packages' => [
@@ -248,7 +263,7 @@ return [
             'header' => 'إنشاء حجز جديد',
             'customer_information' => 'بيانات صاحب الحجز',
             'booking_times' => 'أوقات الحجوزات',
-            'offers' => 'العروض',
+            'offers' => 'الباقات و الخدمات',
             'payment' => 'الدفع',
             'additional_information' => 'معلومات إضافية'
         ],
@@ -340,7 +355,14 @@ return [
                 'items' => ['cash' => 'نقداً', 'bank' => 'بنك']
             ],
             'amount' => ['label' => 'المبلغ', 'placeholder' => 'الرجاء كتابة البلغ'],
-            'description' => ['label' => 'الوصف', 'placeholder' => 'الرجاء كتابة وصف المصروف بالتفصيل']
+            'description' => ['label' => 'الوصف', 'placeholder' => 'الرجاء كتابة وصف المصروف بالتفصيل'],
+            'status' => [
+                'label' => ' الحالة',
+                'items' => [
+                    'collected' => 'مستلمة',
+                    'uncollected' => 'مستحقة',
+                ],
+            ],
         ],
         'flash' => [
             'created' => 'تم إنشاء إيراد جديد',
@@ -437,6 +459,7 @@ return [
         'index' => [
             'header' => 'الخدمات',
             'table' => [
+                '#' => '#',
                 'description' => 'الوصف',
                 'price' => 'السعر',
             ]
