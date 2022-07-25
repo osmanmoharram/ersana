@@ -40,8 +40,8 @@ class Package extends Model
         $this->attributes['price'] = $value * 100;
     }
 
-    protected function getPriceAttribute($value)
+    protected function getPriceAttribute()
     {
-        return $this->attributes['price'] = $value / 100;
+        return $this->attributes['price'] / 100;
     }
 }

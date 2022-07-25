@@ -1,7 +1,7 @@
 <nav x-data="{ open: false }" class="bg-slate-50 border-b border-gray-200">
     <!-- begin::Primary Navigation Menu -->
     <div class="px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center {{ session()->has('hall') ? 'justify-between' : 'sm:justify-end' }} h-16">
+        <div class="flex items-center justify-between {{ ! session()->has('hall') ? 'sm:justify-end' : '' }} h-16">
             <x-application-logo class="h-8 sm:hidden" />
 
             @if (session()->has('hall'))
@@ -65,12 +65,12 @@
                 <x-dropdown align="{{ app()->getLocale() === 'ar' ? 'left' : 'right' }}" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <div class="w-8 h-8 rounded-full bg-blue-500"></div>
+                            <img src="{{ asset('storage/' . substr(auth()->user()->photo, 6)) }}" alt="Me" class="h-9 w-9 rounded-full">
                         </button>
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile')">
+                        <x-dropdown-link :href="route('profile.show')">
                             {{ __('auth.profile') }}
                         </x-dropdown-link>
                         <!-- Authentication -->
@@ -106,81 +106,169 @@
 
     <!-- begin::Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <!-- begin::Dashboard -->
-            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('sidebar.dashboard') }}
-            </x-responsive-nav-link>
-            <!-- end::Dashboard -->
+        @if (Auth::user()->isClient() && session()->has('hall'))
+            <div class="pt-2 pb-3 space-y-1">
+                <!-- begin::Dashboard -->
+                @can('view dashboard')
+                    <x-responsive-nav-link :href="route('halls.dashboard', session('hall')->id)" :active="request()->route()->named('halls.dashboard')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.dashboard') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Dashboard -->
 
-            <!-- begin::Subscriptions -->
-            <x-responsive-nav-link :href="route('subscriptions.index')" :active="request()->routeIs('subscriptions')">
-                {{ __('sidebar.subscriptions') }}
-            </x-responsive-nav-link>
-            <!-- end::Subscriptions -->
+                <!-- begin::Bookings -->
+                @can('view bookings')
+                    <x-responsive-nav-link :href="route('halls.bookings.index', session('hall')->id)" :active="request()->route()->named('halls.bookings.index')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.bookings') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Bookings -->
 
-            <!-- begin::Packages -->
-            <x-responsive-nav-link :href="route('packages.index')" :active="request()->routeIs('packages')">
-                {{ __('sidebar.packages') }}
-            </x-responsive-nav-link>
-            <!-- end::Packages -->
+                <!-- begin::Customers -->
+                @can('view customers')
+                    <x-responsive-nav-link :href="route('halls.customers.index', session('hall')->id)" :active="request()->route()->named('halls.customers.index')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.customers') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Customers -->
 
-            <!-- begin::Features -->
-            <x-responsive-nav-link :href="route('features.index')" :active="request()->routeIs('features')">
-                {{ __('sidebar.features') }}
-            </x-responsive-nav-link>
-            <!-- end::Features -->
+                <!-- begin::Expenses -->
+                @can('view expenses')
+                    <x-responsive-nav-link :href="route('expenses.index')" :active="request()->route()->named('expenses.index')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.expenses') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Expenses -->
 
-            <!-- begin::Ads -->
-            {{-- <x-responsive-nav-link :href="" :active="">
-                {{ __('sidebar.ads') }}
-            </x-responsive-nav-link> --}}
-            <!-- end::Ads -->
+                <!-- begin::Revenues -->
+                @can('view revenues')
+                    <x-responsive-nav-link :href="route('revenues.index')" :active="request()->route()->named('revenues.index')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.revenues') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Revenues -->
 
-            <!-- begin::Reports -->
-            {{-- <x-responsive-nav-link :href="" :active="">
-                {{ __('sidebar.reports') }}
-            </x-responsive-nav-link> --}}
-            <!-- end::Reports -->
+                <!-- begin::Reports -->
+                @can('view reports')
+                    <x-responsive-nav-link :href="route('reports.index')" :active="request()->route()->named('reports.index')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.reports') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Reports -->
 
-            <!-- begin::Clients -->
-            <x-responsive-nav-link :href="route('clients.index')" :active="request()->routeIs('clients')">
-                {{ __('sidebar.clients') }}
-            </x-responsive-nav-link>
-            <!-- end::Clients -->
+                <!-- begin::Users -->
+                @can('view users')
+                    <x-responsive-nav-link :href="route('users.index')" :active="request()->route()->named('users.index')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.users') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Users -->
 
-            <!-- begin::Business Fields -->
-            <x-responsive-nav-link :href="route('business-fields.index')" :active="request()->routeIs('business-fields')">
-                {{ __('sidebar.business-fields') }}
-            </x-responsive-nav-link>
-            <!-- end::Business Fields -->
+                <!-- begin::Settings -->
+                @can('view settings')
+                    <x-responsive-nav-link :href="route('halls.settings', ['hall' => session('hall')->id])" :active="request()->route()->named('halls.settings')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.settings') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Settings -->
+            </div>
+        @else
+            <div class="pt-2 pb-3 space-y-1">
+                <!-- begin::Dashboard -->
+                @can('view dashboard')
+                    <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->route()->named('admin.dashboard')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.dashboard') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Dashboard -->
 
-            <!-- begin::Users -->
-            <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users')">
-                {{ __('sidebar.users') }}
-            </x-responsive-nav-link>
-            <!-- end::Users -->
+                <!-- begin::Subscriptions -->
+                @can('view subscriptions')
+                    <x-responsive-nav-link :href="route('subscriptions.index')" :active="request()->route()->named('subscriptions.index') || request()->route()->named('subscriptions.create') || request()->route()->named('subscriptions.edit')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.subscriptions') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Subscriptions -->
 
-            <!-- begin::Settings -->
-            {{-- <x-responsive-nav-link :href="route('settings.index')" :active="request()->routeIs('settings')">
-                {{ __('sidebar.settings') }}
-            </x-responsive-nav-link> --}}
-            <!-- end::Settings -->
-        </div>
+                <!-- begin::Halls -->
+                @can('view halls')
+                    <x-responsive-nav-link :href="route('halls.index')" :active="request()->route()->named('halls.index') || request()->route()->named('halls.create') || request()->route()->named('halls.edit')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.halls') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Halls -->
+
+                <!-- begin::Ads -->
+                @can('view advertisements')
+                    <x-responsive-nav-link :href="route('advertisements.index')" :active="request()->route()->named('advertisements.index') || request()->route()->named('advertisements.create') || request()->route()->named('advertisements.edit')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.ads') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Ads -->
+
+                <!-- begin::Expenses -->
+                @can('view expenses')
+                    <x-responsive-nav-link :href="route('expenses.index')" :active="request()->route()->named('expenses.index') || request()->route()->named('expenses.create') || request()->route()->named('expenses.edit')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.expenses') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Expenses -->
+
+                <!-- begin::Revenues -->
+                @can('view revenues')
+                    <x-responsive-nav-link :href="route('revenues.index')" :active="request()->route()->named('revenues.index') || request()->route()->named('revenues.create') || request()->route()->named('revenues.edit')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.revenues') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Revenues -->
+
+                <!-- begin::Reports -->
+                @can('view reports')
+                    <x-responsive-nav-link :href="route('reports.index')" :active="request()->route()->named('reports.index') || request()->route()->named('reports.create') || request()->route()->named('reports.edit')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.reports') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Reports -->
+
+                <!-- begin::Clients -->
+                @can('view clients')
+                    <x-responsive-nav-link :href="route('clients.index')" :active="request()->route()->named('clients.index') || request()->route()->named('clients.create') || request()->route()->named('clients.edit')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.clients') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Clients -->
+
+                <!-- begin::Users -->
+                @can('view users')
+                    <x-responsive-nav-link :href="route('users.index')" :active="request()->route()->named('users.index') || request()->route()->named('users.create') || request()->route()->named('users.edit')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.users') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Users -->
+
+                <!-- begin::Settings -->
+                @can('view settings')
+                    <x-responsive-nav-link :href="route('settings')" :active="request()->route()->named('settings') || request()->route()->named('packages.index') || request()->route()->named('features.index') || request()->route()->named('business-fields.index')" :border="app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4'">
+                        {{ __('sidebar.settings') }}
+                    </x-responsive-nav-link>
+                @endcan
+                <!-- end::Settings -->
+            </div>
+        @endif
 
         <!-- begin::Languages Links -->
         <div class="border-t border-gray-200">
             <!-- begin::Arabic -->
             <a
                 href="{{ LaravelLocalization::getLocalizedURL('ar') }}"
-                class="block ps-3 pe-4 py-2 border-l-4 border-transparent text-sm font-medium text-slate-700 bg-slate-50 focus:outline-none focus:text-slate-800 focus:bg-slate-100 focus:border-slate-700 transition duration-150 ease-in-out"
+                class="block ps-3 pe-4 py-2 {{ app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4' }} {{ app()->getLocale() === 'ar' ? 'border-slate-300' : 'border-transparent' }} hover:border-slate-300 text-sm font-medium text-slate-700 bg-slate-50 focus:outline-none focus:text-slate-800 focus:bg-slate-100 transition duration-150 ease-in-out"
             >عربي</a>
             <!-- end::Arabic -->
 
             <!-- begin::English -->
             <a
                 href="{{ LaravelLocalization::getLocalizedURL('en') }}"
-                class="block ps-3 pe-4 py-2 border-l-4 border-transparent text-sm font-medium text-slate-700 bg-slate-50 focus:outline-none focus:text-slate-800 focus:bg-slate-100 focus:border-slate-700 transition duration-150 ease-in-out"
+                class="block ps-3 pe-4 py-2 {{ app()->getLocale() === 'ar' ? 'border-r-4' : 'border-l-4' }} {{ app()->getLocale() === 'en' ? 'border-slate-300' : 'border-transparent' }} hover:border-slate-300 text-sm font-medium text-slate-700 bg-slate-50 focus:outline-none focus:bg-slate-100  transition duration-150 ease-in-out"
             >English</a>
             <!-- end::English -->
         </div>
@@ -188,13 +276,16 @@
 
         <!-- begin::Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-sm text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-xs text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
+            <a href="{{ route('profile.show') }}" class="px-4 flex items-center space-s-2 text-slate-600 hover:text-slate-800 transition duration-150 ease-in-out">
+                <img src="{{ asset('storage/' . substr(auth()->user()->photo, 6)) }}" alt="Me" class="h-9 w-9 rounded-full">
+                <div>
+                    <div class="font-medium text-sm">{{ Auth::user()->name }}</div>
+                    <div class="font-light text-xs">{{ Auth::user()->email }}</div>
+                </div>
+            </a>
 
             <!-- begin::Settings -->
-            <x-responsive-nav-link :href="route('halls.index')" :active="request()->route()->named('halls.index')" class="mt-2 ">
+            <x-responsive-nav-link :href="route('halls.index')" class="mt-2 ">
                 <div class="flex items-center space-s-4">
                     <span class="block text-sm">
                         {{ app()->getLocale() === 'ar' ? 'العودة إلى القاعات' : 'Go back to halls' }}

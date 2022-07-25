@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\NewUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -24,9 +22,19 @@ class UserController extends Controller
                 ->latest()
                 ->paginate(30);
         } else {
-            $users = User::where('hall_id', null)
-                ->latest()
-                ->paginate(30);
+            $q = User::where('hall_id', null)->whereDoesntHave('roles');
+
+            if (request()->user()->hasRole('super_admin')) {
+                $users = $q->orWhereHas('roles', function ($query) {
+                    $query->where('name', '!=', 'super_admin');
+                })->latest()->paginate(30);
+            } else {
+                $users = $q->orWhereHas('roles', function ($query) {
+                    $query
+                        ->where('name', '!=', 'super_admin')
+                        ->orWhere('name', '!=', 'admin');
+                })->latest()->paginate(30);
+            }
         }
 
         return view('users.index', compact('users'));

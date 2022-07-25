@@ -7,7 +7,7 @@
         </div>
     </x-slot>
 
-    <form x-data action="{{ route('halls.update', $hall->id) }}" method="POST" class="mt-2 pb-8">
+    <form x-data action="{{ route('halls.update', $hall->id) }}" method="POST" class="mt-2 pb-8" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
 
@@ -85,6 +85,31 @@
                 </div>
             </div>
             <!-- end::Capacity -->
+
+            <!-- begin::Images -->
+            <div x-data="{ show: false }" class="grid grid-cols-2 pt-2">
+                <div class="col-span-2 max-w-[560px]">
+                    <div class="flex space-s-2">
+                        <label for="images" class="relative cursor-pointer bg-green-400 hover:bg-green-500 py-2 px-4 rounded-md font-medium text-sm text-white focus-within:outline-none transition duration-150 ease-in-out">
+                            <span>{{ app()->getLocale() === 'ar' ? 'تحميل الصور' : 'Upload images' }}</span>
+
+                            <input
+                                id="images" name="images[]" type="file" multiple class="sr-only"
+                                @change="$el.files.length > 0 ? show=true : show=false"
+                            >
+                        </label>
+
+                        <p class="text-sm text-green-500 mt-2"x-show="show">
+                            {{ app()->getLocale() === 'ar' ? 'تم إختيار صور للتحميل' : 'Files have been selected for upload' }}
+                        </p>
+                    </div>
+
+                    <p class="text-xs text-slate-400 mt-2">
+                        {{ app()->getLocale() === 'ar' ? 'الصور يجب أن تكون من نوع PNG, JPG, JPEG وحجمها لا يزيد عن 10MB' : 'Images must be of type PNG, JPG, JPEG and its max size is 10MB' }}
+                    </p>
+                </div>
+            </div>
+            <!-- end::Images -->
         </div>
 
         <!-- begin::Form Button -->

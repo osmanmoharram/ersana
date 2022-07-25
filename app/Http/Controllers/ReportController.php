@@ -18,10 +18,10 @@ class ReportController extends Controller
     public function index()
     {
         if (request()->user()->isClient()) {
-            $reports = Report::where('client_id', request()->user()->client_id)
+            $reports = Report::where('hall_id', session('hall')->id)
                 ->latest()->paginate(30);
         } else {
-            $reports = Report::where('client_id', null)
+            $reports = Report::where('hall_id', null)
                 ->latest()->paginate(30);
         }
 
@@ -153,8 +153,8 @@ class ReportController extends Controller
         $attributes['type'] = $request->type;
         $attributes['average'] = $average;
         $attributes['total'] = $total;
-        if ($request->user()->isClient()) {
-            $attributes['client_id'] = $request->user()->client_id;
+        if ($request->user()->isClient() && session()->has('hall')) {
+            $attributes['hall_id'] = session('hall')->id;
         }
 
         return $attributes;

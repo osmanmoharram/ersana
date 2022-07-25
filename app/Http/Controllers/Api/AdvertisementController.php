@@ -10,7 +10,7 @@ class AdvertisementController extends Controller
 {
     public function __invoke()
     {
-        $advertisements = Advertisement::where('published', true)->get();
+        $advertisements = Advertisement::where('status', 'active')->get();
 
         return response()->json(compact('advertisements'), 200);
     }

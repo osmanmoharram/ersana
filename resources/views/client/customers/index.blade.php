@@ -12,7 +12,7 @@
                 <!-- begin::Full Name -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm  text-slate-500">
-                        {{ $customer->name }}
+                        {{ $customer->user->name }}
                     </div>
                 </td>
                 <!-- end::Full Name -->
@@ -20,7 +20,7 @@
                 <!-- begin::Email -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm  text-slate-500">
-                        {{ $customer->email }}
+                        {{ $customer->user->email }}
                     </div>
                 </td>
                 <!-- end::Email -->
@@ -28,7 +28,7 @@
                 <!-- begin::Phone -->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="text-sm {{ app()->getLocale() === 'ar' ? 'text-right' : '' }} text-slate-500" dir="ltr">
-                        {{ $customer->phone }}
+                        {{ $customer->user->phone }}
                     </div>
                 </td>
                 <!-- end::Phone -->

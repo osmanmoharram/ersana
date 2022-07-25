@@ -1,3 +1,13 @@
+@section('scripts')
+    <script>
+        function getClientId(clientId) {
+            @php
+                $client_id = clientId
+            @endphp
+        }
+    </script>
+@endsection
+
 <x-app-layout>
     <x-slot name="header" class="py-6">
         {{ __('page.subscriptions.create.header') }}
@@ -20,6 +30,7 @@
                         <li
                             class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
                             @click="$store.selection.select($el, '{{ $client->id }}'); visible = false"
+                            onclick=getClientId({{ $client->id }})
                         >
                             {{ $client->user->name }}
                         </li>
@@ -56,11 +67,20 @@
         <!-- end::Package -->
 
         <div class="grid grid-cols-2 py-2">
-            <hr>
+            <div class="col-span-2 max-w-[560px]">
+                <hr>
+            </div>
         </div>
 
         <div class="grid grid-cols-2">
-            <div class="col-span-1">
+            <a
+                href="{{ route('halls.create', ['target_client_id' => isset($client_id) ? $client_id : null]) }}"
+                class="py-2.5 px-4 text-xs text-white bg-green-400 hover:bg-green-500 shadow-sm rounded-sm mb-px transition duration-150 ease-in-out"
+            >
+                {{ __('page.subscriptions.form.hall.button') }}
+            </a>
+
+            <div class="col-span-2 max-w-[560px]">
                 <x-label for="date" :value="__('page.halls.index.header')" class="mb-2" />
 
                 <x-table id="halls" page="halls" :columns="['name', 'city', 'address', 'capacity']">
@@ -80,7 +100,7 @@
         <div x-data class="space-y-4 mt-4">
             <!-- begin::Hall Name -->
             <div class="grid grid-cols-2">
-                <div class="col-span-1">
+                <div class="col-span-2 max-w-[560px]">
                     <x-label for="hall_name" :value="__('page.subscriptions.form.hall.name.label')" />
 
                     <x-input
@@ -93,8 +113,8 @@
 
             <!-- begin::Hall Location -->
             <div class="grid grid-cols-2">
-                <div class="col-span-1">
-                    <div class="grid grid-cols-2 gap-x-6">
+                <div class="col-span-2 max-w-[560px]">
+                    <div class="grid grid-cols-2 gap-x-2">
                         <!-- begin::Hall City -->
                         <div class="col-span-1">
                             <x-label for="city" :value="__('page.subscriptions.form.hall.city.label')" />
@@ -133,7 +153,7 @@
 
             <!-- begin::Hall Capacity -->
             <div class="grid grid-cols-2">
-                <div class="col-span-1">
+                <div class="col-span-2 max-w-[560px]">
                     <x-label for="capacity" :value="__('page.halls.form.capacity.label')" />
 
                     <x-input
@@ -145,7 +165,7 @@
             <!-- end::Hall Capacity -->
 
             <div class="grid grid-cols-2">
-                <div class="col-span-1">
+                <div class="col-span-2 max-w-[560px]">
                     <button
                         type="button"
                         class="py-2.5 px-4 text-xs text-white bg-green-400 hover:bg-green-500 shadow-sm rounded-sm mb-px transition duration-150 ease-in-out"
@@ -171,3 +191,5 @@
         <!-- end::Form Button -->
     </form>
 </x-app-layout>
+
+

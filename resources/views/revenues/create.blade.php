@@ -88,6 +88,33 @@
         </div>
         <!-- end::Description -->
 
+        <!-- begin::Status -->
+        <div class="grid grid-cols-2">
+            <div class="col-span-1">
+                <x-label for="status" :value="__('page.revenues.form.status.label')" />
+
+                <x-select
+                    name="status" value="{{ old('status') }}"
+                    display="{{ old('status') ? __('page.revenues.form.status.items.' . old('status')) : null }}"
+                    placeholder="{{ __('actions.select.placeholder') }}"
+                >
+                    @foreach (['collected', 'uncollected'] as $status)
+                        <li
+                            class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
+                            @click="$store.selection.select($el, '{{ $status }}'); visible = false"
+                        >
+                            {{ __('page.revenues.form.status.items.' . $status) }}
+                        </li>
+                    @endforeach
+                </x-select>
+
+                @error('status')
+                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+        <!-- end::Status -->
+
         <!-- begin::Form Button -->
         <div class="grid grid-cols-2 pt-8">
             <div class="col-span-1 flex items-center justify-between">

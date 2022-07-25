@@ -29,9 +29,10 @@ class NewAdvertisementRequest extends FormRequest
             'end_date' => ['required', 'date', 'after:start_date'],
             'price' => ['required', 'numeric'],
             'status' => ['required', 'in:active,suspended'],
+            'images.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             'owner_name' => ['required', 'string'],
             'owner_phone' => ['required', 'string'],
-            'business_field_id' => ['requird', 'exists:business_fields,id']
+            'business_field_id' => ['required', 'exists:business_fields,id']
         ];
     }
 }

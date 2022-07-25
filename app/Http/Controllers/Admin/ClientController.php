@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\NewClientRequest;
 use App\Models\Admin\{BusinessField, Client};
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 
 class ClientController extends Controller
 {
@@ -50,7 +51,7 @@ class ClientController extends Controller
         event(new CreatedClient($client));
 
         return redirect()
-            ->route('subscriptions.create')
+            ->route('clients.index')
             ->withMessage(__('page.clients.flash.created'));
     }
 
@@ -86,7 +87,20 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        $name = $client->user->name;
+
+        foreach ($client->halls as $hall) {
+            $hall->delete();
+        }
+
+        $client->subscription->delete();
+
+        $client->user->delete();
+
+        $client->delete();
+
+        return redirect()->route('clients.index')
+            ->withMessage(__('page.clients.flash.deleted', ['client' => $name]));
     }
 
     protected function createClientUser($request, $client)
@@ -99,5 +113,12 @@ class ClientController extends Controller
         ]);
 
         $client->update(['user_id' => $user->id]);
+
+        $permissions = Permission::where('type', 'client')
+            ->orWhere('type', 'both')
+            ->pluck('name')
+            ->toArray();
+
+        $user->givePermissionTo($permissions);
     }
 }

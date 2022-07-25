@@ -13,7 +13,7 @@
                 <x-label for="name" :value="__('page.customers.form.name.label')" />
 
                 <x-input
-                    type="text" class="w-full mt-1" name="name" value="{{ $customer->name }}"
+                    type="text" class="w-full mt-1" name="name" value="{{ $customer->user->name }}"
                     placeholder="{{ __('page.customers.form.name.placeholder') }}"
                 />
 
@@ -30,7 +30,7 @@
                 <x-label for="email" :value="__('page.customers.form.email.label')" />
 
                 <x-input
-                    type="text" class="w-full mt-1" name="email" value="{{ $customer->email }}"
+                    type="text" class="w-full mt-1" name="email" value="{{ $customer->user->email }}"
                     placeholder="{{ __('page.customers.form.email.placeholder') }}"
                 />
 
@@ -47,7 +47,7 @@
                 <x-label for="phone" :value="__('page.customers.form.phone.label')" />
 
                 <x-input
-                    type="text" name="phone" value="{{ $customer->phone }}" dir="ltr"
+                    type="text" name="phone" value="{{ $customer->user->phone }}" dir="ltr"
                     class="w-full mt-1 {{ app()->getLocale() === 'ar' ? 'text-right' : 'text-left' }}"
                     placeholder="{{ __('page.customers.form.phone.placeholder') }}"
                 />

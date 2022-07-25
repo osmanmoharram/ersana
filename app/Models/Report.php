@@ -21,9 +21,9 @@ class Report extends Model
         $this->attributes['average'] = $value * 100;
     }
 
-    protected function getAverageAttribute($value)
+    protected function getAverageAttribute()
     {
-        return $this->attributes['average'] = $value / 100;
+        return $this->attributes['average'] / 100;
     }
 
     protected function setTotalAttribute($value)
@@ -31,8 +31,8 @@ class Report extends Model
         $this->attributes['total'] = $value * 100;
     }
 
-    protected function getTotalAttribute($value)
+    protected function getTotalAttribute()
     {
-        return $this->attributes['total'] = $value / 100;
+        return $this->attributes['total'] / 100;
     }
 }

@@ -7,6 +7,8 @@ use App\Http\Requests\{NewHallRequest, UpdateHallRequest};
 use App\Models\Admin\Client;
 use App\Models\Client\{Booking, BookingTime, Customer, Offer};
 use App\Models\{Expense, Hall, Report, Revenue, Setting, User};
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class HallController extends Controller
 {
@@ -39,16 +41,32 @@ class HallController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $target_client = $request->target_client_id ? Client::find($request->target_client_id) : null;
+
+        dd($request->target_client_id);
+
         $clients = Client::all();
 
-        return view('halls.create', compact('clients'));
+        return view('halls.create', compact('target_client', 'clients'));
     }
 
     public function store(NewHallRequest $request)
     {
-        $hall = Hall::create($request->validated());
+        $data = $request->except('images');
+
+        if ($request->has('images')) {
+            $images = [];
+
+            foreach ($request->images as $image) {
+                $images[] = $image->store('images/halls');
+            }
+
+            $data['images'] = json_encode($images);
+        }
+
+        Hall::create($data);
 
         return redirect()
             ->route('halls.index')
@@ -75,21 +93,23 @@ class HallController extends Controller
      */
     public function update(UpdateHallRequest $request, Hall $hall)
     {
-        $hall->update($request->validated());
+        $hall->update($request->except('images'));
 
-        // foreach ($hall->bookingTimes as $time) {
-        //     $time->delete();
-        // }
+        if ($request->has('images')) {
+            $images = [];
 
-        // foreach ($request->bookingTimes as $time) {
-        //     BookingTime::create([
-        //         'period' => $time['period'],
-        //         'from' => $time['from'],
-        //         'to' => $time['to'],
-        //         'price' => $time['price'],
-        //         'hall_id' => $hall->id
-        //     ]);
-        // }
+            foreach (json_decode($hall->images) as $image) {
+                if (File::exists($image)) {
+                    File::delete($image);
+                }
+            }
+
+            foreach ($request->images as $image) {
+                $images[] = $image->store('images/halls');
+            }
+
+            $hall->images = json_encode($images);
+        }
 
         return redirect()
             ->route('halls.index')
@@ -104,6 +124,7 @@ class HallController extends Controller
      */
     public function destroy(Hall $hall)
     {
+        $name = $hall->name;
         // Delete bookings notifications
 
         $this->deleteBookings($hall);
@@ -124,8 +145,10 @@ class HallController extends Controller
 
         $this->deleteSettings($hall);
 
+        $hall->delete();
+
         return redirect()->route('halls.index')
-            ->withMessage(__('page.halls.flash.deleted'));
+            ->withMessage(__('page.halls.flash.deleted', ['hall' => $name]));
     }
 
     protected function deleteBookings($hall)

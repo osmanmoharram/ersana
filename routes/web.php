@@ -14,6 +14,8 @@ use App\Http\Controllers\Client\{
     BookingTimeController,
     CustomerController,
     OfferController,
+    ServiceController,
+    SupplierController,
 };
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
@@ -22,14 +24,14 @@ use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\SettingController;
+use App\Models\Admin\Client;
 use App\Models\Client\Booking;
 use App\Models\Hall;
-use App\Models\Setting;
-use Illuminate\Http\Request;
+use App\Models\Report;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +64,10 @@ Route::group([
 
         Route::resource('clients', ClientController::class)->except(['show']);
 
+        Route::get('clients/{client}', function (Client $client) {
+            return response()->json(['client' => $client]);
+        });
+
         Route::resource('business-fields', BusinessFieldController::class)->except(['show']);
 
         Route::resource('subscriptions', SubscriptionController::class)->except(['show']);
@@ -74,9 +80,17 @@ Route::group([
 
             Route::resource('bookings', BookingController::class);
 
+            Route::get('/bookings/{booking}/pdf', function (Hall $hall, Booking $booking) {
+                return Pdf::loadView('client.bookings.pdf', ['booking' => $booking])->download('client.bookings.pdf');
+            })->name('bookings.pdf');
+
             Route::resource('booking-times', BookingTimeController::class);
 
             Route::resource('customers', CustomerController::class);
+
+            Route::resource('suppliers', SupplierController::class);
+
+            Route::resource('services', ServiceController::class);
 
             Route::resource('booking-times', BookingTimeController::class);
 
@@ -100,11 +114,19 @@ Route::group([
 
         Route::resource('reports', ReportController::class);
 
+        Route::get('/reporst/{report}/pdf', function (Report $report) {
+            return Pdf::loadView('reports.pdf', ['report' => $report])->download('reports.pdf');
+        })->name('reports.pdf');
+
         Route::get('/settings', [SettingController::class, 'index'])->name('settings');
 
         Route::patch('/settings/{setting}', [SettingController::class, 'update'])->name('settings.update');
 
-        Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
+        Route::prefix('/profile')->group(function () {
+            Route::get('/', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
+            Route::get('/edit', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+            Route::patch('/', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+        });
     });
 
     require __DIR__.'/auth.php';

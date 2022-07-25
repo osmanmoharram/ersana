@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class ProfileController extends Controller
 {
@@ -13,7 +16,7 @@ class ProfileController extends Controller
      */
     public function show()
     {
-        return view('profile', ['user' => auth()->user()]);
+        return view('profile.show');
     }
 
     /**
@@ -22,9 +25,9 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        return view('profile.edit');
     }
 
     /**
@@ -34,8 +37,36 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = [];
+
+
+        $request->validate([
+            'name' => ['nullable', 'string'],
+            'phone' => ['nullable', 'string'],
+            'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+            'photo' => ['nullable', 'image', 'mimes:png,jpg,jpeg']
+        ]);
+
+        if ($request->name) {
+            $data['name'] = $request->name;
+        }
+
+        if ($request->phone) {
+            $data['phone'] = $request->phone;
+        }
+
+        if ($request->password) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        if ($request->photo) {
+            $data['photo'] = $request->photo->store('public/images/profiles');
+        }
+
+        User::find(auth()->id())->update($data);
+
+        return redirect()->route('profile.show');
     }
 }

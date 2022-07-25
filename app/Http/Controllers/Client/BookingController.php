@@ -11,6 +11,7 @@ use App\Models\Client\BookingTime;
 use App\Models\Client\Customer;
 use App\Models\Hall;
 use App\Models\Client\Offer;
+use App\Models\Client\Service;
 use App\Models\Revenue;
 use App\Notifications\BookingBeforeDueDateNotification;
 use Illuminate\Support\Carbon;
@@ -40,8 +41,12 @@ class BookingController extends Controller
     public function create()
     {
         $offers = Offer::all();
+        $services = Service::all();
+        $customers = Customer::whereHas('user', function ($query) {
+            $query->where('hall_id', session('hall')->id);
+        })->get();
 
-        return view('client.bookings.create', compact('offers'));
+        return view('client.bookings.create', compact('offers', 'customers', 'services'));
     }
 
     /**
@@ -52,16 +57,7 @@ class BookingController extends Controller
      */
     public function store(NewBookingRequest $request)
     {
-        $attributes = $request->except(['customer']);
-
-        $attributes['customer_name'] = $request->customer['name'];
-        $attributes['customer_email'] = $request->customer['email'];
-        $attributes['customer_phone'] = $request->customer['phone'];
-
-        // create new user
-        $attributes['password'] = Hash::make('password');
-
-        $booking = Booking::create($attributes);
+        $booking = Booking::create($request->validated());
 
         event(new RevenueCreated($booking));
 

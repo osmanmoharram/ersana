@@ -3,6 +3,34 @@
 return [
     'dashboard' => [
         'header' => 'لوحة التحكم',
+        'cards' => [
+            'revenues' => [
+                'all' => 'جميع الإيرادات', 'collected' => 'الإيرادات المحصلة', 'uncollected' => 'الإيرادات غير المحصلة',
+            ],
+            'expenses' => 'المصروفات',
+            'bookings' => [
+                'all' => 'جميع الحجوزات',
+                'confirmed' => 'الحجوزات المؤكدة',
+                'temporary' => 'الحجوزات المؤقتة',
+                'canceled' => 'الحجوزات الملغية',
+                'paid' => 'الحجوزات المدفوعة'
+            ]
+        ],
+        'charts' => [
+            'bar' => [
+                'label' => 'عدد الحجوزات في آخر 5 أشهر'
+            ]
+        ],
+        'boxes' => [
+            'revenues' => [
+                'all' => 'جميع الإيرادات',
+                'collected' => 'الإيرادات المستلمة',
+                'uncollected' => 'الإيرادات المستحقة'
+            ],
+            'expenses' => [
+                'all' => 'جميع المصروفات'
+            ]
+        ]
     ],
     'settings' => [
         'header' => 'الإعدادات',
@@ -43,17 +71,17 @@ return [
         ]
     ],
     'offers' => [
-        'index' => ['header' => 'العروض', 'table' => ['#' => '#', 'description' => 'الوصف', 'price' => 'السعر']],
-        'create' => ['header' => 'إنشاء عرض جديد'],
-        'edit' => ['header' => 'تحديث العرض :offer'],
+        'index' => ['header' => 'الباقات', 'table' => ['#' => '#', 'description' => 'الوصف', 'price' => 'السعر']],
+        'create' => ['header' => 'إنشاء باقة جديد'],
+        'edit' => ['header' => 'تحديث الباقة :offer'],
         'form' => [
-            'description' => ['label' => 'الوصف', 'placeholder' => 'اكتب شرحا مبسطا لهذا العرض'],
-            'price' => ['label' => 'السعر', 'placeholder' => 'الرجاء إدخال سعر العرض']
+            'description' => ['label' => 'الوصف', 'placeholder' => 'اكتب شرحا مبسطا لهذه الباقة'],
+            'price' => ['label' => 'السعر', 'placeholder' => 'الرجاء إدخال سعر الباقة']
         ],
         'flash' => [
-            'created' => 'تم إنشاء عرض جديد',
-            'updated' => 'تم تحديث بيانات العرض :offer',
-            'deleted' => 'تم حذف العرض :offer'
+            'created' => 'تم إنشاء باقة جديدة',
+            'updated' => 'تم تحديث بيانات الباقة :offer',
+            'deleted' => 'تم حذف الباقة :offer'
         ]
     ],
     'packages' => [
@@ -235,7 +263,7 @@ return [
             'header' => 'إنشاء حجز جديد',
             'customer_information' => 'بيانات صاحب الحجز',
             'booking_times' => 'أوقات الحجوزات',
-            'offers' => 'العروض',
+            'offers' => 'الباقات و الخدمات',
             'payment' => 'الدفع',
             'additional_information' => 'معلومات إضافية'
         ],
@@ -243,11 +271,12 @@ return [
         'edit' => ['header' => 'تحديث بيانات الحجز رقم :booking'],
         'form' => [
             'customer' => [
-                'name' => ['label' => 'الإسم', 'placeholder' => 'الرجاء إدخال إسم صاحب الحجز'],
+                // 'name' => ['label' => 'الإسم', 'placeholder' => 'الرجاء إدخال إسم صاحب الحجز'],
                 // 'company' => ['label' => 'Company', 'placeholder' => 'Please write the customer\'s company name'],
-                'email' => ['label' => 'البريد الإلكتروني', 'placeholder' => 'الرجاء كتابة البريد الإلكتروني لصاحب الحجز'],
-                'phone' => ['label' => 'الهاتف', 'placeholder' => 'الرجاء كتابة هاتف صاحب الحجز'],
-                'address' => ['label' => 'العنوان', 'placeholder' => 'الرجاء كتابة عنوان صاحب الحجز',],
+                // 'email' => ['label' => 'البريد الإلكتروني', 'placeholder' => 'الرجاء كتابة البريد الإلكتروني لصاحب الحجز'],
+                // 'phone' => ['label' => 'الهاتف', 'placeholder' => 'الرجاء كتابة هاتف صاحب الحجز'],
+                // 'address' => ['label' => 'العنوان', 'placeholder' => 'الرجاء كتابة عنوان صاحب الحجز',],
+                'placeholder' => 'الرجاء اختيار واحد من العملاء الذين في القائمة'
             ],
             'date' => ['label' => 'تاريخ الحجز', 'placeholder' => 'الرجاء اختيار تاريخ'],
             'bookingTimes' => ['label' => 'أوقات الحجز المتوفرة', 'button' => 'بحث'],
@@ -326,7 +355,14 @@ return [
                 'items' => ['cash' => 'نقداً', 'bank' => 'بنك']
             ],
             'amount' => ['label' => 'المبلغ', 'placeholder' => 'الرجاء كتابة البلغ'],
-            'description' => ['label' => 'الوصف', 'placeholder' => 'الرجاء كتابة وصف المصروف بالتفصيل']
+            'description' => ['label' => 'الوصف', 'placeholder' => 'الرجاء كتابة وصف المصروف بالتفصيل'],
+            'status' => [
+                'label' => ' الحالة',
+                'items' => [
+                    'collected' => 'مستلمة',
+                    'uncollected' => 'مستحقة',
+                ],
+            ],
         ],
         'flash' => [
             'created' => 'تم إنشاء إيراد جديد',
@@ -393,4 +429,62 @@ return [
             'deleted' => 'تم حذف الإعلان :advertisement'
         ],
     ],
+    'suppliers' => [
+        'index' => [
+            'header' => 'الموردون',
+            'table' => [
+                'name' => 'الإسم',
+                'email' => 'البريد الإلكتروني',
+                'phone' => 'الهاتف',
+                'address' => 'العنوان',
+                'businessField' => 'مجال العمل',
+            ]
+        ],
+        'create' => ['header' => 'إنشاء مورد جديد'],
+        'edit' => ['header' => 'تحديث بيانات المورد :supplier'],
+        'form' => [
+            'name' => ['label' => 'الإسم', 'placeholder' => 'الرجاء كتابة إسم المورد'],
+            'email' => ['label' => 'البريد الإلكتروني', 'placeholder' => 'الرجاء إدخال البريد الإلكتروني'],
+            'phone' => ['label' => 'الهاتف', 'placeholder' => 'الرجاء إدخال الهاتف'],
+            'address' => ['label' => 'العنوان', 'placeholder' => 'الرجاء إدخال العنوان'],
+            'businessField' => ['label' => 'مجال العمل', 'placeholder' => 'الرجاء اختيار مجال عمل'],
+        ],
+        'flash' => [
+            'created' => 'تم إنشاء مورد جديد',
+            'updated' => 'تم تحديث بيانات المورد :supplier',
+            'deleted' => 'تم حذف المورد :supplier'
+        ],
+    ],
+    'services' => [
+        'index' => [
+            'header' => 'الخدمات',
+            'table' => [
+                '#' => '#',
+                'description' => 'الوصف',
+                'price' => 'السعر',
+            ]
+        ],
+        'create' => ['header' => 'إنشاء خدمة جديد'],
+        'edit' => ['header' => 'تحديث بيانات الخدمة :service'],
+        'form' => [
+            'description' => ['label' => 'الوصف', 'placeholder' => 'الرجاء إدخال وصف واضح للخدمة'],
+            'price' => ['label' => 'السعر', 'placeholder' => 'الرجاء إدخال سعر الخدمة'],
+        ],
+        'flash' => [
+            'created' => 'تم إنشاء خدمة جديد',
+            'updated' => 'تم تحديث بيانات الخدمة :service',
+            'deleted' => 'تم حذف الخدمة :service'
+        ],
+    ],
+    'profile' => [
+        'back' => 'العودة',
+        'edit' => 'تعديل البيانات',
+        'name' => 'الإسم',
+        'email' => 'البريد الإلكتروني',
+        'phone' => 'الهاتف',
+        'password' => 'كلمة المرور',
+        'confirm_password' => 'تأكيد كلمة المرور',
+        'photo' => 'تغيير الصورة',
+        'update' => 'تحديث'
+    ]
 ];
