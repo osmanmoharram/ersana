@@ -164,7 +164,7 @@ return [
                 'name' => ['label' => 'Hall Name', 'placeholder' => 'Please insert the name of the hall'],
                 'city' => ['label' => 'Hall City', 'placeholder' => 'Please select the city where the hall is located'],
                 'address' => ['label' => 'Hall Address', 'placeholder' => 'Please insert the address of the hall'],
-                'button' => 'Add Hall'
+                'button' => 'Add Client Halls'
             ]
         ],
         'flash' => [
