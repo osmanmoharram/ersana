@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\NewUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -80,11 +82,13 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $roles = Role::all();
+
         $permissions = request()->user()->isClient()
             ? Permission::where('type', 'client')->orWhere('type', 'both')->get()
-            : Permission::where('type', 'owner')->orWhere('type', 'both')->get();
+            : Permission::where('type', 'admin')->orWhere('type', 'both')->get();
 
-        return view('users.edit', compact('user', 'permissions'));
+        return view('users.edit', compact('user', 'roles', 'permissions'));
     }
 
     /**
@@ -96,15 +100,15 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $data = $request->except('permissions');
-
-        if($request->user()->isClient()) {
-            $data['client_id'] = $request->user()->client_id;
-        }
+        $data = $request->except('role', 'permissions');
 
         $user->update($data);
 
-        $user->syncPermissions($request->permissions);
+        $user->assignRole($request->role);
+
+        if ($request->has('permissions')) {
+            $user->givePermissionTo($request->permissions);
+        }
 
         return redirect()
             ->route('users.index')

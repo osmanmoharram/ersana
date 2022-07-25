@@ -87,7 +87,7 @@
                 @enderror
             </div>
         </div>
-        <!-- end::Client -->
+        <!-- end::Role -->
 
         <div class="grid grid-cols-2">
             <div class="col-span-1">

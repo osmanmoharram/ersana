@@ -369,19 +369,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var flat
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ "./resources/js/intl-tel-input.js":
-/*!****************************************!*\
-  !*** ./resources/js/intl-tel-input.js ***!
-  \****************************************/
-/***/ (() => {
-
-eval("//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sInNvdXJjZXMiOlsid2VicGFjazovLy8uL3Jlc291cmNlcy9qcy9pbnRsLXRlbC1pbnB1dC5qcz9jNWQ5Il0sInNvdXJjZXNDb250ZW50IjpbIiJdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuL3Jlc291cmNlcy9qcy9pbnRsLXRlbC1pbnB1dC5qcy5qcyIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/js/intl-tel-input.js\n");
-
-/***/ }),
-
-=======
->>>>>>> 3e64360efdc5e07f3a0ef4f0e52932143546bafb
 /***/ "./node_modules/flatpickr/dist/esm/index.js":
 /*!**************************************************!*\
   !*** ./node_modules/flatpickr/dist/esm/index.js ***!

@@ -69,6 +69,29 @@
         </div>
         <!-- end::Phone -->
 
+        <!-- begin::Role -->
+        <div class="grid grid-cols-2">
+            <div class="col-span-2 max-w-[560px]">
+                <x-label for="role" :value="__('page.users.form.role.label')" />
+
+                <x-select name="role" value="{{ $user->getRoleNames()->first() }}" display="{{ __('page.users.form.role.items.' . $user->getRoleNames()->first()) }}" placeholder="{{ __('page.users.form.role.placeholder') }}">
+                    @foreach (['admin', 'accountant', 'data_entry'] as $role)
+                        <li
+                            class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
+                            @click="$store.selection.select($el, '{{ $role }}'); visible = false"
+                        >
+                            {{ __('page.users.form.role.items.' . $role) }}
+                        </li>
+                    @endforeach
+                </x-select>
+
+                @error('client_id')
+                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+        <!-- end::Role -->
+
         <!-- begin::Permissions -->
         <div x-data class="grid grid-cols-2">
             <div class="col-span-1">
