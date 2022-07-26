@@ -45,8 +45,6 @@ class HallController extends Controller
     {
         $target_client = $request->target_client_id ? Client::find($request->target_client_id) : null;
 
-        dd($request->target_client_id);
-
         $clients = Client::all();
 
         return view('halls.create', compact('target_client', 'clients'));

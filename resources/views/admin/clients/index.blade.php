@@ -2,6 +2,8 @@
     <!-- begin::Page Heading -->
     <x-slot name="header" class="py-6">
         {{ __('page.clients.index.header') }}
+
+        <x-actions.add href="{{ route('clients.create') }}" size="p-1" />
     </x-slot>
     <!-- end::Page Heading -->
 

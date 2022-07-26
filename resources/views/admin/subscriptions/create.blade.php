@@ -9,6 +9,7 @@
 @endsection --}}
 
 <x-app-layout>
+   
     <x-slot name="header" class="py-6">
         {{ __('page.subscriptions.create.header') }}
     </x-slot>
@@ -29,8 +30,7 @@
                     @foreach ($clients as $client)
                         <li
                             class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
-                            @click="$store.selection.select($el, '{{ $client->id }}'); visible = false"
-                            onclick=getClientId({{ $client->id }})
+                            @click="$store.selection.select($el, '{{ $client->id }}'); visible = false; $store.client.set('{{ $client->id }}')"
                         >
                             {{ $client->user->name }}
                         </li>
@@ -65,18 +65,6 @@
             </div>
         </div>
         <!-- end::Package -->
-
-        <div class="grid grid-cols-2 py-2">
-            <div class="col-span-2 max-w-[560px]">
-                <a
-                    href="{{ route('halls.create', ['target_client_id' => isset($client_id) ? $client_id : null]) }}"
-                    class="block py-2.5 px-4 text-center text-xs text-white bg-green-400 hover:bg-green-500 shadow-sm rounded-sm mb-px transition duration-150 ease-in-out"
-                >
-                    {{ __('page.subscriptions.form.hall.button') }}
-                </a>
-            </div>
-        </div>
-        
 
         {{-- <div class="grid grid-cols-2 py-2">
             <div class="col-span-2 max-w-[560px]">
@@ -191,13 +179,22 @@
         <!-- end::Hall -->
 
         <!-- begin::Form Button -->
-        <div class="grid grid-cols-2 pt-8">
-            <div class="col-span-2 max-w-[560px] flex items-center justify-between">
-                <x-button>
-                    {{ __('actions.add.form')}}
-                </x-button>
+        <div class="grid grid-cols-2">
+            <div class="col-span-3 max-w-[560px] flex items-center justify-between pt-6">
+                <a
+                    href="{{ route('halls.create', ['target_client_id' => isset($client_id) ? $client_id : null]) }}"
+                    class="inline-block py-2 px-4 uppercase text-center text-xs text-white bg-green-400 hover:bg-green-500 shadow-sm rounded-sm mb-px transition duration-150 ease-in-out"
+                >
+                    {{ __('page.subscriptions.form.hall.button') }}
+                </a>
 
-                <x-actions.back href="{{ route('subscriptions.index') }}" />
+                <div class="flex items-center space-x-3">
+                    <x-actions.back href="{{ route('subscriptions.index') }}" />
+    
+                    <x-button>
+                        {{ __('actions.add.form')}}
+                    </x-button>
+                </div>
             </div>
         </div>
         <!-- end::Form Button -->

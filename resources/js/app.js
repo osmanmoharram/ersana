@@ -376,4 +376,18 @@ Alpine.store('profile', {
 
         preview.style.backgroundImage = `url(${url})`;
     }
+});
+
+Alpine.store('client', {
+    set(clientId) {
+        axios.get(`/clients/set`, {
+            params: {
+                client_id: clientId
+            }
+        }).then(response => {
+            
+        }).catch(errors => {
+            
+        });
+    }
 })
