@@ -33,7 +33,9 @@ class ClientController extends Controller
     {
         $business_fields = BusinessField::all();
 
-        return view('admin.clients.create', compact('business_fields'));
+        $redirect = request()->has('redirect') ? request()->redirect : null;
+
+        return view('admin.clients.create', compact('business_fields', 'redirect'));
     }
 
     /**
@@ -50,9 +52,9 @@ class ClientController extends Controller
 
         event(new CreatedClient($client));
 
-        return redirect()
-            ->route('clients.index')
-            ->withMessage(__('page.clients.flash.created'));
+        return $request->redirect
+            ? redirect()->route($request->redirect)
+            : redirect()->route('clients.index')->withMessage(__('page.clients.flash.created'));
     }
 
     /**

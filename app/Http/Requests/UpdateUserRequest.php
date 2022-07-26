@@ -27,7 +27,8 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'unique:users,phone,' . $this->user->id . ',id'],
-            'permissions' => ['required', 'array'],
+            'role' => ['required', 'in:admin,accountant,data_entry'],
+            'permissions' => ['nullable', 'array'],
             'permissions.*' => ['exists:permissions,id'],
         ];
     }

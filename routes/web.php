@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,8 +65,10 @@ Route::group([
 
         Route::resource('clients', ClientController::class)->except(['show']);
 
-        Route::get('clients/{client}', function (Client $client) {
-            return response()->json(['client' => $client]);
+        Route::get('clients/set', function (Request $request) {
+            $request->validate(['client_id' => ['required', 'exists:clients,id']]);
+
+            return back()->withClient(Client::findOrFail($request->client_id));
         });
 
         Route::resource('business-fields', BusinessFieldController::class)->except(['show']);
