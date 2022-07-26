@@ -1,4 +1,11 @@
 <x-app-layout>
+    @if ($errors->any())
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    @endif
     <x-slot name="header" class="py-6">
         {{ __('page.bookings.edit.header', ['booking' => $booking->id]) }}
     </x-slot>
@@ -6,43 +13,6 @@
     <form x-data action="{{ route('halls.bookings.update', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}" method="POST" class="pb-8">
         @csrf
         @method('PATCH')
-
-        <!-- begin::Customer -->
-        <div class="grid grid-cols-5">
-            <div class="col-span-1">
-                <x-label value="{{ __('page.bookings.create.customer_information') }}" />
-            </div>
-
-            <div class="col-span-2 space-y-4">
-                <div class="flex items-center justify-between">
-                    <x-label for="date" :value="__('page.customers.index.header')" />
-
-                    <x-actions.add href="{{ route('halls.customers.create', ['hall' => session('hall')->id]) }}" size="p-1" />
-                </div>
-
-                <x-select name="customer_id" value="{{ $booking->customer->user->name }}" display="{{ $booking->customer->user->name }}" placeholder="{{ __('page.bookings.form.customer.placeholder') }}">
-                    @foreach ($customers as $customer)
-                        <li
-                            class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
-                            @click="$store.selection.select($el, '{{ $customer->id }}'); visible = false"
-                        >
-                            {{ $customer->user->name }}
-                        </li>
-                    @endforeach
-                </x-select>
-
-                @error('customer_id')
-                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                @enderror
-            </div>
-        </div>
-        <!-- begin::Customer -->
-
-        <div class="grid grid-cols-5 py-6">
-            <div class="col-span-3">
-                <hr>
-            </div>
-        </div>
 
         <!-- begin::Booking Times -->
         <div class="grid grid-cols-5">
@@ -211,7 +181,12 @@
                                     <!-- begin::Show -->
                                     <x-modal>
                                         <x-slot name="trigger">
-                                            <x-actions.show @click.prevent="isOpen = ! isOpen" class="cursor-pointer text-center"/>
+                                            <button type="button" @click.prevent="isOpen = ! isOpen" class="cursor-pointer text-center block px-3 h-6 bg-indigo-200/50 hover:bg-indigo-200 text-indigo-500 border border-transparent rounded-sm font-normal text-xs uppercase focus:outline-none disabled:opacity-25 transition ease-in-out duration-150">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                </svg>
+                                            </button>
                                         </x-slot>
 
                                         <div class="px-6 py-4 text-sm flex items-center justify-center">
@@ -260,7 +235,12 @@
                                         <!-- begin::Show -->
                                         <x-modal>
                                             <x-slot name="trigger">
-                                                <x-actions.show @click.prevent="isOpen = ! isOpen" class="cursor-pointer text-center"/>
+                                                <button type="button" @click.prevent="isOpen = ! isOpen" class="cursor-pointer text-center block px-3 h-6 bg-indigo-200/50 hover:bg-indigo-200 text-indigo-500 border border-transparent rounded-sm font-normal text-xs uppercase focus:outline-none disabled:opacity-25 transition ease-in-out duration-150">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                    </svg>
+                                                </button>
                                             </x-slot>
 
                                             <div class="px-6 py-4 text-sm flex items-center justify-center">

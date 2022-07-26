@@ -1,4 +1,4 @@
-@section('scripts')
+{{-- @section('scripts')
     <script>
         function getClientId(clientId) {
             @php
@@ -6,7 +6,7 @@
             @endphp
         }
     </script>
-@endsection
+@endsection --}}
 
 <x-app-layout>
     <x-slot name="header" class="py-6">

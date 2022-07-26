@@ -24,10 +24,6 @@ class UpdateBookingRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer' => ['required', 'array'],
-            'customer.name' => ['required', 'string'],
-            'customer.email' => ['required', 'email', 'string'],
-            'customer.phone' => ['required', 'string'],
             'date' => ['nullable', 'date'],
             'bookingTime_id' => ['nullable', 'exists:booking_times,id'],
             'offer_id' => ['required', 'exists:offers,id'],

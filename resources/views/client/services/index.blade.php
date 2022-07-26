@@ -1,13 +1,15 @@
-<x-app-layout>
-    <!-- begin::Page Heading -->
-    <x-slot name="header" class="py-6">
-        {{ __('page.services.index.header') }}
+<x-settings-layout>
+   <!-- begin::Page Content -->
+   <div class="flex items-start justify-between mb-4">
+        <span class="block">
+            {{ __('page.services.index.header') }}
+        </span>
 
-        <x-actions.add href="{{ route('halls.services.create', session('hall')->id) }}" />
-    </x-slot>
-    <!-- end::Page Heading -->
+        <a href="{{ route('halls.services.create', session('hall')->id) }}" class="inline-block py-1 px-6 rounded-sm bg-slate-900 text-slate-300 text-sm hover:bg-slate-800 transition duration-150 ease-in-out">
+            {{ __('actions.add.page')}}
+        </a>
+    </div>
 
-    <!-- begin::Page Content -->
     <x-table page="services" :columns="['description', 'price']">
         @foreach ($services as $service)
             <tr>
@@ -46,4 +48,4 @@
         </x-slot>
     </x-table>
     <!-- begin::Page Content -->
-</x-app-layout>
+</x-settings-layout>

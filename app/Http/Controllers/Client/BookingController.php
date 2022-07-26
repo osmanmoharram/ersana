@@ -88,7 +88,8 @@ class BookingController extends Controller
     public function edit(Hall $hall, Booking $booking)
     {
         $offers = Offer::all();
-        return view('client.bookings.edit', compact('offers', 'booking'));
+        $services = Service::all();
+        return view('client.bookings.edit', compact('offers', 'services', 'booking'));
     }
 
     /**
@@ -100,11 +101,7 @@ class BookingController extends Controller
      */
     public function update(UpdateBookingRequest $request, Hall $hall, Booking $booking)
     {
-        $attributes = $request->except(['customer', 'date', 'bookingTime_id']);
-
-        $attributes['customer_name'] = $request->customer['name'];
-        $attributes['customer_email'] = $request->customer['email'];
-        $attributes['customer_phone'] = $request->customer['phone'];
+        $attributes = $request->except(['date', 'bookingTime_id']);
 
         if ($date = $request->date) {
             $attributes['date'] = $date;

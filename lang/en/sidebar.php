@@ -20,5 +20,6 @@ return [
     'business-fields' => 'Business Fields',
     'users' => 'Users',
     'roles' => 'Roles',
+    'general' => 'General',
     'settings' => 'Settings',
 ];

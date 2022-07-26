@@ -87,9 +87,14 @@
                     <x-actions.edit href="{{ route('halls.bookings.edit', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"/>
                     <!-- end::Edit -->
 
-                    <!-- begin::PDF -->
-                    <x-actions.pdf href="{{ route('halls.bookings.pdf', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"/>
-                    <!-- end::PDF -->
+                    <!-- begin::Pay -->
+                    {{-- <x-actions.pdf href="{{ route('halls.bookings.pdf', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"/> --}}
+
+                    <x-actions.pay
+                        action="{{ route('halls.bookings.destroy', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"
+                        :booking="$booking"
+                    />
+                    <!-- end::Pay -->
 
                     <!-- begin::Delete -->
                     <x-actions.delete action="{{ route('halls.bookings.destroy', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"/>

@@ -1,7 +1,7 @@
 
 <!-- begin::General -->
 <a href="{{ route('halls.settings', ['hall' => session('hall')->id]) }}" class="block text-sm ps-6 hover:underline">
-    عامة
+    {{ __('sidebar.general') }}
 </a>
 <!-- end::General -->
 
@@ -16,4 +16,10 @@
     {{ __('sidebar.offers') }}
 </a>
 <!-- end::Offers -->
+
+<!-- begin::Services -->
+<a href="{{ route('halls.services.index', session('hall')->id) }}" class="block text-sm ps-6 hover:underline">
+    {{ __('sidebar.services') }}
+</a>
+<!-- end::Services -->
 

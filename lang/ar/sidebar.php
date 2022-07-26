@@ -21,5 +21,6 @@ return [
     'users' => 'المستخدمون',
     'roles' => 'الأدوار',
     'permissions' => 'التصاريح',
+    'general' => 'عامة',
     'settings' => 'الإعدادات',
 ];

@@ -292,7 +292,14 @@ return [
             'payment' => 'Payment',
             'additional_information' => 'Additional Information'
         ],
-        'show' => ['header' => 'Booking Number :booking'],
+        'show' => [
+            'header' => 'Booking Number :booking',
+            'name' => 'Name',
+            'company' => 'Company',
+            'email' => 'Email',
+            'phone' => 'Phone',
+            'address' => 'Address',
+        ],
         'edit' => ['header' => 'Update Booking :booking Data'],
         'form' => [
             'customer' => [
@@ -318,7 +325,12 @@ return [
                 ],
             ],
             'notes' => ['label' => 'Notes', 'placeholder' => 'Please write any additional notes']
-        ]
+        ],
+        'flash' => [
+            'created' => 'A new booking is created',
+            'updated' => 'The booking :booking information is updated',
+            'deleted' => 'The booking :booking is deleted'
+        ],
     ],
     'expenses' => [
         'index' => [

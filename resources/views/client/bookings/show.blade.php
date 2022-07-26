@@ -17,36 +17,36 @@
             <div class="col-span-2 space-y-4">
                 <!-- begin::Full Name -->
                 <div class="flex items-center text-slate-400">
-                    <x-label for="customer[name]" :value="__('page.bookings.form.customer.name.label')" />
+                    <x-label for="customer[name]" :value="__('page.bookings.show.name')" />
 
                     <span class="text-xs font-semibold">&#8282;&nbsp;</span>
 
-                    <span class="text-sm">
-                        {{ $booking->customer_name }}
+                    <span class="text-sm font-bold text-slate-500">
+                        {{ $booking->customer->user->name }}
                     </span>
                 </div>
                 <!-- end::Full Name -->
 
                 <!-- begin::Email -->
                 <div class="flex items-center text-slate-400">
-                    <x-label for="customer[email]" :value="__('page.bookings.form.customer.email.label')" />
+                    <x-label for="customer[email]" :value="__('page.bookings.show.email')" />
 
                     <span class="text-xs font-semibold">&#8282;&nbsp;</span>
 
-                    <span class="text-sm text-slate-400">
-                        {{ $booking->customer_email }}
+                    <span class="text-sm font-bold text-slate-500">
+                        {{ $booking->customer->user->email }}
                     </span>
                 </div>
                 <!-- end::Email -->
 
                 <!-- begin::Phone -->
                 <div class="flex items-center text-slate-400">
-                    <x-label for="customer[phone]" :value="__('page.bookings.form.customer.phone.label')" />
+                    <x-label for="customer[phone]" :value="__('page.bookings.show.phone')" />
 
                     <span class="text-xs font-semibold">&#8282;&nbsp;</span>
 
-                    <span class="text-sm">
-                        {{ $booking->customer_phone }}
+                    <span class="text-sm  font-bold text-slate-500">
+                        {{ $booking->customer->user->phone }}
                     </span>
                 </div>
                 <!-- end::Phone -->
@@ -74,7 +74,7 @@
 
                     <span class="text-xs font-semibold">&#8282;&nbsp;</span>
 
-                    <span class="text-sm">
+                    <span class="text-sm font-bold text-slate-500">
                         {{ substr($booking->date, 0, 10) }}
                     </span>
                 </div>
@@ -86,7 +86,7 @@
 
                     <span class="text-xs font-semibold">&#8282;&nbsp;</span>
 
-                    <span class="text-sm ">
+                    <span class="text-sm font-bold text-slate-500">
                         {{ __('page.bookingTimes.form.period.items.' . $booking->bookingTime->period) }}
                     </span>
                 </div>
@@ -207,7 +207,7 @@
 
                     <span class="text-xs font-semibold">&#8282;&nbsp;</span>
 
-                    <span class="text-sm">
+                    <span class="text-sm font-bold text-slate-500">
                         {{ __('page.bookings.form.payment_method.items.' . $booking->payment_method) }}
                     </span>
                 </div>
@@ -219,7 +219,7 @@
 
                     <span class="text-xs font-semibold">&#8282;&nbsp;</span>
 
-                    <span class="text-sm">
+                    <span class="text-sm font-bold text-slate-500">
                         {{ $booking->paid }}
                     </span>
                 </div>
@@ -234,7 +234,7 @@
 
                     <span class="text-xs font-semibold">&#8282;&nbsp;</span>
 
-                    <span class="text-sm text-slate-400">
+                    <span class="text-sm font-bold text-slate-500">
                         {{ $booking->remaining }}
                     </span>
                 </div>
@@ -246,7 +246,7 @@
 
                     <span class="text-xs font-semibold">&#8282;&nbsp;</span>
 
-                    <span class="text-sm">
+                    <span class="text-sm font-bold text-slate-500">
                         {{ $booking->total }}
                     </span>
                 </div>
@@ -276,7 +276,7 @@
 
                     <span class="text-xs font-semibold">&#8282;&nbsp;</span>
 
-                    <span class="text-sm">
+                    <span class="text-sm font-bold text-slate-500">
                         {{ __('page.bookings.form.status.items.' . $booking->status) }}
                     </span>
                 </div>
@@ -288,7 +288,7 @@
 
                     <span class="text-xs font-semibold">&#8282;&nbsp;</span>
 
-                    <span class="text-sm text-slate-400">
+                    <span class="text-sm font-bold text-slate-500">
                         {{ $booking->notes }}
                     </span>
                 </div>

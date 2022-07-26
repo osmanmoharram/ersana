@@ -271,11 +271,11 @@ return [
         'edit' => ['header' => 'تحديث بيانات الحجز رقم :booking'],
         'form' => [
             'customer' => [
-                // 'name' => ['label' => 'الإسم', 'placeholder' => 'الرجاء إدخال إسم صاحب الحجز'],
-                // 'company' => ['label' => 'Company', 'placeholder' => 'Please write the customer\'s company name'],
-                // 'email' => ['label' => 'البريد الإلكتروني', 'placeholder' => 'الرجاء كتابة البريد الإلكتروني لصاحب الحجز'],
-                // 'phone' => ['label' => 'الهاتف', 'placeholder' => 'الرجاء كتابة هاتف صاحب الحجز'],
-                // 'address' => ['label' => 'العنوان', 'placeholder' => 'الرجاء كتابة عنوان صاحب الحجز',],
+                'name' => ['label' => 'الإسم', 'placeholder' => 'الرجاء إدخال إسم صاحب الحجز'],
+                'company' => ['label' => 'Company', 'placeholder' => 'Please write the customer\'s company name'],
+                'email' => ['label' => 'البريد الإلكتروني', 'placeholder' => 'الرجاء كتابة البريد الإلكتروني لصاحب الحجز'],
+                'phone' => ['label' => 'الهاتف', 'placeholder' => 'الرجاء كتابة هاتف صاحب الحجز'],
+                'address' => ['label' => 'العنوان', 'placeholder' => 'الرجاء كتابة عنوان صاحب الحجز',],
                 'placeholder' => 'الرجاء اختيار واحد من العملاء الذين في القائمة'
             ],
             'date' => ['label' => 'تاريخ الحجز', 'placeholder' => 'الرجاء اختيار تاريخ'],
