@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Events\MadeBookingPayment;
 use App\Events\RevenueCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\NewBookingRequest;
 use App\Http\Requests\Client\UpdateBookingRequest;
 use App\Models\Client\Booking;
-use App\Models\Client\BookingTime;
 use App\Models\Client\Customer;
 use App\Models\Hall;
 use App\Models\Client\Offer;
 use App\Models\Client\Service;
-use App\Models\Revenue;
-use App\Notifications\BookingBeforeDueDateNotification;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
@@ -133,5 +128,20 @@ class BookingController extends Controller
         return redirect()
             ->route('halls.bookings.index', session('hall')->id)
             ->withMessage(__('page.bookings.flash.deleted', ['booking' => $booking_id]));
+    }
+
+    public function makePayment(Request $request, Hall $hall, Booking $booking)
+    {
+        $request->validate([
+            'paid' => ['required', 'numeric'],
+            'invoice' => ['required', 'image', 'mimes:png,jpg,jpeg'],
+        ]);
+
+        $paid = $booking->paid + $request->paid;
+        $remaining = $booking->remaining - $request->paid;
+
+        $booking->update(['paid' => $paid, 'remaining' => $remaining]);
+
+        event(new MadeBookingPayment($paid, now(), $booking));
     }
 }

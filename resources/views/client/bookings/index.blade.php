@@ -91,7 +91,7 @@
                     {{-- <x-actions.pdf href="{{ route('halls.bookings.pdf', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"/> --}}
 
                     <x-actions.pay
-                        action="{{ route('halls.bookings.destroy', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"
+                        action="{{ route('halls.bookings.payment', ['hall' => session('hall')->id, 'booking' => $booking->id]) }}"
                         :booking="$booking"
                     />
                     <!-- end::Pay -->

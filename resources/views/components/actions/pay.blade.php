@@ -5,9 +5,9 @@
         <x-button
             type="button"
             @click="isOpen = ! isOpen"
-            bgColor="bg-green-200/50 hover:bg-green-200"
+            bgColor="bg-green-200/50 hover:bg-green-500"
             size="px-3 py-1"
-            textColor="text-green-600"
+            textColor="text-green-600 hover:text-white"
             title="{{ app()->getLocale() === 'ar' ? 'القيام بعملية دفع' : 'Make a payment' }}"
             {{ $attributes->merge(['class' => 'block']) }}
         >
@@ -18,7 +18,7 @@
     </x-slot>
 
     <!-- begin::Delete Form -->
-    <form method="POST" action="{{ $action }}" class="mt-2">
+    <form method="POST" action="{{ $action }}" class="mt-2" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
 
@@ -51,9 +51,22 @@
                 <x-label for="paid" class="text-slate-500" value="{{ app()->getLocale() === 'ar' ? 'المبلغ المراد دفعه' : 'Paid Amount' }}" />
 
                 <x-input
-                    type="text" class="w-full bg-slate-50" name="paid" value="{{ old('paid') }}"
+                    type="text" class="w-full bg-slate-50 text-slate-800 text-sm" name="paid" value="{{ old('paid') }}"
                     placeholder="{{ __('page.bookings.form.paid.placeholder') }}"
                 />
+            </div>
+
+            <div class="mt-4">
+                <label for="bankStatement" class="inline-block py-2 px-4 relative cursor-pointer bg-green-500 rounded-sm font-medium text-white focus-within:outline-none">
+                    <span>
+                        {{ app()->getLocale() === 'ar' ? 'تحميل صورة إشعار الدفع' : 'Upload payment invoice image' }}
+                    </span>
+                    <input id="bankStatement" name="bank_statement" type="file" class="sr-only" accept=".png, .jpg, .jpeg">
+                </label>
+
+                <div class="mt-4">
+                    <img src="#" alt="" id="bankStatementImage">
+                </div>
             </div>
         </div>
         <!-- end::Form Content -->
@@ -68,3 +81,11 @@
     </form>
     <!-- end::Delete Form -->
 </x-modal>
+
+@section('scripts')
+    <script>
+        bankStatement.onchange = (event) => {
+            bankStatementImage.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
+@endsection

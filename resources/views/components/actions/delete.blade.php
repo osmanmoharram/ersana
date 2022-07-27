@@ -5,9 +5,9 @@
         <x-button
             type="button"
             @click="isOpen = ! isOpen"
-            bgColor="bg-red-200/50 hover:bg-red-200"
+            bgColor="bg-red-200/50 hover:bg-red-500"
             size="px-3 py-1"
-            textColor="text-red-600"
+            textColor="text-red-600 hover:text-white"
             {{ $attributes->merge(['class' => 'block']) }}
         >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">

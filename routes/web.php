@@ -83,6 +83,9 @@ Route::group([
 
             Route::resource('bookings', BookingController::class);
 
+            Route::post('/bookings/{booking}/payment', [BookingController::class, 'makePayment'])
+                ->name('bookings.payment');
+
             Route::get('/bookings/{booking}/pdf', function (Hall $hall, Booking $booking) {
                 return Pdf::loadView('client.bookings.pdf', ['booking' => $booking])->download('client.bookings.pdf');
             })->name('bookings.pdf');
