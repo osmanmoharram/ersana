@@ -23,4 +23,5 @@ return [
     'permissions' => 'التصاريح',
     'general' => 'عامة',
     'settings' => 'الإعدادات',
+    'roles-permissions' => 'الأدوار والصلاحيات'
 ];

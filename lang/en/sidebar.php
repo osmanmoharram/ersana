@@ -22,4 +22,5 @@ return [
     'roles' => 'Roles',
     'general' => 'General',
     'settings' => 'Settings',
+    'roles-permissions' => 'Rolse And Permissions'
 ];

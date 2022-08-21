@@ -55,7 +55,7 @@
             <div class="col-span-2 max-w-[560px]">
                 <x-label for="role" :value="__('page.users.form.role.label')" />
 
-                <x-select name="role" value="{{ $user->getRoleNames()->first() }}" display="{{ __('page.users.form.role.items.' . $user->getRoleNames()->first()) }}" placeholder="{{ __('page.users.form.role.placeholder') }}">
+                <x-select name="role" value="{{ $user->getRoleNames()->first() }}" display="{{ $user->getRoleNames()->first() ? __('page.users.form.role.items.' . $user->getRoleNames()->first()) : '' }}" placeholder="{{ __('page.users.form.role.placeholder') }}">
                     @foreach (['admin', 'accountant', 'data_entry'] as $role)
                         <li
                             class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"

@@ -112,12 +112,12 @@
 
         <!-- begin::Form Button -->
         <div class="grid grid-cols-2 pt-8">
-            <div class="col-span-2 max-w-[560px] flex items-center space-x-2 justify-end">
-                <x-actions.back href="{{ route('clients.index') }}" />
-
+            <div class="col-span-2 max-w-[560px] flex items-center justify-between">
                 <x-button>
                     {{ __('actions.add.form')}}
                 </x-button>
+
+                <x-actions.back href="{{ route('clients.index') }}" />
             </div>
         </div>
         <!-- end::Form Button -->

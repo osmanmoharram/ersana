@@ -54,6 +54,10 @@
 
                 <!-- begin::Actions -->
                 <td class="px-6 py-3 whitespace-nowrap text-right text-sm space-s-1 flex items-center justify-end">
+                    <!-- begin::Edit -->
+                    <x-actions.edit href="{{ route('subscriptions.edit', $subscription->id) }}" />
+                    <!-- end::Edit -->
+
                     @if ($subscription->status === 'suspended')
                         <!-- begin::Activate -->
                         <x-actions.activate action="{{ route('subscriptions.update', $subscription->id) }}" />
@@ -63,10 +67,6 @@
                         <x-actions.suspend action="{{ route('subscriptions.update', $subscription->id) }}" />
                         <!-- end::Suspend -->
                     @endif
-
-                    <!-- begin::Edit -->
-                    <x-actions.edit href="{{ route('subscriptions.edit', $subscription->id) }}" />
-                    <!-- end::Edit -->
 
                     <!-- begin::Delete -->
                     <x-actions.delete :action="route('subscriptions.destroy', $subscription->id)" />

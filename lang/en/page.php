@@ -211,6 +211,13 @@ return [
             ]
         ],
         'create' => ['header' => 'Create New Hall',],
+        'show' => [
+            'owner' => 'Owner',
+            'city' => 'City',
+            'address' => 'Address',
+            'capacity' => 'Capacity',
+            'images' => 'Images'
+        ],
         'edit' => [ 'header' => 'Update :hall Hall'],
         'form' => [
             'name' => ['label' => 'Name', 'placeholder' => 'Please insert the hall name'],
@@ -449,11 +456,11 @@ return [
         'form' => [
             'name' => ['label' => 'Name', 'placeholder' => 'Please write the name of advertisement'],
             'start_date' => ['label' => 'Start Date', 'placeholder' => 'Please insert the start date of the advertisement'],
-            'start_date' => ['label' => 'End Date', 'placeholder' => 'Please insert the end date of the advertisement'],
+            'end_date' => ['label' => 'End Date', 'placeholder' => 'Please insert the end date of the advertisement'],
             'price' => ['label' => 'Price', 'placeholder' => 'Please write the advertisement price'],
             'status' => ['label' => 'Status', 'placeholder' => 'Please write the status of the advertisement'],
             'owner_name' => ['label' => 'Owner Name', 'placeholder' => 'Please write the owner\'s name'],
-            'owner_name' => ['label' => 'Owner Phone', 'placeholder' => 'Please write the owner\'s phone'],
+            'owner_phone' => ['label' => 'Owner Phone', 'placeholder' => 'Please write the owner\'s phone'],
         ],
         'flash' => [
             'created' => 'A new advertisement has been created',
@@ -518,5 +525,19 @@ return [
         'confirm_password' => 'Confirm Password',
         'photo' => 'Change Photo',
         'update' => 'Update'
+    ],
+    'roles' => [
+        'index' => [
+            'header' => 'ٌRoles',
+            'table' => [
+                'name' => 'Name',
+                'permissions' => 'Permissions'
+            ],
+        ],
+        'items' => [
+            'admin' => 'Admin',
+            'accountant' => 'Accountant',
+            'data_entry' => 'Data Entry'
+        ]
     ]
 ];

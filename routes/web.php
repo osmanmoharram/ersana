@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -110,7 +111,7 @@ Route::group([
         });
 
         // Admin And Client Routes
-        Route::resource('halls', HallController::class)->except(['show']);
+        Route::resource('halls', HallController::class);
 
         Route::resource('users', UserController::class)->except(['show']);
 
@@ -133,6 +134,8 @@ Route::group([
             Route::get('/edit', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
             Route::patch('/', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
         });
+
+        Route::view('/roles', 'admin.roles.index', ['roles' => Role::latest()->paginate(10)])->name('roles.index');
     });
 
     require __DIR__.'/auth.php';

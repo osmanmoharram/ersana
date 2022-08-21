@@ -9,7 +9,7 @@
 @endsection --}}
 
 <x-app-layout>
-   
+
     <x-slot name="header" class="py-6">
         {{ __('page.subscriptions.create.header') }}
     </x-slot>
@@ -188,12 +188,12 @@
                     {{ __('page.subscriptions.form.hall.button') }}
                 </a>
 
-                <div class="flex items-center space-x-3">
-                    <x-actions.back href="{{ route('subscriptions.index') }}" />
-    
+                <div class="flex items-center space-s-2">
                     <x-button>
                         {{ __('actions.add.form')}}
                     </x-button>
+
+                    <x-actions.back href="{{ route('subscriptions.index') }}" />
                 </div>
             </div>
         </div>

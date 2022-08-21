@@ -146,6 +146,9 @@ return [
         'description' => [
             'unique' => 'This feature aleady exists in the system! please insert a new one.',
         ],
+        'images.*' => [
+            'uploaded' => 'The image/s failed to upload please check the image size and try again',
+        ]
     ],
 
     /*

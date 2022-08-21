@@ -186,6 +186,13 @@ return [
             ]
         ],
         'create' => ['header' => 'إنشاء قاعة جديدة'],
+        'show' => [
+            'owner' => 'المالك',
+            'city' => 'المدينة',
+            'address' => 'العنوان',
+            'capacity' => 'السعة',
+            'images' => 'الصور'
+        ],
         'edit' => ['header' => 'تحديث بيانات القاعة :hall'],
         'form' => [
             'name' => ['label' => 'إسم القاعة', 'placeholder' => 'الرجاء إدخال إسم القاعة'],
@@ -486,5 +493,19 @@ return [
         'confirm_password' => 'تأكيد كلمة المرور',
         'photo' => 'تغيير الصورة',
         'update' => 'تحديث'
+    ],
+    'roles' => [
+        'index' => [
+            'header' => 'الأدوار',
+            'table' => [
+                'name' => 'الإسم',
+                'permissions' => 'الصلاحيات'
+            ]
+        ],
+        'items' => [
+            'admin' => 'مدير',
+            'accountant' => 'محاسب',
+            'data_entry' => 'مدخل بيانات'
+        ]
     ]
 ];

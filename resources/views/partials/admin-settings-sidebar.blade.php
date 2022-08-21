@@ -15,3 +15,9 @@
     {{ __('sidebar.business-fields') }}
 </a>
 <!-- end::Business Fields -->
+
+<!-- begin::Roles And Permissions Fields -->
+<a href="{{ route('roles.index') }}" class="block text-sm ps-6 hover:underline">
+    {{ __('sidebar.roles') }}
+</a>
+<!-- end::Roles And Permissions Fields -->

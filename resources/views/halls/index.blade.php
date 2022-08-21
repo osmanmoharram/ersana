@@ -53,6 +53,10 @@
 
                 <!-- begin::Actions -->
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm space-s-1 flex items-center justify-end">
+                    <!-- begin::Show -->
+                    <x-actions.show href="{{ route('halls.show', $hall->id) }}" />
+                    <!-- end::Show -->
+                    
                     <!-- begin::Edit -->
                     <x-actions.edit href="{{ route('halls.edit', $hall->id) }}" />
                     <!-- end::Edit -->

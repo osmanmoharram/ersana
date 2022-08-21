@@ -64,11 +64,18 @@ class HallController extends Controller
             $data['images'] = json_encode($images);
         }
 
+        dd($data);
+
         Hall::create($data);
 
         return redirect()
             ->route('halls.index')
             ->withMessage(__('page.halls.flash.created'));
+    }
+
+    public function show(Hall $hall)
+    {
+        return view('halls.show', compact('hall'));
     }
 
     /**
@@ -96,17 +103,11 @@ class HallController extends Controller
         if ($request->has('images')) {
             $images = [];
 
-            foreach (json_decode($hall->images) as $image) {
-                if (File::exists($image)) {
-                    File::delete($image);
-                }
-            }
-
             foreach ($request->images as $image) {
-                $images[] = $image->store('images/halls');
+                $images[] = $image->store('public/' . $hall->client->user->name . '/images/halls');
             }
 
-            $hall->images = json_encode($images);
+            $hall->update(['images' => json_encode($images)]);
         }
 
         return redirect()
