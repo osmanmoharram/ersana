@@ -135,7 +135,7 @@ Route::group([
             Route::patch('/', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
         });
 
-        Route::view('/roles', 'admin.roles.index', ['roles' => Role::latest()->paginate(10)])->name('roles.index');
+        Route::view('/roles', 'roles.index', ['roles' => Role::latest()->paginate(10)])->name('roles.index');
     });
 
     require __DIR__.'/auth.php';
