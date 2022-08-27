@@ -31,7 +31,8 @@ class RevenueCreatedEventListener
             'payment_method' => $event->booking->payment_method,
             'amount' => $event->booking->total,
             'description' => app()->getLocale() === 'ar' ? 'حجز جديد' : 'New Booking',
-            'hall_id' => $event->booking->bookingTime->hall_id
+            'hall_id' => $event->booking->bookingTime->hall_id,
+            'status' => 'uncollected'
         ]);
     }
 }

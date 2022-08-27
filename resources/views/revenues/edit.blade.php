@@ -90,16 +90,16 @@
                 <x-label for="status" :value="__('page.revenues.form.status.label')" />
 
                 <x-select
-                    name="status" value="{{ __('page.revenues.form.status.items.' . $status) }}"
+                    name="status" value="{{ __('page.revenues.form.status.items.' . $revenue->status) }}"
                     placeholder="{{ __('actions.select.placeholder') }}"
-                    display="{{ __('page.revenues.form.status.items.' . $status) }}"
+                    display="{{ __('page.revenues.form.status.items.' . $revenue->status) }}"
                 >
                     @foreach (['collected', 'uncollected'] as $status)
                         <li
                             class="text-gray-800 text-sm hover:bg-slate-50 cursor-pointer select-none py-2 ps-3 pe-9" role="option"
                             @click="$store.selection.select($el, '{{ $status }}'); visible = false"
                         >
-                            {{ __('page.revenues.form.status.items.' . $status) }}
+                            {{ __('page.revenues.form.status.items.' . $revenue->status) }}
                         </li>
                     @endforeach
                 </x-select>

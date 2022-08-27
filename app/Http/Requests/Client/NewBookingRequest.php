@@ -25,14 +25,11 @@ class NewBookingRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'customer' => ['required', 'array'],
-            // 'customer.name' => ['required', 'string'],
-            // 'customer.email' => ['required', 'email', 'string'],
-            // 'customer.phone' => ['required', 'string'],
             'customer_id' => ['required', 'exists:customers,id'],
             'date' => ['required', 'date'],
             'bookingTime_id' => ['required', 'exists:booking_times,id'],
             'offer_id' => ['required', 'exists:offers,id'],
+            'service_id' => ['required', 'exists:services,id'],
             'payment_method' => ['required', 'in:bank,cash'],
             'paid' => ['required', 'numeric'],
             'remaining' => ['required', 'numeric'],
