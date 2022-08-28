@@ -24,14 +24,14 @@ class UserController extends Controller
         } else {
             $q = User::where('hall_id', null)->whereDoesntHave('roles');
 
-            if (request()->user()->hasRole('super_admin')) {
+            if (request()->user()->hasRole('admin')) {
                 $users = $q->orWhereHas('roles', function ($query) {
-                    $query->where('name', '!=', 'super_admin');
+                    $query->where('name', '!=', 'admin');
                 })->latest()->paginate(30);
             } else {
                 $users = $q->orWhereHas('roles', function ($query) {
                     $query
-                        ->where('name', '!=', 'super_admin')
+                        ->where('name', '!=', 'admin')
                         ->orWhere('name', '!=', 'admin');
                 })->latest()->paginate(30);
             }
